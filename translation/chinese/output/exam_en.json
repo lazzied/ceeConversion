@@ -1,0 +1,871 @@
+{
+  "metadata": {
+    "title": "2024 National Unified Examination for Admission to Higher Education",
+    "subtitle": "Mathematics (Arts) · National Paper A",
+    "year": 2024,
+    "subject": "Mathematics (Arts)",
+    "paper": "National Paper A",
+    "header_left": "2024 National Paper A (Arts Mathematics)",
+    "header_right": "National Unified Examination for Admission to Higher Education",
+    "source_file": "gaokao_2024_national_A_wen__1_.tex"
+  },
+  "instructions": null,
+  "sections": [
+    {
+      "order": 1,
+      "title": "Multiple Choice Questions",
+      "ordinal": "One",
+      "kind": "single_choice",
+      "description": null,
+      "questions": [
+        {
+          "number": 1,
+          "kind": "single_choice",
+          "stem": "If $z = \\sqrt{2}\\,i$, then $z\\overline{z} =$ (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$-2$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$-\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$2$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 2,
+          "kind": "single_choice",
+          "stem": "Given the set $A = \\{1, 2, 3, 4, 5, 9\\}$, $B = \\{x \\mid x + 1 \\in A\\}$, then $A \\cap B =$ (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\{1,2,3\\}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\{3,4,9\\}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\{1,2,3,4\\}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\{2,3,4,5\\}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 3,
+          "kind": "single_choice",
+          "stem": "Let vectors $\\boldsymbol{a} = (x + 1, x)$, $\\boldsymbol{b} = (x, 2)$, $\\boldsymbol{c} = (1, 1)$. If $\\boldsymbol{a} - 2\\boldsymbol{b}$ is collinear with $\\boldsymbol{c}$, then $x =$ (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{5}{2}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$-\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$-\\dfrac{5}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 4,
+          "kind": "single_choice",
+          "stem": "In the final round of a solo singing competition, four contestants—Jia, Yi, Bing, and Ding—each perform once, and the performance order is determined by random draw. The probability that Bing is not the first to perform and either Jia or Yi is the last to perform is (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{6}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{4}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 5,
+          "kind": "single_choice",
+          "stem": "记 $S_{n}$ 为等差数列 $\\{a_{n}\\}$ 的前 $n$ 项和。已知 $S_{9}=1$，则 $a_{3}+a_{7}=$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{9}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{2}{9}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{2}{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 6,
+          "kind": "single_choice",
+          "stem": "The two foci of a hyperbola are at $(0,4)$ and $(0,-4)$, and the point $(-6,4)$ lies on the hyperbola. The eccentricity of the hyperbola is (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$4$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$3$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$2$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 7,
+          "kind": "single_choice",
+          "stem": "Let the function $f(x)=\\dfrac{e^{x}+2\\sin x}{1+x^{2}}$. The area of the triangle formed by the tangent line to the curve $y=f(x)$ at the point $(0,1)$ and the two coordinate axes is (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{6}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{2}{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 8,
+          "kind": "single_choice",
+          "stem": "The graph of the function $y = -x^{2} + \\left(e^{x} - e^{-x}\\right)\\sin x$ on the interval $[-2.8, 2.8]$ is approximately (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "Graph A",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "B",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "Graph B",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "C",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "Graph C",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "D",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "Graph D",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 9,
+          "kind": "single_choice",
+          "stem": "The line $2x - y - 2 = 0$ intersects the circle $x^{2} + y^{2} - 6x - 8y = 0$ at points $A, B$. Then $|AB| =$ (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$4$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$5$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$8$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$10$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 10,
+          "kind": "single_choice",
+          "stem": "Given $\\dfrac{\\cos\\alpha}{\\cos\\alpha-\\sin\\alpha}=\\sqrt{3}$, then $\\tan\\left(\\alpha+\\dfrac{\\pi}{4}\\right)=$ (\\ \\ )",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$2\\sqrt{3}+1$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$2\\sqrt{3}-1$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{\\sqrt{3}}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$1-\\sqrt{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 11,
+          "kind": "single_choice",
+          "stem": "Let $\\alpha, \\beta$ be two planes, and $m, n$ be two lines, with $\\alpha \\cap \\beta = m$. Consider the following four propositions:",
+          "blocks": [
+            {
+              "type": "statement_list",
+              "items": [
+                {
+                  "label": "①",
+                  "text": "If $m \\parallel n$, then $n \\parallel \\alpha$ or $n \\parallel \\beta$;"
+                },
+                {
+                  "label": "②",
+                  "text": "If $m \\perp n$, then $n \\perp \\alpha$ or $n \\perp \\beta$;"
+                },
+                {
+                  "label": "③",
+                  "text": "If $n \\parallel \\alpha$ and $n \\parallel \\beta$, then $m \\parallel n$;"
+                },
+                {
+                  "label": "④",
+                  "text": "If the angles between $n$ and $\\alpha, \\beta$ are equal, then $m \\perp n$."
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": "The numbers of all true propositions are (\\ \\ )"
+            }
+          ],
+          "options": [
+            {
+              "label": "A",
+              "text": "①③",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "②④",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "①②③",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "①③④",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 12,
+          "kind": "single_choice",
+          "stem": "记 $\\triangle ABC$ 的内角 $A, B, C$ 的对边分别为 $a, b, c$，已知 $B = 60^{\\circ}$，$b^{2} = \\dfrac{9}{4}ac$，则 $\\sin A + \\sin C =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{3}{2}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{\\sqrt{7}}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{\\sqrt{3}}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Fill-in-the-Blank Questions",
+      "ordinal": "Two",
+      "kind": "fill_blank",
+      "description": null,
+      "questions": [
+        {
+          "number": 13,
+          "kind": "fill_blank",
+          "stem": "The maximum value of the function $f(x) = \\sin x - \\sqrt{3} \\cos x$ on the interval $[0, \\pi]$ is \\blank.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 14,
+          "kind": "fill_blank",
+          "stem": "Frustums A and B both have upper base radius $r_1$ and lower base radius $r_2$. The slant heights of frustums A and B are $2(r_2 - r_1)$ and $3(r_2 - r_1)$, respectively. The ratio of the volumes of frustum A to frustum B is \\blank.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 15,
+          "kind": "fill_blank",
+          "stem": "Given $a > 1$ and $\\dfrac{1}{\\log_8 a} - \\dfrac{1}{\\log_a 4} = -\\dfrac{5}{2}$, then $a =$ \\blank.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 16,
+          "kind": "fill_blank",
+          "stem": "When $x > 0$, the curves $y = x^{3} - 3x$ and $y = -(x - 1)^{2} + a$ intersect at two points. The range of values for $a$ is \\blank.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Solving Problems",
+      "ordinal": "Three",
+      "kind": "free_response",
+      "description": null,
+      "questions": [
+        {
+          "number": 17,
+          "kind": "free_response",
+          "stem": "记 $S_{n}$ 为等比数列 $\\{a_{n}\\}$ 的前 $n$ 项和，已知 $2S_{n}=3a_{n+1}-3$。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Find the general term formula of $\\{a_{n}\\}$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "求数列 $\\{S_{n}\\}$ 的前 $n$ 项和。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 18,
+          "kind": "free_response",
+          "stem": "A factory is upgrading its production line with intelligent transformation. After the upgrade, 150 products are randomly sampled from workshops A and B for inspection, with the following data:",
+          "blocks": [
+            {
+              "type": "table",
+              "column_spec": "lcccc",
+              "rows": [
+                [
+                  "",
+                  "Premium grade",
+                  "Qualified grade",
+                  "Unqualified grade",
+                  "Total"
+                ],
+                [
+                  "Workshop A",
+                  "26",
+                  "24",
+                  "0",
+                  "50"
+                ],
+                [
+                  "Workshop B",
+                  "70",
+                  "28",
+                  "2",
+                  "100"
+                ],
+                [
+                  "Total",
+                  "96",
+                  "52",
+                  "2",
+                  "150"
+                ]
+              ],
+              "header_rows": 1,
+              "rules": [
+                1,
+                3
+              ]
+            }
+          ],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Fill in the following contingency table:",
+              "blocks": [
+                {
+                  "type": "table",
+                  "column_spec": "lcc",
+                  "rows": [
+                    [
+                      "",
+                      "Premium grade",
+                      "Non-premium grade"
+                    ],
+                    [
+                      "Workshop A",
+                      "\\hspace{3em}",
+                      "\\hspace{3em}"
+                    ],
+                    [
+                      "Workshop B",
+                      "",
+                      ""
+                    ]
+                  ],
+                  "header_rows": 1,
+                  "rules": [
+                    1
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": "能否有 $95\\%$ 的把握认为甲、乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲、乙两车间产品的优级品率存在差异？"
+                }
+              ],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "It is known that before the upgrade, the premium grade rate of the factory's products was $p = 0.5$. Let $\\overline{p}$ be the premium grade rate of the $n$ sampled products after the upgrade. If $\\overline{p} > p + 1.65\\sqrt{\\dfrac{p(1 - p)}{n}}$, then it is considered that the premium grade rate has increased. Based on the data from the 150 sampled products, can we conclude that the premium grade rate has increased after the intelligent transformation of the production line? $(\\sqrt{150} \\approx 12.247)$",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [
+            {
+              "type": "callout",
+              "label": "Appendix:",
+              "blocks": [
+                {
+                  "type": "text",
+                  "content": "$\\displaystyle K^{2} = \\frac{n(ad - bc)^{2}}{(a + b)(c + d)(a + c)(b + d)}$"
+                },
+                {
+                  "type": "table",
+                  "column_spec": "c|ccc",
+                  "rows": [
+                    [
+                      "$P(K^{2} \\geqslant k)$",
+                      "0.050",
+                      "0.010",
+                      "0.001"
+                    ],
+                    [
+                      "$k$",
+                      "3.841",
+                      "6.635",
+                      "10.828"
+                    ]
+                  ],
+                  "header_rows": 1,
+                  "rules": [
+                    1
+                  ]
+                }
+              ]
+            }
+          ],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 19,
+          "kind": "free_response",
+          "stem": "As shown in the figure, in the pentahedron with vertices $A, B, C, D, E, F$, quadrilaterals $ABCD$ and $ADEF$ are both isosceles trapezoids, $EF \\parallel AD$, $BC \\parallel AD$, $AD = 4$, $AB = BC = EF = 2$, $ED = \\sqrt{10}$, $FB = 2\\sqrt{3}$, and $M$ is the midpoint of $AD$.",
+          "blocks": [
+            {
+              "type": "figure",
+              "label": "Figure for Question 19: Pentahedron $ABCDEF$",
+              "width_cm": 6.0,
+              "height_cm": 4.2,
+              "is_placeholder": true,
+              "source_path": "imgs/img_in_image_box_2059_1248_2291_1465.jpg"
+            }
+          ],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Prove: $BM \\parallel$ plane $CDE$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "Find the distance from point $M$ to plane $FAB$.",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 20,
+          "kind": "free_response",
+          "stem": "Given the function $f(x) = a(x - 1) - \\ln x + 1$.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Discuss the monotonicity of $f(x)$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "Let $a \\leqslant 2$. Prove that when $x > 1$, $f(x) < \\mathrm{e}^{x-1}$.",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 21,
+          "kind": "free_response",
+          "stem": "Let ellipse $C$: $\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$ $(a > b > 0)$ have right focus $F$, and point $M\\left(1,\\dfrac{3}{2}\\right)$ lie on $C$, with $MF \\perp x$-axis.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Find the equation of $C$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A, B$ 两点，$N$ 为线段 $FP$ 的中点，直线 $NB$ 交直线 $MF$ 于点 $Q$，证明：$AQ \\perp y$ 轴。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 22,
+          "kind": "free_response",
+          "stem": "In the rectangular coordinate system $xOy$, with the origin as the pole and the positive $x$-axis as the polar axis, the polar equation of curve $C$ is $\\rho = \\rho \\cos \\theta + 1$.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Write the Cartesian equation of $C$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "设直线 $l$：$\\begin{cases}x=t,\\\\ y=t+a\\end{cases}$（$t$ 为参数），若 $C$ 与 $l$ 相交于 $A, B$ 两点，且 $|AB|=2$，求 $a$。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 23,
+          "kind": "free_response",
+          "stem": "Given real numbers $a, b$ satisfy $a + b \\geqslant 3$.",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "Prove: $2a^{2}+2b^{2}>a+b$;",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "Prove: $\\left|a-2b^{2}\\right|+\\left|b-2a^{2}\\right|\\geqslant 6$.",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "schema_version": "1.0"
+}

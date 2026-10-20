@@ -1,0 +1,82 @@
+Validation report: data/output/exam.md
+5 errors, 69 warnings
+PDF comparison done (warnings only: PDF text order is noisy).
+
+[ERROR] line 81 | Q8 | stray_glyph | stray axis glyph from a figure (like y_{\downarrow})
+    $y_{\downarrow}$
+[ERROR] line 176 | Q18 | k_table | K² table row not converted to a markdown table
+    $\frac{P(K^{2} \geq k)}{k}$ | 0.050 0.010 0.001
+[ERROR] line 180 | Q19 | slash_parallel | '//' probably means \parallel
+    19. 如图，在以 $A, B, C, D, E, F$ 为顶点的五面体中，四边形 $ABCD$ 与四边形 $ADEF$ 均为等腰梯形，$EF$ // $AD,
+[ERROR] line 182 | Q19 | dollar_signs | '$$' found (two math spans merged)
+    (1) 证明：$BM$$\parallel$平面$CDE$；
+[ERROR] line 188 | - | image | image file not found: imgs/img_in_image_box_2059_1248_2291_1465.jpg
+[WARNING] document | - | pdf_chinese | PDF has '新高考', markdown has '全国甲卷文' after '高等学校招生考试'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '若则' after '试新高考一单选题'
+[WARNING] document | - | pdf_chinese | PDF has '图', markdown has '设向量若与共线则某独唱比赛的决赛阶段共有甲乙丙丁四人参加每人出场一次出场次序由随机抽签确定则丙不' after '单选题已知集合则'
+[WARNING] document | - | pdf_chinese | PDF has '中国', markdown has '第一个出场且甲或乙最后出场' after '题已知集合则图是'
+[WARNING] document | - | pdf_chinese | PDF has '古建筑中的举架结构', markdown has '概率' after '集合则图是中国的'
+[WARNING] document | - | pdf_chinese | PDF has '桁相邻桁的水平距离称', markdown has '记' after '筑中的举架结构是'
+[WARNING] document | - | pdf_chinese | PDF has '步垂直距离称为举图是某古建筑屋顶截面示意图其中是举是相等的步相邻桁的举步之比分别为已知成公差为的', markdown has '' after '桁的水平距离称为'
+[WARNING] document | - | pdf_chinese | PDF has '且直线', markdown has '' after '公差为的等差数列'
+[WARNING] document | - | pdf_chinese | PDF has '斜率为则图图', markdown has '前项和' after '等差数列且直线的'
+[WARNING] document | - | pdf_chinese | PDF has '向量若则甲乙丙丁戊名同学站成一排参加文艺汇演若甲不站在两端丙和丁相邻则不同排列方式共有种种种种若', markdown has '' after '斜率为则图图已知'
+[WARNING] document | - | pdf_chinese | PDF has '正三棱台', markdown has '双曲线' after '种种种种若则已知'
+[WARNING] document | - | pdf_chinese | PDF has '高为上下底面的边长', markdown has '两个焦点' after '则已知正三棱台的'
+[WARNING] document | - | pdf_chinese | PDF has '和其顶', markdown has '' after '底面的边长分别为'
+[WARNING] document | - | pdf_chinese | PDF has '都', markdown has '' after '长分别为和其顶点'
+[WARNING] document | - | pdf_chinese | PDF has '同一球面', markdown has '该双曲线' after '别为和其顶点都在'
+[WARNING] document | - | pdf_chinese | PDF has '球', markdown has '双曲线' after '在同一球面上则该'
+[WARNING] document | - | pdf_chinese | PDF has '表', markdown has '离心率为设函数则曲线在点处的切线与两坐标轴所围成的三角形的' after '一球面上则该球的'
+[WARNING] document | - | pdf_chinese | PDF has '已知', markdown has '' after '则该球的表面积为'
+[WARNING] document | - | pdf_chinese | PDF has '的定义域为且则二多选题已知函数', markdown has '在区间' after '表面积为已知函数'
+[WARNING] document | - | pdf_chinese | PDF has '关于点中心对称则在区间单调递减在区间有两个极值点直线是曲线的对称轴直线是曲线的切线已知', markdown has '大致' after '题已知函数的图象'
+[WARNING] document | - | pdf_chinese | PDF has '坐标原点过抛物线焦点的', markdown has '' after '曲线的切线已知为'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '圆' after '物线焦点的直线与'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '则已知则设为两个平面为两条直线且下述四个命题若则或若则或若且则若与所成的角相等则' after '的直线与交于两点'
+[WARNING] document | - | pdf_chinese | PDF has '在第一象限点若则直线', markdown has '所有真命题' after '线与交于两点其中'
+[WARNING] document | - | pdf_chinese | PDF has '斜率为如图四边形为正方形平面记三棱锥的体积分别为则若满足则三填空题已知随机变量服从正态分布且则曲线经过坐标原点的两条切线的方程分别为设点若直线关于对称的直线与圆有公共点则的取值范围', markdown has '编号' after '象限点若则直线的'
+[WARNING] document | - | pdf_chinese | PDF has '已知直线与椭圆在第一象限交于两点与轴轴分别交于两点且则的方程为四解答题已知是等差数列是公比为的等比数列且证明求集合中元素的个数', markdown has '' after '点则的取值范围是'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '已知则二填空题函数在区间的最大值为已知圆台甲乙的上底面半径均为下底面半径均为圆台甲乙的母线长' after '内角的对边分别为'
+[WARNING] document | - | pdf_chinese | PDF has '以', markdown has '' after '的对边分别为分别'
+[WARNING] document | - | pdf_chinese | PDF has '边长', markdown has '则圆台甲与乙' after '边分别为分别以为'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '体积之比为已知且则当时曲线与曲线有两个交点则的取值范围是' after '为分别以为边长的'
+[WARNING] document | - | pdf_chinese | PDF has '个正三角形', markdown has '解答题记为等比数列' after '分别以为边长的三'
+[WARNING] document | - | pdf_chinese | PDF has '面积依次为', markdown has '前项和' after '的三个正三角形的'
+[WARNING] document | - | pdf_chinese | PDF has '面积若', markdown has '通项公式' after '积依次为已知求的'
+[WARNING] document | - | pdf_chinese | PDF has '在', markdown has '数列的前项和' after '已知求的面积若求'
+[WARNING] document | - | pdf_chinese | PDF has '地区', markdown has '工厂' after '求的面积若求在某'
+[WARNING] document | - | pdf_chinese | PDF has '流行病学调查', markdown has '生产线智能化升级改造升级改造后从该工厂甲乙两个车间的产品中' after '若求在某地区进行'
+[WARNING] document | - | pdf_chinese | PDF has '调查了位某种疾病患者的年龄得到', markdown has '抽取件进行检验数据' after '流行病学调查随机'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '优级品合格品不合格品总计甲车间乙车间总计填写如下列联表优级品非优级品甲车间乙车间能否有' after '者的年龄得到如下'
+[WARNING] document | - | pdf_chinese | PDF has '样本数', markdown has '把握认为甲乙两车间产品的优级品率存在差异能否有的把握认为甲乙两车间产品的优级品率存在差异已知升级改造前该工厂产品的优级品率设为升级改造后抽取的件产品的优级品率如果则认为该工厂产品的优级品率提高了根' after '的年龄得到如下的'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '抽取' after '到如下的样本数据'
+[WARNING] document | - | pdf_chinese | PDF has '频率分布直方图频率组距年龄岁估计该地区这种疾病患者的平均年龄同一组中', markdown has '件产品' after '如下的样本数据的'
+[WARNING] document | - | pdf_chinese | PDF has '用', markdown has '能否认为生产线智能化升级改造后' after '龄同一组中的数据'
+[WARNING] document | - | pdf_chinese | PDF has '区间', markdown has '工厂产品' after '一组中的数据用该'
+[WARNING] document | - | pdf_chinese | PDF has '中点值为代表估计该地区一位这种疾病患者的年龄位于区间的概', markdown has '优级品' after '的数据用该区间的'
+[WARNING] document | - | pdf_chinese | PDF has '已知该地区这种疾病患者的患病率为该地区年龄位于区间的人口占该地区总人口的从该地区中任选一人若此人的年龄位于区间求此人患这种疾病的概率以样本数据中患者的年龄位于各区间的频率作为患者的年龄位于该区间的概率精确到', markdown has '提高了附' after '龄位于区间的概率'
+[WARNING] document | - | pdf_chinese | PDF has '是三棱锥', markdown has '在以为顶点' after '的概率精确到如图'
+[WARNING] document | - | pdf_chinese | PDF has '高', markdown has '五面体中四边形与四边形均为等腰梯形' after '到如图是三棱锥的'
+[WARNING] document | - | pdf_chinese | PDF has '若', markdown has '' after '为的中点证明平面'
+[WARNING] document | - | pdf_chinese | PDF has '二', markdown has '到平' after '中点证明平面若求'
+[WARNING] document | - | pdf_chinese | PDF has '角正弦值已知双曲线', markdown has '' after '证明平面若求二面'
+[WARNING] document | - | pdf_chinese | PDF has '右焦点为渐近线方程为求的方程过的直线与的两条渐近线分别交于两点点在上且过且斜率为的直线与过且斜率为的直线交于点从下面中选取两个作为条件证明另外一个成立在上', markdown has '距离' after '弦值已知双曲线的'
+[WARNING] document | - | pdf_chinese | PDF has '当时', markdown has '' after '成立在上已知函数'
+[WARNING] document | - | pdf_chinese | PDF has '当时求的取值范围', markdown has '' after '当时讨论的单调性'
+[WARNING] document | - | pdf_chinese | PDF has '', markdown has '当时的右焦点为点在上且轴求的方程过点的直线交于两点为线段的中点直线交直线于点证明轴在直角坐标系中以坐标原点为极点轴正半轴为极轴建立极坐标系曲线的极坐标方程为写出的直角坐标方程设直线为参数若与相交于两点且求已知实数满足证明证明' after '的取值范围设证明'
+[WARNING] document | - | pdf_characters | '1': PDF 115x, markdown 70x
+[WARNING] document | - | pdf_characters | '0': PDF 72x, markdown 35x
+[WARNING] document | - | pdf_characters | 'A': PDF 62x, markdown 33x
+[WARNING] document | - | pdf_characters | 'B': PDF 60x, markdown 31x
+[WARNING] document | - | pdf_characters | 'C': PDF 48x, markdown 26x
+[WARNING] document | - | pdf_characters | 'O': PDF 17x, markdown 1x
+[WARNING] document | - | pdf_characters | 'n': PDF 18x, markdown 34x
+[WARNING] document | - | pdf_characters | 'y': PDF 25x, markdown 10x
+[WARNING] document | - | pdf_characters | '2': PDF 100x, markdown 86x
+[WARNING] document | - | pdf_characters | 'V': PDF 12x, markdown 0x
+[WARNING] document | - | pdf_characters | 'D': PDF 33x, markdown 21x
+[WARNING] document | - | pdf_characters | 'P': PDF 14x, markdown 3x
+[WARNING] document | - | pdf_characters | 'f': PDF 15x, markdown 6x
+[WARNING] document | - | pdf_characters | 'k': PDF 11x, markdown 2x
+[WARNING] document | - | pdf_characters | '3': PDF 40x, markdown 33x

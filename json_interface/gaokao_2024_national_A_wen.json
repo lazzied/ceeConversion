@@ -1,0 +1,871 @@
+{
+  "metadata": {
+    "title": "2024 年普通高等学校招生全国统一考试",
+    "subtitle": "数学（文科） · 全国甲卷",
+    "year": 2024,
+    "subject": "数学（文科）",
+    "paper": "全国甲卷",
+    "header_left": "2024 全国甲卷（文科数学）",
+    "header_right": "普通高等学校招生全国统一考试",
+    "source_file": "gaokao_2024_national_A_wen__1_.tex"
+  },
+  "instructions": null,
+  "sections": [
+    {
+      "order": 1,
+      "title": "单选题",
+      "ordinal": "一",
+      "kind": "single_choice",
+      "description": null,
+      "questions": [
+        {
+          "number": 1,
+          "kind": "single_choice",
+          "stem": "若 $z = \\sqrt{2}\\,i$，则 $z\\overline{z} =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$-2$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$-\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$2$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 2,
+          "kind": "single_choice",
+          "stem": "已知集合 $A = \\{1, 2, 3, 4, 5, 9\\}$，$B = \\{x \\mid x + 1 \\in A\\}$，则 $A \\cap B =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\{1,2,3\\}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\{3,4,9\\}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\{1,2,3,4\\}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\{2,3,4,5\\}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 3,
+          "kind": "single_choice",
+          "stem": "设向量 $\\boldsymbol{a} = (x + 1, x)$，$\\boldsymbol{b} = (x, 2)$，$\\boldsymbol{c} = (1, 1)$，若 $\\boldsymbol{a} - 2\\boldsymbol{b}$ 与 $\\boldsymbol{c}$ 共线，则 $x =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{5}{2}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$-\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$-\\dfrac{5}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 4,
+          "kind": "single_choice",
+          "stem": "某独唱比赛的决赛阶段共有甲、乙、丙、丁四人参加，每人出场一次，出场次序由随机抽签确定。则丙不是第一个出场，且甲或乙最后出场的概率是（\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{6}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{4}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 5,
+          "kind": "single_choice",
+          "stem": "记 $S_{n}$ 为等差数列 $\\{a_{n}\\}$ 的前 $n$ 项和。已知 $S_{9}=1$，则 $a_{3}+a_{7}=$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{9}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{2}{9}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{2}{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 6,
+          "kind": "single_choice",
+          "stem": "已知双曲线的两个焦点分别为 $(0,4)$，$(0,-4)$，点 $(-6,4)$ 在该双曲线上，则该双曲线的离心率为（\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$4$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$3$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$2$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 7,
+          "kind": "single_choice",
+          "stem": "设函数 $f(x)=\\dfrac{e^{x}+2\\sin x}{1+x^{2}}$，则曲线 $y=f(x)$ 在点 $(0,1)$ 处的切线与两坐标轴所围成的三角形的面积为（\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{1}{6}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\dfrac{1}{3}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{1}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{2}{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 8,
+          "kind": "single_choice",
+          "stem": "函数 $y = -x^{2} + \\left(e^{x} - e^{-x}\\right)\\sin x$ 在区间 $[-2.8, 2.8]$ 的图象大致为（\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "图象 A",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "B",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "图象 B",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "C",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "图象 C",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            },
+            {
+              "label": "D",
+              "text": null,
+              "figure": {
+                "type": "figure",
+                "label": "图象 D",
+                "width_cm": 4.6,
+                "height_cm": 3.2,
+                "is_placeholder": true,
+                "source_path": null
+              }
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 9,
+          "kind": "single_choice",
+          "stem": "直线 $2x - y - 2 = 0$ 与圆 $x^{2} + y^{2} - 6x - 8y = 0$ 交于 $A, B$ 两点，则 $|AB| =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$4$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$5$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$8$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$10$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 10,
+          "kind": "single_choice",
+          "stem": "已知 $\\dfrac{\\cos\\alpha}{\\cos\\alpha-\\sin\\alpha}=\\sqrt{3}$，则 $\\tan\\left(\\alpha+\\dfrac{\\pi}{4}\\right)=$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$2\\sqrt{3}+1$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$2\\sqrt{3}-1$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{\\sqrt{3}}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$1-\\sqrt{3}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 11,
+          "kind": "single_choice",
+          "stem": "设 $\\alpha, \\beta$ 为两个平面，$m, n$ 为两条直线，且 $\\alpha \\cap \\beta = m$。下述四个命题：",
+          "blocks": [
+            {
+              "type": "statement_list",
+              "items": [
+                {
+                  "label": "①",
+                  "text": "若 $m \\parallel n$，则 $n \\parallel \\alpha$ 或 $n \\parallel \\beta$；"
+                },
+                {
+                  "label": "②",
+                  "text": "若 $m \\perp n$，则 $n \\perp \\alpha$ 或 $n \\perp \\beta$；"
+                },
+                {
+                  "label": "③",
+                  "text": "若 $n \\parallel \\alpha$ 且 $n \\parallel \\beta$，则 $m \\parallel n$；"
+                },
+                {
+                  "label": "④",
+                  "text": "若 $n$ 与 $\\alpha, \\beta$ 所成的角相等，则 $m \\perp n$。"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": "其中所有真命题的编号是（\\ \\ ）"
+            }
+          ],
+          "options": [
+            {
+              "label": "A",
+              "text": "①③",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "②④",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "①②③",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "①③④",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 12,
+          "kind": "single_choice",
+          "stem": "记 $\\triangle ABC$ 的内角 $A, B, C$ 的对边分别为 $a, b, c$，已知 $B = 60^{\\circ}$，$b^{2} = \\dfrac{9}{4}ac$，则 $\\sin A + \\sin C =$ （\\ \\ ）",
+          "blocks": [],
+          "options": [
+            {
+              "label": "A",
+              "text": "$\\dfrac{3}{2}$",
+              "figure": null
+            },
+            {
+              "label": "B",
+              "text": "$\\sqrt{2}$",
+              "figure": null
+            },
+            {
+              "label": "C",
+              "text": "$\\dfrac{\\sqrt{7}}{2}$",
+              "figure": null
+            },
+            {
+              "label": "D",
+              "text": "$\\dfrac{\\sqrt{3}}{2}$",
+              "figure": null
+            }
+          ],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "填空题",
+      "ordinal": "二",
+      "kind": "fill_blank",
+      "description": null,
+      "questions": [
+        {
+          "number": 13,
+          "kind": "fill_blank",
+          "stem": "函数 $f(x) = \\sin x - \\sqrt{3} \\cos x$ 在区间 $[0, \\pi]$ 的最大值为 \\blank。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 14,
+          "kind": "fill_blank",
+          "stem": "已知圆台甲、乙的上底面半径均为 $r_1$，下底面半径均为 $r_2$，圆台甲、乙的母线长分别为 $2(r_2 - r_1)$，$3(r_2 - r_1)$，则圆台甲与乙的体积之比为 \\blank。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 15,
+          "kind": "fill_blank",
+          "stem": "已知 $a > 1$ 且 $\\dfrac{1}{\\log_8 a} - \\dfrac{1}{\\log_a 4} = -\\dfrac{5}{2}$，则 $a =$ \\blank。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 16,
+          "kind": "fill_blank",
+          "stem": "当 $x > 0$ 时，曲线 $y = x^{3} - 3x$ 与曲线 $y = -(x - 1)^{2} + a$ 有两个交点，则 $a$ 的取值范围是 \\blank。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [],
+          "footer_blocks": [],
+          "blank_count": 1,
+          "points": null,
+          "raw": null
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "title": "解答题",
+      "ordinal": "三",
+      "kind": "free_response",
+      "description": null,
+      "questions": [
+        {
+          "number": 17,
+          "kind": "free_response",
+          "stem": "记 $S_{n}$ 为等比数列 $\\{a_{n}\\}$ 的前 $n$ 项和，已知 $2S_{n}=3a_{n+1}-3$。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "求 $\\{a_{n}\\}$ 的通项公式；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "求数列 $\\{S_{n}\\}$ 的前 $n$ 项和。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 18,
+          "kind": "free_response",
+          "stem": "某工厂进行生产线智能化升级改造。升级改造后，从该工厂甲、乙两个车间的产品中随机抽取 150 件进行检验，数据如下：",
+          "blocks": [
+            {
+              "type": "table",
+              "column_spec": "lcccc",
+              "rows": [
+                [
+                  "",
+                  "优级品",
+                  "合格品",
+                  "不合格品",
+                  "总计"
+                ],
+                [
+                  "甲车间",
+                  "26",
+                  "24",
+                  "0",
+                  "50"
+                ],
+                [
+                  "乙车间",
+                  "70",
+                  "28",
+                  "2",
+                  "100"
+                ],
+                [
+                  "总计",
+                  "96",
+                  "52",
+                  "2",
+                  "150"
+                ]
+              ],
+              "header_rows": 1,
+              "rules": [
+                1,
+                3
+              ]
+            }
+          ],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "填写如下列联表：",
+              "blocks": [
+                {
+                  "type": "table",
+                  "column_spec": "lcc",
+                  "rows": [
+                    [
+                      "",
+                      "优级品",
+                      "非优级品"
+                    ],
+                    [
+                      "甲车间",
+                      "\\hspace{3em}",
+                      "\\hspace{3em}"
+                    ],
+                    [
+                      "乙车间",
+                      "",
+                      ""
+                    ]
+                  ],
+                  "header_rows": 1,
+                  "rules": [
+                    1
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": "能否有 $95\\%$ 的把握认为甲、乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲、乙两车间产品的优级品率存在差异？"
+                }
+              ],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "已知升级改造前该工厂产品的优级品率 $p = 0.5$。设 $\\overline{p}$ 为升级改造后抽取的 $n$ 件产品的优级品率，如果 $\\overline{p} > p + 1.65\\sqrt{\\dfrac{p(1 - p)}{n}}$，则认为该工厂产品的优级品率提高了。根据抽取的 150 件产品的数据，能否认为生产线智能化升级改造后，该工厂产品的优级品率提高了？$(\\sqrt{150} \\approx 12.247)$",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [
+            {
+              "type": "callout",
+              "label": "附：",
+              "blocks": [
+                {
+                  "type": "text",
+                  "content": "$\\displaystyle K^{2} = \\frac{n(ad - bc)^{2}}{(a + b)(c + d)(a + c)(b + d)}$"
+                },
+                {
+                  "type": "table",
+                  "column_spec": "c|ccc",
+                  "rows": [
+                    [
+                      "$P(K^{2} \\geqslant k)$",
+                      "0.050",
+                      "0.010",
+                      "0.001"
+                    ],
+                    [
+                      "$k$",
+                      "3.841",
+                      "6.635",
+                      "10.828"
+                    ]
+                  ],
+                  "header_rows": 1,
+                  "rules": [
+                    1
+                  ]
+                }
+              ]
+            }
+          ],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 19,
+          "kind": "free_response",
+          "stem": "如图，在以 $A, B, C, D, E, F$ 为顶点的五面体中，四边形 $ABCD$ 与四边形 $ADEF$ 均为等腰梯形，$EF \\parallel AD$，$BC \\parallel AD$，$AD = 4$，$AB = BC = EF = 2$，$ED = \\sqrt{10}$，$FB = 2\\sqrt{3}$，$M$ 为 $AD$ 的中点。",
+          "blocks": [
+            {
+              "type": "figure",
+              "label": "题 19 图：五面体 $ABCDEF$",
+              "width_cm": 6.0,
+              "height_cm": 4.2,
+              "is_placeholder": true,
+              "source_path": "imgs/img_in_image_box_2059_1248_2291_1465.jpg"
+            }
+          ],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "证明：$BM \\parallel$ 平面 $CDE$；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "求 $M$ 到平面 $FAB$ 的距离。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 20,
+          "kind": "free_response",
+          "stem": "已知函数 $f(x) = a(x - 1) - \\ln x + 1$。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "讨论 $f(x)$ 的单调性；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "设 $a \\leqslant 2$，证明：当 $x > 1$ 时，$f(x) < \\mathrm{e}^{x-1}$。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 21,
+          "kind": "free_response",
+          "stem": "设椭圆 $C$：$\\dfrac{x^{2}}{a^{2}}+\\dfrac{y^{2}}{b^{2}}=1$ $(a > b > 0)$ 的右焦点为 $F$，点 $M\\left(1,\\dfrac{3}{2}\\right)$ 在 $C$ 上，且 $MF \\perp x$ 轴。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "求 $C$ 的方程；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A, B$ 两点，$N$ 为线段 $FP$ 的中点，直线 $NB$ 交直线 $MF$ 于点 $Q$，证明：$AQ \\perp y$ 轴。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 22,
+          "kind": "free_response",
+          "stem": "在直角坐标系 $xOy$ 中，以坐标原点为极点，$x$ 轴正半轴为极轴建立极坐标系，曲线 $C$ 的极坐标方程为 $\\rho = \\rho \\cos \\theta + 1$。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "写出 $C$ 的直角坐标方程；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "设直线 $l$：$\\begin{cases}x=t,\\\\ y=t+a\\end{cases}$（$t$ 为参数），若 $C$ 与 $l$ 相交于 $A, B$ 两点，且 $|AB|=2$，求 $a$。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        },
+        {
+          "number": 23,
+          "kind": "free_response",
+          "stem": "已知实数 $a, b$ 满足 $a + b \\geqslant 3$。",
+          "blocks": [],
+          "options": [],
+          "sub_questions": [
+            {
+              "label": "(1)",
+              "text": "证明：$2a^{2}+2b^{2}>a+b$；",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            },
+            {
+              "label": "(2)",
+              "text": "证明：$\\left|a-2b^{2}\\right|+\\left|b-2a^{2}\\right|\\geqslant 6$。",
+              "blocks": [],
+              "options": [],
+              "sub_questions": [],
+              "footer_blocks": [],
+              "blank_count": 0
+            }
+          ],
+          "footer_blocks": [],
+          "blank_count": 0,
+          "points": null,
+          "raw": null
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "schema_version": "1.0"
+}
