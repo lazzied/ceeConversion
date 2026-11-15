@@ -99,7 +99,7 @@ def parse_figure(text):
 
 def parse_choices(block):
     """'(A) x  (B) y' or '(A) \\includegraphics{...}' -> list of choice Blocks."""
-    parts = re.split(r"(?:^|\s{2,})\(([A-H])\)\s*", block)
+    parts = re.split(r"(?:^|\n|\s{2,})\(([A-H])\)\s*", block)
     choices = []
     for label, text in zip(parts[1::2], parts[2::2]):
         text = text.strip()
@@ -142,7 +142,7 @@ def parse_exam(md):
                                          follows_sub_question=current_sub))
         elif text.startswith("<table"):
             question.blocks.append(Block("table", text=text, follows_sub_question=current_sub))
-        elif re.match(r"\([A-H]\)\s", text):
+        elif re.match(r"\([A-H]\)", text):
             question.blocks.extend(parse_choices(text))
         elif re.match(r"\(\d+\)\s", text):
             m = re.match(r"\((\d+)\)\s+(.*)", text, re.S)
@@ -170,27 +170,28 @@ def describe(q):
 
 def main():
 
-    input_file = "paper/exam_out.md"
-    output_json = "paper/exam_segmented.json"
+    files = [
+        ("paper/exam_out.md", "paper/exam_segmented.json"),
+        ("data/output/exam.md", "paper/ocr_exam_segmented.json"),
+    ]
 
+    for input_file, output_json in files:
+        print(f"\nProcessing: {input_file}")
 
-    #input_file = "data/output/exam.md"
-    #output_json = "paper/ocr_exam_segmented.json"
+        with open(input_file, encoding="utf-8") as f:
+            exam = parse_exam(f.read())
 
+        print(exam.title)
 
+        for s in exam.sections:
+            print(f"  {s.title}: {len(s.questions)} questions")
+            for q in s.questions:
+                print(f"    Q{q.number:<2} {q.kind:<13} {describe(q)}")
 
-    with open(input_file, encoding="utf-8") as f:
-        exam = parse_exam(f.read())
+        with open(output_json, "w", encoding="utf-8") as f:
+            json.dump(asdict(exam), f, ensure_ascii=False, indent=2)
 
-    print(exam.title)
-    for s in exam.sections:
-        print(f"  {s.title}: {len(s.questions)} questions")
-        for q in s.questions:
-            print(f"    Q{q.number:<2} {q.kind:<13} {describe(q)}")
-
-    with open(output_json, "w", encoding="utf-8") as f:
-        json.dump(asdict(exam), f, ensure_ascii=False, indent=2)
-    print("Wrote", output_json)
+        print("Wrote", output_json)
 
 
 if __name__ == "__main__":

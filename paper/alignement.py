@@ -33,42 +33,10 @@ def flatten_questions(document):
     return questions
 
 
-# ---------------------------------------------------------
-# 2. Normalize text before calculating similarity
-# ---------------------------------------------------------
-
-def normalize_text(text):
-    if not text:
-        return ""
-
-    text = unicodedata.normalize("NFKC", str(text))
-
-    # Normalize common LaTeX variants.
-    text = text.replace(r"\dfrac", r"\frac")
-    text = text.replace(r"\tfrac", r"\frac")
-    text = text.replace(r"\bar", r"\overline")
-
-    # Remove math delimiters.
-    text = text.replace("$", "")
-
-    # Remove formatting commands that do not change content.
-    text = text.replace(r"\left", "")
-    text = text.replace(r"\right", "")
-
-    # Normalize a few common text wrappers.
-    text = re.sub(r"\\mathrm\{([^{}]*)\}", r"\1", text)
-    text = re.sub(r"\\text\{([^{}]*)\}", r"\1", text)
-
-    # Ignore whitespace and punctuation differences.
-    text = re.sub(r"\s+", "", text)
-    text = re.sub(r"[，。；：！？、,.!?;:（）()【】\[\]]", "", text)
-
-    return text.lower()
-
 
 def similarity(text_a, text_b):
-    a = normalize_text(text_a)
-    b = normalize_text(text_b)
+    a = text_a
+    b = text_b
 
     if not a or not b:
         return 0.0

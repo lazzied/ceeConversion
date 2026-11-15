@@ -1,4 +1,3 @@
-
 """Deterministic cleanup passes for OCR-derived exam Markdown."""
 
 from pathlib import Path
@@ -291,6 +290,217 @@ def trim_math_spaces(markdown: str) -> str:
 
 
 # ---------------------------------------------------------
+# 4b. COMPACT MATH STYLE  ( \frac{2}{3} -> \frac23 , x^{2} -> x^2 ... )
+# ---------------------------------------------------------
+
+def normalize_math_symbols(markdown: str) -> str:
+    r"""Canonical spelling of equivalent LaTeX symbols (math only).
+
+        \geqslant, \geq -> \ge        \leqslant, \leq -> \le
+        \left| ... \right| -> | ... |
+        e^{x} -> \mathrm{e}^{x}
+    """
+
+    def normalize(math: str) -> str:
+        math = re.sub(r'\\(?:geqslant|geq)(?![a-zA-Z])', r'\\ge', math)
+        math = re.sub(r'\\(?:leqslant|leq)(?![a-zA-Z])', r'\\le', math)
+        math = re.sub(r'\\left\s*\|', '|', math)
+        math = re.sub(r'\\right\s*\|', '|', math)
+        math = re.sub(r'(?<![A-Za-z\\])e(?=\^)', r'\\mathrm{e}', math)
+        return math
+
+    return edit_parts(markdown, edit_math=normalize)
+
+
+# A "single token" is one letter, one digit or one control word (\pi, \alpha ...).
+SINGLE_TOKEN = re.compile(r'[A-Za-z0-9]|\\[A-Za-z]+')
+FRAC = re.compile(r'\\frac(?![A-Za-z])')
+
+
+def _strip_spaces(s: str) -> str:
+    """Delete spaces, except where TeX needs one:
+    after a control word that is followed by a letter (\\sin x, \\mid x),
+    and after a backslash ("\\ ")."""
+
+    def keep(m: re.Match[str]) -> str:
+        before, after = s[:m.start()], s[m.end():]
+
+        if before.endswith('\\') and not before.endswith('\\\\'):
+            return ' '
+
+        if re.search(r'\\[A-Za-z]+$', before) and re.match(r'[A-Za-z]', after):
+            return ' '
+
+        return ''
+
+    return re.sub(r'\s+', keep, s)
+
+
+def remove_math_spaces(markdown: str) -> str:
+    r"""Remove spaces inside math:  $x = 2 \mid x + 1$  ->  $x=2\mid x+1$.
+
+    Text inside \text{...} is left untouched.
+    """
+
+    def tidy(math: str) -> str:
+        pieces = re.split(r'(\\text\{[^{}]*\})', math)
+
+        for i in range(0, len(pieces), 2):
+            pieces[i] = _strip_spaces(pieces[i])
+
+        return ''.join(pieces)
+
+    return edit_parts(markdown, edit_math=tidy)
+
+
+def _read_arg(s: str, i: int):
+    """Read one TeX argument starting at s[i].
+
+    Returns (text, was_braced, end_index) or None.
+    """
+
+    while i < len(s) and s[i] == ' ':
+        i += 1
+
+    if i >= len(s):
+        return None
+
+    if s[i] == '{':
+        depth = 0
+
+        for j in range(i, len(s)):
+            if s[j] in '{}' and s[j - 1:j] == '\\':
+                continue  # escaped brace \{ or \}
+
+            if s[j] == '{':
+                depth += 1
+            elif s[j] == '}':
+                depth -= 1
+
+                if depth == 0:
+                    return s[i + 1:j], True, j + 1
+
+        return None
+
+    m = re.match(r'\\[A-Za-z]+|.', s[i:], re.S)
+    return m.group(), False, i + m.end()
+
+
+def _compact_fracs(s: str) -> str:
+    r"""\frac{2}{3} -> \frac23,  \frac{\pi}{4} -> \frac\pi4,
+    \frac{1}{\log_8a} -> \frac1{\log_8a}   (braces kept for longer arguments)."""
+
+    result, i = '', 0
+
+    while True:
+        m = FRAC.search(s, i)
+
+        if not m:
+            return result + s[i:]
+
+        result += s[i:m.start()]
+
+        a = _read_arg(s, m.end())
+        b = _read_arg(s, a[2]) if a else None
+
+        if not a or not b:
+            result += m.group()
+            i = m.end()
+            continue
+
+        args = []
+
+        for text, braced, _ in (a, b):
+            if braced:
+                text = _compact_fracs(text)
+
+                if not SINGLE_TOKEN.fullmatch(text):
+                    text = '{' + text + '}'
+
+            args.append(text)
+
+        first, second = args
+
+        out = r'\frac'
+
+        if first[0].isalpha():
+            out += ' '  # \frac a b  (a control word must not touch a letter)
+
+        out += first
+
+        if re.fullmatch(r'\\[A-Za-z]+', first) and second[0].isalpha():
+            out += ' '  # \pi a
+
+        out += second
+
+        result += out
+        i = b[2]
+
+# ---------------------------------------------------------
+# 5b. STANDALONE NUMBERS -> MATH
+# ---------------------------------------------------------
+
+# Never touch: tables, \includegraphics paths, heading lines.
+PROTECT_NUMBERS = re.compile(
+    r'(<table\b.*?</table>|\\includegraphics\{[^}]*\}|^#{1,6}[ \t][^\n]*)',
+    re.S | re.I | re.M,
+)
+
+# group 1: a question / sub-question label at line start -> kept as is
+# group 2: a standalone number (optional minus, decimal, percent)
+NUMBER = re.compile(
+    r'(?m)(^[ \t]*(?:\d{1,2}[.．、](?!\d)|[（(]\d{1,2}[）)]))'
+    r'|(?<![A-Za-z0-9_$\\.])(?<!\d-)(-?\d+(?:\.\d+)?%?)(?![A-Za-z0-9_$])'
+)
+
+
+def wrap_standalone_numbers(markdown: str) -> str:
+    r"""Wrap bare numbers in prose: 150 -> $150$, 95% -> $95\%$, -2 -> $-2$.
+
+    Skipped: numbers touching letters (2x, a2), numbering labels at line
+    start (1.  (1)), tables, image paths, headings, and anything already
+    inside $...$ (edit_parts only passes prose here).
+    """
+    def repl(m: re.Match[str]) -> str:
+        if m.group(1):
+            return m.group(1)
+        num = m.group(2)
+        if num.endswith('%'):
+            return '$' + num[:-1] + r'\%$'
+        return '$' + num + '$'
+
+    pieces = PROTECT_NUMBERS.split(markdown)
+    for i in range(0, len(pieces), 2):          # odd indices = protected blocks
+        pieces[i] = edit_parts(pieces[i], edit_text=lambda t: NUMBER.sub(repl, t))
+    return ''.join(pieces)
+
+def compact_math_braces(markdown: str) -> str:
+    r"""Drop unnecessary braces around single-token arguments.
+
+        \frac{2}{3}      -> \frac23
+        \frac{\pi}{4}    -> \frac\pi4
+        x^{2}, S_{n}     -> x^2, S_n
+        60^{\circ}       -> 60^\circ
+        \sqrt{3}         -> \sqrt3
+    Longer arguments keep their braces:  a_{n+1},  \sqrt{10},  \frac{\sqrt3}{2}
+    """
+
+    def compact(math: str) -> str:
+        # superscripts / subscripts
+        math = re.sub(r'([\^_])\{([A-Za-z0-9])\}', r'\1\2', math)
+        math = re.sub(r'([\^_])\{(\\[A-Za-z]+)\}(?![A-Za-z])', r'\1\2', math)
+
+        # \sqrt{3} -> \sqrt3   (a letter needs a space:  \sqrt a)
+        math = re.sub(r'\\sqrt\{(\d)\}', r'\\sqrt\1', math)
+        math = re.sub(r'\\sqrt\{([A-Za-z])\}', r'\\sqrt \1', math)
+
+        # fractions
+        return _compact_fracs(math)
+
+    return edit_parts(markdown, edit_math=compact)
+
+
+# ---------------------------------------------------------
 # 5. OCR-SPECIFIC CORRECTIONS
 # ---------------------------------------------------------
 
@@ -440,9 +650,13 @@ def normalize_markdown(
         replace_degree_sign,
         fullwidth_to_halfwidth_in_math,
         trim_math_spaces,
+        normalize_math_symbols,
+        remove_math_spaces,
+        compact_math_braces,
         remove_page_numbers,
         fix_answer_brackets,
         fix_fill_in_blanks,
+        wrap_standalone_numbers,
         split_options,
         clean_whitespace,
     ]

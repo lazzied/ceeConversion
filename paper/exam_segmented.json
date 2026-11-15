@@ -10,8 +10,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$-2$\n(B) $-\\sqrt{2}$\n(C) $\\sqrt{2}$\n(D) $2$",
+              "text": "$-2$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$-\\sqrt{2}$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\sqrt{2}$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$2$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -23,8 +44,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\{1,2,3\\}$\n(B) $\\{3,4,9\\}$\n(C) $\\{1,2,3,4\\}$\n(D) $\\{2,3,4,5\\}$",
+              "text": "$\\{1,2,3\\}$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\{3,4,9\\}$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\{1,2,3,4\\}$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\{2,3,4,5\\}$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -36,8 +78,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\frac52$\n(B) $\\frac12$\n(C) $-\\frac12$\n(D) $-\\frac52$",
+              "text": "$\\frac52$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac12$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$-\\frac12$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$-\\frac52$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -49,8 +112,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\frac16$\n(B) $\\frac14$\n(C) $\\frac13$\n(D) $\\frac12$",
+              "text": "$\\frac16$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac14$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac13$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac12$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -62,8 +146,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\frac19$\n(B) $\\frac29$\n(C) $\\frac13$\n(D) $\\frac23$",
+              "text": "$\\frac19$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac29$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac13$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac23$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -75,8 +180,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$4$\n(B) $3$\n(C) $2$\n(D) $\\sqrt2$",
+              "text": "$4$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$3$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$2$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\sqrt2$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -88,8 +214,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\frac16$\n(B) $\\frac13$\n(C) $\\frac12$\n(D) $\\frac23$",
+              "text": "$\\frac16$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac13$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac12$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac23$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -107,6 +254,33 @@
                 "path": "img/2024/national_paper_a_liberal/q8_optA.png"
               },
               "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "",
+              "label": "B",
+              "figure": {
+                "path": "img/2024/national_paper_a_liberal/q8_optB.png"
+              },
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "",
+              "label": "C",
+              "figure": {
+                "path": "img/2024/national_paper_a_liberal/q8_optC.png"
+              },
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "",
+              "label": "D",
+              "figure": {
+                "path": "img/2024/national_paper_a_liberal/q8_optD.png"
+              },
+              "follows_sub_question": null
             }
           ]
         },
@@ -116,8 +290,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$4$\n(B) $5$\n(C) $8$\n(D) $10$",
+              "text": "$4$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$5$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$8$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$10$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -129,8 +324,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$2\\sqrt3+1$\n(B) $2\\sqrt3-1$\n(C) $\\frac{\\sqrt3}{2}$\n(D) $1-\\sqrt3$",
+              "text": "$2\\sqrt3+1$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$2\\sqrt3-1$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac{\\sqrt3}{2}$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$1-\\sqrt3$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -177,8 +393,29 @@
             },
             {
               "kind": "choice",
-              "text": "①③\n(B) ②④\n(C) ①②③\n(D) ①③④",
+              "text": "①③",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "②④",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "①②③",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "①③④",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }
@@ -190,8 +427,29 @@
           "blocks": [
             {
               "kind": "choice",
-              "text": "$\\frac32$\n(B) $\\sqrt2$\n(C) $\\frac{\\sqrt7}{2}$\n(D) $\\frac{\\sqrt3}{2}$",
+              "text": "$\\frac32$",
               "label": "A",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\sqrt2$",
+              "label": "B",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac{\\sqrt7}{2}$",
+              "label": "C",
+              "figure": null,
+              "follows_sub_question": null
+            },
+            {
+              "kind": "choice",
+              "text": "$\\frac{\\sqrt3}{2}$",
+              "label": "D",
               "figure": null,
               "follows_sub_question": null
             }

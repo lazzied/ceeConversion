@@ -3,18 +3,7 @@
     "question_status": "aligned",
     "ocr_number": 1,
     "gold_number": 1,
-    "question_similarity": 1.0,
-    "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
-    }
-  },
-  {
-    "question_status": "aligned",
-    "ocr_number": 2,
-    "gold_number": 2,
-    "question_similarity": 1.0,
+    "question_similarity": 0.959,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -23,19 +12,157 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "{1, 2, 3}\n(B) {3, 4, 9}\n(C) {1, 2, 3, 4}\n(D) {2, 3, 4, 5}",
+            "text": "$-2$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\{1,2,3\\}$\n(B) $\\{3,4,9\\}$\n(C) $\\{1,2,3,4\\}$\n(D) $\\{2,3,4,5\\}$",
+            "text": "$-2$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.867
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$-\\sqrt2$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$-\\sqrt{2}$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.917
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\sqrt2$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\sqrt{2}$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.909
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$2$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$2$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "question_status": "aligned",
+    "ocr_number": 2,
+    "gold_number": 2,
+    "question_similarity": 0.977,
+    "block_alignment": {
+      "mode": "block_alignment",
+      "reason": null,
+      "alignment": [
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "{$1$, $2$, $3$}",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\{1,2,3\\}$",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.6
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "{$3$, $4$, $9$}",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\{3,4,9\\}$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.6
+        },
+        {
+          "operation": "weak",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "{$1$, $2$, $3$, $4$}",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\{1,2,3,4\\}$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.595
+        },
+        {
+          "operation": "weak",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "{$2$, $3$, $4$, $5$}",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\{2,3,4,5\\}$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.595
         }
       ]
     }
@@ -44,7 +171,7 @@
     "question_status": "aligned",
     "ocr_number": 3,
     "gold_number": 3,
-    "question_similarity": 0.777,
+    "question_similarity": 0.803,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -53,19 +180,73 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{5}{2}$\n(B) $\\frac{1}{2}$\n(C) $-\\frac{1}{2}$\n(D) $-\\frac{5}{2}$",
+            "text": "$\\frac52$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac52$\n(B) $\\frac12$\n(C) $-\\frac12$\n(D) $-\\frac52$",
+            "text": "$\\frac52$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.81
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$-\\frac12$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$-\\frac12$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$-\\frac52$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$-\\frac52$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
         }
       ]
     }
@@ -74,7 +255,7 @@
     "question_status": "aligned",
     "ocr_number": 4,
     "gold_number": 4,
-    "question_similarity": 1.0,
+    "question_similarity": 0.949,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -83,19 +264,73 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{1}{6}$\n(B) $\\frac{1}{4}$\n(C) $\\frac{1}{3}$\n(D) $\\frac{1}{2}$",
+            "text": "$\\frac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac16$\n(B) $\\frac14$\n(C) $\\frac13$\n(D) $\\frac12$",
+            "text": "$\\frac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.8
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac14$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac14$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
         }
       ]
     }
@@ -104,7 +339,7 @@
     "question_status": "aligned",
     "ocr_number": 5,
     "gold_number": 5,
-    "question_similarity": 0.881,
+    "question_similarity": 0.984,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -113,19 +348,73 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{1}{9}$\n(B) $\\frac{2}{9}$\n(C) $\\frac{1}{3}$\n(D) $\\frac{2}{3}$",
+            "text": "$\\frac19$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac19$\n(B) $\\frac29$\n(C) $\\frac13$\n(D) $\\frac23$",
+            "text": "$\\frac19$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.8
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac29$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac29$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac23$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac23$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
         }
       ]
     }
@@ -134,18 +423,7 @@
     "question_status": "aligned",
     "ocr_number": 6,
     "gold_number": 6,
-    "question_similarity": 1.0,
-    "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
-    }
-  },
-  {
-    "question_status": "aligned",
-    "ocr_number": 7,
-    "gold_number": 7,
-    "question_similarity": 0.968,
+    "question_similarity": 0.984,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -154,19 +432,157 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{1}{6}$\n(B) $\\frac{1}{3}$\n(C) $\\frac{1}{2}$\n(D) $\\frac{2}{3}$",
+            "text": "$4$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac16$\n(B) $\\frac13$\n(C) $\\frac12$\n(D) $\\frac23$",
+            "text": "$4$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.8
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$3$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$3$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$2$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$2$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\sqrt2$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\sqrt2$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "question_status": "aligned",
+    "ocr_number": 7,
+    "gold_number": 7,
+    "question_similarity": 0.989,
+    "block_alignment": {
+      "mode": "block_alignment",
+      "reason": null,
+      "alignment": [
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac16$",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac16$",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac13$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac12$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac23$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac23$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
         }
       ]
     }
@@ -175,7 +591,7 @@
     "question_status": "aligned",
     "ocr_number": 3,
     "gold_number": 8,
-    "question_similarity": 0.95,
+    "question_similarity": 0.932,
     "block_alignment": {
       "mode": "parent_fallback",
       "reason": "Different block-type distributions",
@@ -186,18 +602,7 @@
     "question_status": "aligned",
     "ocr_number": 9,
     "gold_number": 9,
-    "question_similarity": 0.951,
-    "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
-    }
-  },
-  {
-    "question_status": "aligned",
-    "ocr_number": 10,
-    "gold_number": 10,
-    "question_similarity": 0.959,
+    "question_similarity": 0.842,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -206,19 +611,157 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$2\\sqrt{3}+1$\n(B) $2\\sqrt{3}-1$\n(C) $\\frac{\\sqrt{3}}{2}$\n(D) $1-\\sqrt{3}$",
+            "text": "$4$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$2\\sqrt3+1$\n(B) $2\\sqrt3-1$\n(C) $\\frac{\\sqrt3}{2}$\n(D) $1-\\sqrt3$",
+            "text": "$4$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.92
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$5$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$5$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$8$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$8$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$10$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$10$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "question_status": "aligned",
+    "ocr_number": 10,
+    "gold_number": 10,
+    "question_similarity": 0.995,
+    "block_alignment": {
+      "mode": "block_alignment",
+      "reason": null,
+      "alignment": [
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$2\\sqrt3+1$",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$2\\sqrt3+1$",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$2\\sqrt3-1$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$2\\sqrt3-1$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt3}2$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt3}{2}$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.947
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$1-\\sqrt3$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$1-\\sqrt3$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
         }
       ]
     }
@@ -227,18 +770,181 @@
     "question_status": "aligned",
     "ocr_number": 11,
     "gold_number": 11,
-    "question_similarity": 1.0,
+    "question_similarity": 0.949,
     "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
+      "mode": "block_alignment",
+      "reason": null,
+      "alignment": [
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "statement",
+            "text": "若 $m\\parallel n$, 则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$;",
+            "label": "①",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "statement",
+            "text": "若 $m\\parallel n$,则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$;",
+            "label": "①",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.992
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "statement",
+            "text": "若 $m\\perp n$, 则 $n\\perp\\alpha$ 或 $n\\perp\\beta$;",
+            "label": "②",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "statement",
+            "text": "若 $m\\perp n$,则 $n\\perp\\alpha$ 或 $n\\perp\\beta$;",
+            "label": "②",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.99
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "statement",
+            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$, 则 $m\\parallel n$;",
+            "label": "③",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "statement",
+            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$,则 $m\\parallel n$;",
+            "label": "③",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.992
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "statement",
+            "text": "若 $n$ 与 $\\alpha,\\beta$ 所成的角相等, 则 $m\\perp n$.",
+            "label": "④",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "statement",
+            "text": "若 $n$ 与 $\\alpha$,$\\beta$ 所成的角相等,则 $m\\perp n$.",
+            "label": "④",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.968
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "text",
+            "text": "其中所有真命题的编号是( )",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "text",
+            "text": "其中所有真命题的编号是( )",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "①③",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "①③",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "②④",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "②④",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "①②③",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "①②③",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "①③④",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "①③④",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        }
+      ]
     }
   },
   {
     "question_status": "aligned",
     "ocr_number": 12,
     "gold_number": 12,
-    "question_similarity": 0.943,
+    "question_similarity": 0.925,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -247,19 +953,73 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{3}{2}$\n(B) $\\sqrt{2}$\n(C) $\\frac{\\sqrt{7}}{2}$\n(D) $\\frac{\\sqrt{3}}{2}$",
+            "text": "$\\frac32$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac32$\n(B) $\\sqrt2$\n(C) $\\frac{\\sqrt7}{2}$\n(D) $\\frac{\\sqrt3}{2}$",
+            "text": "$\\frac32$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
-          "similarity": 0.907
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\sqrt2$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\sqrt2$",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 1.0
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt7}2$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt7}{2}$",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.947
+        },
+        {
+          "operation": "aligned",
+          "ocr_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt3}2$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "$\\frac{\\sqrt3}{2}$",
+            "label": "D",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "similarity": 0.947
         }
       ]
     }
@@ -268,7 +1028,7 @@
     "question_status": "aligned",
     "ocr_number": 13,
     "gold_number": 13,
-    "question_similarity": 0.976,
+    "question_similarity": 0.991,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -279,7 +1039,7 @@
     "question_status": "aligned",
     "ocr_number": 14,
     "gold_number": 14,
-    "question_similarity": 1.0,
+    "question_similarity": 0.974,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -290,7 +1050,7 @@
     "question_status": "aligned",
     "ocr_number": 15,
     "gold_number": 15,
-    "question_similarity": 0.932,
+    "question_similarity": 1.0,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -301,7 +1061,7 @@
     "question_status": "aligned",
     "ocr_number": 16,
     "gold_number": 16,
-    "question_similarity": 0.959,
+    "question_similarity": 0.965,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -312,7 +1072,7 @@
     "question_status": "aligned",
     "ocr_number": 17,
     "gold_number": 17,
-    "question_similarity": 0.927,
+    "question_similarity": 1.0,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -321,7 +1081,7 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求 $\\{a_{n}\\}$ 的通项公式;",
+            "text": "求 $\\{a_n\\}$ 的通项公式;",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
@@ -333,13 +1093,13 @@
             "figure": null,
             "follows_sub_question": "1"
           },
-          "similarity": 0.933
+          "similarity": 1.0
         },
         {
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求数列 $\\{S_{n}\\}$ 的前 $n$ 项和.",
+            "text": "求数列 $\\{S_n\\}$ 的前 $n$ 项和.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -351,7 +1111,7 @@
             "figure": null,
             "follows_sub_question": "2"
           },
-          "similarity": 0.941
+          "similarity": 1.0
         }
       ]
     }
@@ -360,7 +1120,7 @@
     "question_status": "aligned",
     "ocr_number": 18,
     "gold_number": 18,
-    "question_similarity": 1.0,
+    "question_similarity": 0.892,
     "block_alignment": {
       "mode": "parent_fallback",
       "reason": "Different block-type distributions",
@@ -371,7 +1131,7 @@
     "question_status": "aligned",
     "ocr_number": 19,
     "gold_number": 19,
-    "question_similarity": 0.882,
+    "question_similarity": 0.77,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -392,7 +1152,7 @@
             "figure": null,
             "follows_sub_question": "1"
           },
-          "similarity": 1.0
+          "similarity": 0.929
         },
         {
           "operation": "aligned",
@@ -468,7 +1228,7 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "设 $a \\leqslant 2$,证明:当 $x$ > 1 时, $f(x) < \\mathrm{e}^{x-1}$.",
+            "text": "设 $a\\le2$,证明:当 $x$ > $1$ 时, $f(x)<\\mathrm{e}^{x-1}$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -480,7 +1240,7 @@
             "figure": null,
             "follows_sub_question": "2"
           },
-          "similarity": 0.889
+          "similarity": 0.951
         }
       ]
     }
@@ -489,7 +1249,7 @@
     "question_status": "aligned",
     "ocr_number": 21,
     "gold_number": 21,
-    "question_similarity": 0.922,
+    "question_similarity": 0.911,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -516,7 +1276,7 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A, B$ 两点,$N$ 为线段 $FP$ 的中点,直线 $NB$ 交直线 $MF$ 于点 $Q$,证明: $AQ \\perp y$ 轴.",
+            "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A, B$ 两点,$N$ 为线段 $FP$ 的中点,直线 $NB$ 交直线 $MF$ 于点 $Q$,证明: $AQ\\perp y$ 轴.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -528,7 +1288,7 @@
             "figure": null,
             "follows_sub_question": "2"
           },
-          "similarity": 1.0
+          "similarity": 0.979
         }
       ]
     }
@@ -537,7 +1297,7 @@
     "question_status": "aligned",
     "ocr_number": 22,
     "gold_number": 22,
-    "question_similarity": 0.977,
+    "question_similarity": 0.959,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -564,7 +1324,7 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "设直线 $l$: $\\begin{cases}x=t,\\\\y=t+a\\end{cases}$ (t 为参数),若 $C$ 与 $l$ 相交于 $A, B$ 两点,且 |$AB$|=2,求 $a$.",
+            "text": "设直线 $l$: $\\begin{cases}x=t,\\\\y=t+a\\end{cases}$ (t 为参数),若 $C$ 与 $l$ 相交于 $A, B$ 两点,且 |$AB$|=$2$,求 $a$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -576,7 +1336,7 @@
             "figure": null,
             "follows_sub_question": "2"
           },
-          "similarity": 0.947
+          "similarity": 0.836
         }
       ]
     }
@@ -585,7 +1345,7 @@
     "question_status": "aligned",
     "ocr_number": 23,
     "gold_number": 23,
-    "question_similarity": 0.833,
+    "question_similarity": 0.941,
     "block_alignment": {
       "mode": "block_alignment",
       "reason": null,
@@ -594,7 +1354,7 @@
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "证明: $2a^{2}+2b^{2}>a+b;$",
+            "text": "证明: $2a^2+2b^2>a+b;$",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
@@ -606,13 +1366,13 @@
             "figure": null,
             "follows_sub_question": "1"
           },
-          "similarity": 0.889
+          "similarity": 0.93
         },
         {
           "operation": "aligned",
           "ocr_block": {
             "kind": "sub_question",
-            "text": "证明: $\\left|a-2b^{2}\\right|+\\left|b-2a^{2}\\right|\\geqslant6$",
+            "text": "证明: $|a-2b^2|+|b-2a^2|\\ge6$",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -624,7 +1384,7 @@
             "figure": null,
             "follows_sub_question": "2"
           },
-          "similarity": 0.828
+          "similarity": 0.966
         }
       ]
     }
