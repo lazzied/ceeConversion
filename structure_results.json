@@ -1,0 +1,82 @@
+{
+  "question_pair_count": 23,
+  "error_counts": {
+    "extra_block_in_ocr": 2,
+    "question_number_mismatch": 1,
+    "table_not_rendered": 1,
+    "unexpected_figure": 4
+  },
+  "questions": [
+    {
+      "ocr_question": 3,
+      "reference_question": 8,
+      "errors": [
+        {
+          "type": "question_number_mismatch",
+          "location": "question",
+          "detail": {
+            "ocr": 3,
+            "reference": 8
+          }
+        },
+        {
+          "type": "unexpected_figure",
+          "location": "block[0]",
+          "detail": {
+            "kind": "figure"
+          }
+        },
+        {
+          "type": "unexpected_figure",
+          "location": "block[1]",
+          "detail": {
+            "kind": "figure"
+          }
+        },
+        {
+          "type": "extra_block_in_ocr",
+          "location": "block[4]",
+          "detail": {
+            "kind": "text"
+          }
+        },
+        {
+          "type": "unexpected_figure",
+          "location": "block[5]",
+          "detail": {
+            "kind": "figure"
+          }
+        },
+        {
+          "type": "unexpected_figure",
+          "location": "block[7]",
+          "detail": {
+            "ocr_kind": "figure",
+            "reference_kind": "choice"
+          }
+        }
+      ]
+    },
+    {
+      "ocr_question": 18,
+      "reference_question": 18,
+      "errors": [
+        {
+          "type": "table_not_rendered",
+          "location": "block[6]",
+          "detail": {
+            "ocr_kind": "text",
+            "reference_kind": "table"
+          }
+        },
+        {
+          "type": "extra_block_in_ocr",
+          "location": "block[7]",
+          "detail": {
+            "kind": "text"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -20,30 +20,20 @@ This shared step matters for evaluation: it reduces differences caused by incons
 
 The current reference and OCR JSON files contain 23 questions each. Their section groupings differ, so the alignment stage flattens questions in reading order before matching them.
 
-### 3. Align questions and blocks
+### 3. Compare question similarity and exam structure
 
-[`paper/block_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/block_alignment.py) uses a Needleman–Wunsch-style monotonic sequence alignment. It first pairs questions using stem similarity and a question-number bonus. It then aligns blocks separately by kind, such as choices with choices, using fuzzy text similarity.
+[`paper/block_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/block_alignment.py) matches questions in reading order using a monotonic sequence alignment. It writes a compact `alignment_results.json`: each row contains the OCR question number, reference question number, and one general similarity score.
 
-The reported question score combines stem similarity (60%) and content similarity (40%) when blocks are available. Missing blocks receive a zero similarity contribution, so omissions can lower the content score. Alignment statuses are labeled `aligned`, `weak`, or `unaligned` using similarity thresholds.
+Structural diagnostics are written separately to `structure_results.json`. They report missing or extra questions and blocks, question or subquestion numbering mismatches, tables that were not rendered, unexpected/missing figures, and figure placement differences. The structural comparison follows the ordered block sequence and focuses on document organization rather than text accuracy.
 
-### 4. Calculate error metrics
+### 4. Compare content units and report OCR errors
 
-[`paper/metrics.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/metrics.py) calculates character error rate (CER), a multilingual and LaTeX-aware token error rate, and word error rate (WER) for applicable Latin-script prose. OCR is treated as the hypothesis and the reference as the gold text. Unmatched blocks are compared with empty text, so extra or missing blocks contribute errors.
+[`paper/token_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/token_alignment.py) aligns ordered content units and creates `token_alignment_results.json`, with separate `syntactic` and `semantic` findings. It distinguishes prose from math, treats LaTeX commands as tokens and math punctuation/digits as separate tokens, gives each Chinese character its own token, and ignores whitespace. Figure references must match exactly. Tables use a `<table>` placeholder and compare their ordered cell content.
 
-[`paper/extract_solution.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/extract_solution.py) is a separate LaTeX-to-Markdown utility for extracting answers and solutions. It is adjacent to the evaluation workflow, rather than one of its alignment or metric stages. [`paper/token_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/token_alignment.py) is currently empty.
-
-## Current results
-
-The saved [`metrics_results.json`](/home/ziedlazreg/Desktop/ceeConversion/metrics_results.json) reports 23 aligned question results. Across stems and blocks, it records:
-
-- **CER:** 14.636% across 3,874 reference characters.
-- **Token error rate:** 13.326% across 2,634 reference tokens.
-- **Latin-prose WER:** 21.429%, based on 17 eligible pairs and 28 reference words.
-
-The stem CER is 9.527%; the content-block CER is 18.859%. In this snapshot, block content contributes more measured character errors than question stems.
+[`paper/metrics.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/metrics.py) independently calculates character error rate and content-token error rate, overall and by unit type. This makes math and prose scores inspectable separately from the structural report. `paper/extract_solution.py` remains a separate LaTeX-to-Markdown utility for extracting answers and solutions.
 
 ## Interpretation and limitations
 
-These figures describe the current OCR-to-reference comparison after the inputs have been prepared. They are not, by themselves, a before-and-after estimate of the normalizer’s effect; that would require evaluating both normalized and unnormalized inputs under the same setup. The alignment scores and error rates also depend on segmentation and question/block matching, so a structural parsing or matching error can affect the measured text errors.
+The normalizer is shared between OCR Markdown and the gold conversion so stylistic differences are reduced before comparison. It does not correct arbitrary OCR recognition errors. The syntax/semantic labels in the token report are rule-based indicators: LaTeX commands, delimiters, and brace structure are classified as syntactic, while prose and formula-content differences are classified as semantic. They are useful for review, but they do not prove that a formula is mathematically wrong. Alignment quality also depends on the input segmentation and on question matching.
 
-In short, the folder’s evaluation path is **convert and normalize → segment → align → score**. `normalization.py` belongs in the preparation path for both the OCR text and the gold reference, before their structural comparison.
+The evaluation path is **convert and normalize → segment → align structure → align content units → calculate metrics**. Similarity, structural findings, content-error detections, and aggregate metrics are kept in separate output files so each report has one purpose.

@@ -1,105 +1,108 @@
 {
-  "alignment_result_count": 23,
-  "metrics": {
-    "metric_definitions": {
-      "CER": "(character substitutions + deletions + insertions) / Gold characters",
-      "Token Error Rate": "(token substitutions + deletions + insertions) / Gold tokens, using this module multilingual/LaTeX tokenizer",
-      "WER": "(word substitutions + deletions + insertions) / Gold words; Latin prose only",
-      "direction": "OCR is the hypothesis; Gold is the reference.",
-      "note": "CER/token error rate are aggregated over stems and aligned blocks. Unmatched blocks are compared with an empty string. WER excludes CJK and LaTeX/math-heavy pairs."
-    },
+  "question_pair_count": 23,
+  "unit_pair_count": 2071,
+  "character_error_rate": {
     "overall": {
-      "cer": {
-        "rate": 0.14636,
-        "error_percent": 14.636,
-        "substitutions": 26,
-        "deletions": 404,
-        "insertions": 137,
-        "total_errors": 567,
-        "reference_length": 3874
-      },
-      "token_error_rate": {
-        "rate": 0.133257,
-        "error_percent": 13.326,
-        "substitutions": 24,
-        "deletions": 271,
-        "insertions": 56,
-        "total_errors": 351,
-        "reference_length": 2634
-      },
-      "wer_latin_prose_only": {
-        "rate": 0.214286,
-        "error_percent": 21.429,
-        "substitutions": 0,
-        "deletions": 3,
-        "insertions": 3,
-        "total_errors": 6,
-        "reference_length": 28
-      },
-      "pair_count": 103,
-      "wer_pair_count": 17
+      "substitutions": 1,
+      "deletions": 163,
+      "insertions": 98,
+      "reference_length": 2698,
+      "total_errors": 262,
+      "rate": 0.097109,
+      "error_percent": 9.711
     },
-    "question_stems": {
-      "cer": {
-        "rate": 0.095265,
-        "error_percent": 9.527,
-        "substitutions": 21,
-        "deletions": 131,
-        "insertions": 15,
-        "total_errors": 167,
-        "reference_length": 1753
-      },
-      "token_error_rate": {
-        "rate": 0.086747,
-        "error_percent": 8.675,
-        "substitutions": 17,
-        "deletions": 88,
-        "insertions": 3,
-        "total_errors": 108,
-        "reference_length": 1245
-      },
-      "wer_latin_prose_only": {
-        "rate": null,
-        "error_percent": null,
+    "by_unit": {
+      "figure": {
         "substitutions": 0,
-        "deletions": 0,
+        "deletions": 4,
+        "insertions": 5,
+        "reference_length": 4,
+        "total_errors": 9,
+        "rate": 2.25,
+        "error_percent": 225.0
+      },
+      "math": {
+        "substitutions": 1,
+        "deletions": 94,
+        "insertions": 81,
+        "reference_length": 1648,
+        "total_errors": 176,
+        "rate": 0.106796,
+        "error_percent": 10.68
+      },
+      "table": {
+        "substitutions": 0,
+        "deletions": 1,
         "insertions": 0,
-        "total_errors": 0,
-        "reference_length": 0
+        "reference_length": 3,
+        "total_errors": 1,
+        "rate": 0.333333,
+        "error_percent": 33.333
       },
-      "pair_count": 23,
-      "wer_pair_count": 0
-    },
-    "content_blocks": {
-      "cer": {
-        "rate": 0.18859,
-        "error_percent": 18.859,
-        "substitutions": 5,
-        "deletions": 273,
-        "insertions": 122,
-        "total_errors": 400,
-        "reference_length": 2121
-      },
-      "token_error_rate": {
-        "rate": 0.174946,
-        "error_percent": 17.495,
-        "substitutions": 7,
-        "deletions": 183,
-        "insertions": 53,
-        "total_errors": 243,
-        "reference_length": 1389
-      },
-      "wer_latin_prose_only": {
-        "rate": 0.214286,
-        "error_percent": 21.429,
+      "text": {
         "substitutions": 0,
-        "deletions": 3,
-        "insertions": 3,
-        "total_errors": 6,
-        "reference_length": 28
-      },
-      "pair_count": 80,
-      "wer_pair_count": 17
+        "deletions": 64,
+        "insertions": 12,
+        "reference_length": 1043,
+        "total_errors": 76,
+        "rate": 0.072867,
+        "error_percent": 7.287
+      }
     }
+  },
+  "content_token_error_rate": {
+    "overall": {
+      "substitutions": 1,
+      "deletions": 88,
+      "insertions": 84,
+      "reference_length": 2013,
+      "total_errors": 173,
+      "rate": 0.085941,
+      "error_percent": 8.594
+    },
+    "by_unit": {
+      "figure": {
+        "substitutions": 0,
+        "deletions": 4,
+        "insertions": 5,
+        "reference_length": 4,
+        "total_errors": 9,
+        "rate": 2.25,
+        "error_percent": 225.0
+      },
+      "math": {
+        "substitutions": 1,
+        "deletions": 44,
+        "insertions": 67,
+        "reference_length": 999,
+        "total_errors": 112,
+        "rate": 0.112112,
+        "error_percent": 11.211
+      },
+      "table": {
+        "substitutions": 0,
+        "deletions": 1,
+        "insertions": 0,
+        "reference_length": 3,
+        "total_errors": 1,
+        "rate": 0.333333,
+        "error_percent": 33.333
+      },
+      "text": {
+        "substitutions": 0,
+        "deletions": 39,
+        "insertions": 12,
+        "reference_length": 1007,
+        "total_errors": 51,
+        "rate": 0.050645,
+        "error_percent": 5.065
+      }
+    }
+  },
+  "tokenization": {
+    "text": "Chinese characters are individual tokens; Latin words and number groups are tokens; whitespace is ignored.",
+    "math": "Each LaTeX command is one token; braces, operators, letters, and digits are separate tokens; whitespace is ignored.",
+    "figures": "One identity token; image references must match exactly.",
+    "tables": "A <table> placeholder and the ordered cell contents are compared."
   }
 }

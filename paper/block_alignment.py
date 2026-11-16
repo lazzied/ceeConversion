@@ -1,483 +1,251 @@
+"""Question similarity and structural-error detection for exam OCR."""
+
+from __future__ import annotations
+
 import json
-from collections import Counter, defaultdict
+from collections import Counter
+from difflib import SequenceMatcher
+from pathlib import Path
 
-from rapidfuzz import fuzz
 
-
-# ---------------------------------------------------------
-# 1. Load and flatten the segmentations
-# ---------------------------------------------------------
 
 def load_segmentation(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with open(path, "r", encoding="utf-8") as stream:
+        return json.load(stream)
 
 
 def flatten_questions(document):
-    """Flatten all sections while preserving reading order."""
-    questions = []
+    """Flatten sections in reading order while retaining section metadata."""
+    return [
+        {**question, "_section_index": section_index, "_section_title": section["title"]}
+        for section_index, section in enumerate(document.get("sections", []))
+        for question in section.get("questions", [])
+    ]
 
-    for section_index, section in enumerate(document["sections"]):
-        for question in section["questions"]:
-            questions.append({
-                **question,
-                "_section_index": section_index,
-                "_section_title": section["title"],
-            })
-
-    return questions
-
-
-# ---------------------------------------------------------
-# 2. Generic text similarity
-# ---------------------------------------------------------
 
 def similarity(text_a, text_b):
+    if not text_a and not text_b:
+        return 1.0
     if not text_a or not text_b:
         return 0.0
+    return SequenceMatcher(a=str(text_a), b=str(text_b), autojunk=False).ratio()
 
-    return fuzz.ratio(str(text_a), str(text_b)) / 100.0
 
-
-# ---------------------------------------------------------
-# 3. Generic monotonic sequence alignment
-# ---------------------------------------------------------
-
-def monotonic_alignment(
-    left,
-    right,
-    similarity_fn,
-    gap_penalty=-0.35,
-):
-    """
-    Needleman-Wunsch-style global sequence alignment.
-
-    Returns:
-        ("match", left_index, right_index)
-        ("left_only", left_index, None)
-        ("right_only", None, right_index)
-    """
-    n = len(left)
-    m = len(right)
-
+def monotonic_alignment(left, right, similarity_fn, gap_penalty=-0.35):
+    """Needleman-Wunsch sequence alignment. Return match/left_only/right_only ops."""
+    n, m = len(left), len(right)
     dp = [[0.0] * (m + 1) for _ in range(n + 1)]
     trace = [[None] * (m + 1) for _ in range(n + 1)]
-
     for i in range(1, n + 1):
-        dp[i][0] = i * gap_penalty
-        trace[i][0] = "left_only"
-
+        dp[i][0], trace[i][0] = i * gap_penalty, "left_only"
     for j in range(1, m + 1):
-        dp[0][j] = j * gap_penalty
-        trace[0][j] = "right_only"
+        dp[0][j], trace[0][j] = j * gap_penalty, "right_only"
 
     for i in range(1, n + 1):
         for j in range(1, m + 1):
-            sim = similarity_fn(left[i - 1], right[j - 1])
-            match_score = 2 * sim - 1.0
-
-            match = dp[i - 1][j - 1] + match_score
+            match = dp[i - 1][j - 1] + 2 * similarity_fn(left[i - 1], right[j - 1]) - 1
             delete = dp[i - 1][j] + gap_penalty
             insert = dp[i][j - 1] + gap_penalty
-
             best = max(match, delete, insert)
             dp[i][j] = best
+            trace[i][j] = "match" if best == match else ("left_only" if best == delete else "right_only")
 
-            if best == match:
-                trace[i][j] = "match"
-            elif best == delete:
-                trace[i][j] = "left_only"
-            else:
-                trace[i][j] = "right_only"
-
-    alignment = []
+    result = []
     i, j = n, m
-
-    while i > 0 or j > 0:
-        operation = trace[i][j]
-
-        if operation == "match":
-            alignment.append(("match", i - 1, j - 1))
+    while i or j:
+        op = trace[i][j]
+        if op == "match":
+            result.append((op, i - 1, j - 1))
+            i, j = i - 1, j - 1
+        elif op == "left_only":
+            result.append((op, i - 1, None))
             i -= 1
+        else:
+            result.append((op, None, j - 1))
             j -= 1
-        elif operation == "left_only":
-            alignment.append(("left_only", i - 1, None))
-            i -= 1
-        elif operation == "right_only":
-            alignment.append(("right_only", None, j - 1))
-            j -= 1
+    return list(reversed(result))
 
-    return list(reversed(alignment))
-
-
-# ---------------------------------------------------------
-# 4. Question-level matching
-# ---------------------------------------------------------
 
 def question_alignment_score(ocr_question, gold_question):
-    """
-    Used only to decide which OCR question corresponds to which
-    gold question. The number bonus is NOT part of the reported
-    stem or combined similarity.
-    """
-    stem_score = similarity(
-        ocr_question.get("stem", ""),
-        gold_question.get("stem", ""),
-    )
-
-    ocr_number = ocr_question.get("number")
-    gold_number = gold_question.get("number")
-
-    number_bonus = 0.45 if ocr_number == gold_number else -0.15
-
-    alignment_score = max(
-        0.0,
-        min(1.0, stem_score + number_bonus / 2),
-    )
-
-    return stem_score, alignment_score
+    """Stem-plus-number score used only to identify corresponding questions."""
+    stem_score = similarity(ocr_question.get("stem", ""), gold_question.get("stem", ""))
+    number_bonus = 0.45 if ocr_question.get("number") == gold_question.get("number") else -0.15
+    return stem_score, max(0.0, min(1.0, stem_score + number_bonus / 2))
 
 
 def align_questions(ocr_questions, gold_questions):
-    def score(q1, q2):
-        _, alignment_score = question_alignment_score(q1, q2)
-        return alignment_score
-
     return monotonic_alignment(
         ocr_questions,
         gold_questions,
-        score,
+        lambda ocr, gold: question_alignment_score(ocr, gold)[1],
     )
 
 
-# ---------------------------------------------------------
-# 5. Convert blocks into comparable text
-# ---------------------------------------------------------
-
-def block_text(block):
-    parts = []
-
-    label = block.get("label", "")
-    text = block.get("text", "")
-    figure = block.get("figure")
-
-    if label:
-        parts.append(str(label))
-
-    if text:
-        parts.append(str(text))
-
-    # Do not compare image filenames: OCR and gold pipelines
-    # may generate different paths.
-    if figure:
-        parts.append("<FIGURE>")
-
-    return " ".join(parts)
+def _block_signature(block):
+    # Labels are compared as their own structural property so a changed
+    # subquestion/choice number is reported as a numbering error.
+    return block.get("kind", "unknown")
 
 
-def block_similarity(block_a, block_b):
-    return similarity(
-        block_text(block_a),
-        block_text(block_b),
-    )
+def _error(error_type, location, detail):
+    return {"type": error_type, "location": location, "detail": detail}
 
 
-# ---------------------------------------------------------
-# 6. Align blocks by kind and calculate per-kind similarity
-# ---------------------------------------------------------
+def detect_structure_errors(ocr_question, gold_question):
+    """Compare document organization, labels, block kinds, and figure placement."""
+    errors = []
+    oq, gq = ocr_question, gold_question
+    on, gn = oq.get("number"), gq.get("number")
+    if on != gn:
+        errors.append(_error("question_number_mismatch", "question", {"ocr": on, "reference": gn}))
 
-def align_blocks(ocr_question, gold_question):
-    """
-    Align each block kind independently.
+    ocr_blocks, gold_blocks = oq.get("blocks", []), gq.get("blocks", [])
+    ocr_sig = [_block_signature(block) for block in ocr_blocks]
+    gold_sig = [_block_signature(block) for block in gold_blocks]
+    matcher = SequenceMatcher(a=ocr_sig, b=gold_sig, autojunk=False)
 
-    This allows choices, statements, subquestions, and ordinary
-    text blocks to be compared without requiring identical block
-    type distributions.
-    """
-    ocr_blocks = ocr_question.get("blocks", [])
-    gold_blocks = gold_question.get("blocks", [])
-
-    ocr_by_kind = defaultdict(list)
-    gold_by_kind = defaultdict(list)
-
-    for block in ocr_blocks:
-        ocr_by_kind[block.get("kind", "unknown")].append(block)
-
-    for block in gold_blocks:
-        gold_by_kind[block.get("kind", "unknown")].append(block)
-
-    all_kinds = list(dict.fromkeys(
-        [block.get("kind", "unknown") for block in ocr_blocks]
-        + [block.get("kind", "unknown") for block in gold_blocks]
-    ))
-
-    all_alignments = []
-    per_kind_similarity = {}
-
-    for kind in all_kinds:
-        left = ocr_by_kind[kind]
-        right = gold_by_kind[kind]
-
-        alignment = monotonic_alignment(
-            left,
-            right,
-            block_similarity,
-        )
-
-        kind_results = []
-        similarity_total = 0.0
-
-        for operation, oi, gi in alignment:
-            if operation == "left_only":
-                ocr_block = left[oi]
-                gold_block = None
-                sim = 0.0
-                status = "ocr_only"
-
-            elif operation == "right_only":
-                ocr_block = None
-                gold_block = right[gi]
-                sim = 0.0
-                status = "gold_only"
-
-            else:
-                ocr_block = left[oi]
-                gold_block = right[gi]
-                sim = block_similarity(ocr_block, gold_block)
-
-                if sim >= 0.60:
-                    status = "aligned"
-                elif sim >= 0.30:
-                    status = "weak"
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            for oi, gi in zip(range(i1, i2), range(j1, j2)):
+                ob, gb = ocr_blocks[oi], gold_blocks[gi]
+                kind = gb.get("kind", "unknown")
+                if kind in {"choice", "statement", "sub_question"} and ob.get("label") != gb.get("label"):
+                    errors.append(_error(
+                        "block_number_or_label_mismatch", f"block[{gi}]",
+                        {"kind": kind, "ocr": ob.get("label"), "reference": gb.get("label")},
+                    ))
+        elif tag == "replace":
+            # Pair replacements at the same local position to distinguish a lost
+            # table/figure rendering from a genuinely inserted or deleted block.
+            paired = min(i2 - i1, j2 - j1)
+            for offset in range(paired):
+                oi, gi = i1 + offset, j1 + offset
+                ob, gb = ocr_blocks[oi], gold_blocks[gi]
+                ok, gk = ob.get("kind", "unknown"), gb.get("kind", "unknown")
+                if gk == "table" and ok != "table":
+                    errors.append(_error("table_not_rendered", f"block[{gi}]", {"ocr_kind": ok, "reference_kind": "table"}))
+                elif gk == "figure" and ok != "figure":
+                    errors.append(_error("figure_missing_or_misrendered", f"block[{gi}]", {"ocr_kind": ok, "reference_kind": "figure"}))
+                elif ok == "table" and gk != "table":
+                    errors.append(_error("unexpected_table", f"block[{oi}]", {"ocr_kind": "table", "reference_kind": gk}))
+                elif ok == "figure" and gk != "figure":
+                    errors.append(_error("unexpected_figure", f"block[{oi}]", {"ocr_kind": "figure", "reference_kind": gk}))
                 else:
-                    status = "unaligned"
+                    errors.append(_error("block_type_or_order_mismatch", f"block[{gi}]", {"ocr_kind": ok, "reference_kind": gk}))
+                if ok == gk and ok in {"choice", "statement", "sub_question"} and ob.get("label") != gb.get("label"):
+                    errors.append(_error(
+                        "block_number_or_label_mismatch", f"block[{gi}]",
+                        {"kind": gk, "ocr": ob.get("label"), "reference": gb.get("label")},
+                    ))
+            for oi in range(i1 + paired, i2):
+                block = ocr_blocks[oi]
+                kind = block.get("kind", "unknown")
+                errors.append(_error("extra_block_in_ocr", f"block[{oi}]", {"kind": kind}))
+            for gi in range(j1 + paired, j2):
+                block = gold_blocks[gi]
+                kind = block.get("kind", "unknown")
+                name = "table_missing_in_ocr" if kind == "table" else "figure_missing_in_ocr" if kind == "figure" else "block_missing_in_ocr"
+                errors.append(_error(name, f"block[{gi}]", {"kind": kind}))
+        elif tag == "delete":
+            for oi in range(i1, i2):
+                block = ocr_blocks[oi]
+                kind = block.get("kind", "unknown")
+                name = "unexpected_table" if kind == "table" else "unexpected_figure" if kind == "figure" else "extra_block_in_ocr"
+                errors.append(_error(name, f"block[{oi}]", {"kind": kind}))
+        else:  # insert: block exists in reference but is absent from OCR
+            for gi in range(j1, j2):
+                block = gold_blocks[gi]
+                kind = block.get("kind", "unknown")
+                name = "table_missing_in_ocr" if kind == "table" else "figure_missing_in_ocr" if kind == "figure" else "block_missing_in_ocr"
+                errors.append(_error(name, f"block[{gi}]", {"kind": kind}))
 
-            similarity_total += sim
+    # A figure can be present but shifted relative to neighboring block kinds.
+    ocr_figures = [i for i, block in enumerate(ocr_blocks) if block.get("kind") == "figure"]
+    gold_figures = [i for i, block in enumerate(gold_blocks) if block.get("kind") == "figure"]
+    if len(ocr_figures) == len(gold_figures):
+        for oi, gi in zip(ocr_figures, gold_figures):
+            oprev = ocr_blocks[oi - 1].get("kind") if oi else None
+            gprev = gold_blocks[gi - 1].get("kind") if gi else None
+            onext = ocr_blocks[oi + 1].get("kind") if oi + 1 < len(ocr_blocks) else None
+            gnext = gold_blocks[gi + 1].get("kind") if gi + 1 < len(gold_blocks) else None
+            if (oprev, onext) != (gprev, gnext):
+                errors.append(_error("figure_misplaced", f"block[{gi}]", {"ocr_index": oi, "reference_index": gi}))
 
-            item = {
-                "kind": kind,
-                "operation": status,
-                "ocr_text": block_text(ocr_block) if ocr_block else None,
-                "gold_text": block_text(gold_block) if gold_block else None,
-                "similarity": round(sim, 3),
-                "ocr_block": ocr_block,
-                "gold_block": gold_block,
-            }
-
-            kind_results.append(item)
-            all_alignments.append(item)
-
-        # Divide by the larger sequence length so missing OCR/gold
-        # blocks reduce the score instead of disappearing.
-        denominator = max(len(left), len(right))
-        kind_score = (
-            similarity_total / denominator
-            if denominator
-            else None
-        )
-
-        if kind_score is not None:
-            per_kind_similarity[kind] = round(kind_score, 3)
-
-    available_kind_scores = list(per_kind_similarity.values())
-
-    content_similarity = (
-        sum(available_kind_scores) / len(available_kind_scores)
-        if available_kind_scores
-        else None
-    )
-
-    return {
-        "mode": "block_alignment_by_kind",
-        "per_kind_similarity": per_kind_similarity,
-        "content_similarity": (
-            round(content_similarity, 3)
-            if content_similarity is not None
-            else None
-        ),
-        "alignment": all_alignments,
-    }
-
-
-# ---------------------------------------------------------
-# 7. Combine stem and content similarities
-# ---------------------------------------------------------
-
-def combined_similarity(stem_score, content_score):
-    """
-    Default weighting:
-        stem/content = 60% / 40%
-
-    If the question has no comparable blocks, use stem similarity
-    alone rather than treating missing content as a zero.
-    """
-    if content_score is None:
-        return stem_score
-
-    return 0.60 * stem_score + 0.40 * content_score
+    # Stable de-duplication keeps reports compact when a replacement implies
+    # both a type error and a figure/table placement observation.
+    unique = []
+    seen = set()
+    for item in errors:
+        key = json.dumps(item, ensure_ascii=False, sort_keys=True)
+        if key not in seen:
+            unique.append(item)
+            seen.add(key)
+    return unique
 
 
-def similarity_status(score):
-    if score >= 0.60:
-        return "aligned"
-    elif score >= 0.30:
-        return "weak"
-    return "unaligned"
+def _question_similarity(ocr_question, gold_question):
+    """One fuzzy score over the full question text, with media placeholders."""
+    def view(question):
+        parts = [str(question.get("stem", ""))]
+        for block in question.get("blocks", []):
+            kind = block.get("kind")
+            if kind == "figure" or block.get("figure"):
+                content = "<FIGURE>"
+            elif kind == "table":
+                content = "<TABLE>"
+            else:
+                content = str(block.get("text", ""))
+            parts.append(f"<{kind}:{block.get('label', '')}>{content}")
+        return " ".join(parts)
+    return round(similarity(view(ocr_question), view(gold_question)), 4)
 
 
-# ---------------------------------------------------------
-# 8. Run the complete alignment
-# ---------------------------------------------------------
+def _run_reports(ocr_path, gold_path):
+    """Build compact similarity rows and separate structural findings."""
+    ocr_questions = flatten_questions(load_segmentation(ocr_path))
+    gold_questions = flatten_questions(load_segmentation(gold_path))
+    pair_ops = align_questions(ocr_questions, gold_questions)
+    similarities, structures = [], []
+
+    for operation, oi, gi in pair_ops:
+        ocr_q = ocr_questions[oi] if oi is not None else None
+        gold_q = gold_questions[gi] if gi is not None else None
+        similarities.append({
+            "ocr_question": ocr_q.get("number") if ocr_q else None,
+            "reference_question": gold_q.get("number") if gold_q else None,
+            "similarity": _question_similarity(ocr_q, gold_q) if ocr_q and gold_q else 0.0,
+        })
+        if operation == "left_only":
+            errors = [_error("extra_question_in_ocr", "question", {"ocr_number": ocr_q.get("number")})]
+        elif operation == "right_only":
+            errors = [_error("question_missing_in_ocr", "question", {"reference_number": gold_q.get("number")})]
+        else:
+            errors = detect_structure_errors(ocr_q, gold_q)
+        if errors:
+            structures.append({
+                "ocr_question": ocr_q.get("number") if ocr_q else None,
+                "reference_question": gold_q.get("number") if gold_q else None,
+                "errors": errors,
+            })
+    return similarities, structures
+
 
 def run_alignment(ocr_path, gold_path):
-    ocr_document = load_segmentation(ocr_path)
-    gold_document = load_segmentation(gold_path)
-
-    ocr_questions = flatten_questions(ocr_document)
-    gold_questions = flatten_questions(gold_document)
-
-    question_pairs = align_questions(
-        ocr_questions,
-        gold_questions,
-    )
-
-    final_results = []
-
-    for operation, oi, gi in question_pairs:
-
-        if operation == "left_only":
-            ocr_q = ocr_questions[oi]
-            final_results.append({
-                "question_status": "ocr_only",
-                "ocr_number": ocr_q.get("number"),
-                "gold_number": None,
-                "ocr_stem": ocr_q.get("stem", ""),
-                "gold_stem": None,
-                "stem_similarity": None,
-                "content_similarity": None,
-                "combined_similarity": None,
-                "block_alignment": None,
-            })
-            continue
-
-        if operation == "right_only":
-            gold_q = gold_questions[gi]
-            final_results.append({
-                "question_status": "gold_only",
-                "ocr_number": None,
-                "gold_number": gold_q.get("number"),
-                "ocr_stem": None,
-                "gold_stem": gold_q.get("stem", ""),
-                "stem_similarity": None,
-                "content_similarity": None,
-                "combined_similarity": None,
-                "block_alignment": None,
-            })
-            continue
-
-        ocr_q = ocr_questions[oi]
-        gold_q = gold_questions[gi]
-
-        stem_score, _ = question_alignment_score(ocr_q, gold_q)
-
-        block_result = align_blocks(ocr_q, gold_q)
-        content_score = block_result["content_similarity"]
-
-        combined_score = combined_similarity(
-            stem_score,
-            content_score,
-        )
-
-        final_results.append({
-            "question_status": similarity_status(combined_score),
-            "ocr_number": ocr_q.get("number"),
-            "gold_number": gold_q.get("number"),
-            "ocr_stem": ocr_q.get("stem", ""),
-            "gold_stem": gold_q.get("stem", ""),
-            "stem_similarity": round(stem_score, 3),
-            "content_similarity": content_score,
-            "combined_similarity": round(combined_score, 3),
-            "combined_weights": {
-                "stem": 0.60,
-                "content": 0.40 if content_score is not None else None,
-            },
-            "block_alignment": block_result,
-        })
-
-    return final_results
+    """Compatibility entry point returning the compact similarity rows."""
+    return _run_reports(ocr_path, gold_path)[0]
 
 
-# ---------------------------------------------------------
-# 9. Display a readable alignment report
-# ---------------------------------------------------------
+def write_reports(ocr_path, gold_path, alignment_path="alignment_results.json", structure_path="structure_results.json"):
+    similarities, structures = _run_reports(ocr_path, gold_path)
+    Path(alignment_path).write_text(json.dumps(similarities, ensure_ascii=False, indent=2), encoding="utf-8")
+    counts = Counter(error["type"] for item in structures for error in item["errors"])
+    report = {"question_pair_count": len(similarities), "error_counts": dict(sorted(counts.items())), "questions": structures}
+    Path(structure_path).write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    return similarities, report
 
-def print_report(results):
-    for result in results:
-        print("\n" + "=" * 90)
-        print(
-            f"OCR Q{result['ocr_number']} "
-            f"<-> GOLD Q{result['gold_number']} | "
-            f"{result['question_status']}"
-        )
-
-        if result["stem_similarity"] is None:
-            print("Question exists on only one side.")
-            continue
-
-        print(
-            f"Stem similarity:     {result['stem_similarity']:.3f}"
-        )
-        print(
-            f"Content similarity:  {result['content_similarity']}"
-        )
-        print(
-            f"Combined similarity: {result['combined_similarity']:.3f}"
-        )
-
-        print("\n[STEM ALIGNMENT]")
-        print("OCR :")
-        print(result["ocr_stem"] or "<EMPTY>")
-        print("GOLD:")
-        print(result["gold_stem"] or "<EMPTY>")
-
-        block_result = result["block_alignment"]
-
-        if block_result is None:
-            continue
-
-        print("\n[CONTENT ALIGNMENT]")
-        print("Per-kind similarity:", block_result["per_kind_similarity"])
-
-        for block in block_result["alignment"]:
-            print(
-                f"\n  Kind: {block['kind']} | "
-                f"{block['operation']} | "
-                f"similarity={block['similarity']:.3f}"
-            )
-            print("  OCR : ", block["ocr_text"] or "<MISSING>")
-            print("  GOLD: ", block["gold_text"] or "<MISSING>")
-
-
-# ---------------------------------------------------------
-# 10. Main
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
-    results = run_alignment(
-        "paper/ocr_exam_segmented.json",
-        "paper/exam_segmented.json",
+    similarities, report = write_reports(
+        "paper/ocr_exam_segmented.json", "paper/exam_segmented.json"
     )
-
-    print_report(results)
-
-    with open(
-        "alignment_results.json",
-        "w",
-        encoding="utf-8",
-    ) as f:
-        json.dump(
-            results,
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
+    print(f"Wrote {len(similarities)} similarity rows and {sum(report['error_counts'].values())} structural findings")
