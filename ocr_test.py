@@ -1,12 +1,7 @@
-from paddleocr import PaddleOCRVL
+"""Compatibility entry point for importing externally generated OCR output."""
 
-pipeline = PaddleOCRVL(
-    device="cpu"
-)
+from paper.ocr_baseline import main
 
-output = pipeline.predict(
-    "./data/input/exam.pdf"
-)
 
-for res in output:
-    res.save_to_markdown("./data/output/paddleocr")     
+if __name__ == "__main__":
+    raise SystemExit(main())

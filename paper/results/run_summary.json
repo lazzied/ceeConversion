@@ -1,0 +1,37 @@
+{
+  "ocr_questions": 23,
+  "gold_questions": 23,
+  "similarity_backend": "rapidfuzz.fuzz.ratio",
+  "outputs": [
+    "ocr_baseline/baseline_manifest.json",
+    "error_taxonomy_results.json",
+    "alignment_results.json",
+    "structure_results.json",
+    "alignment_pairs.jsonl",
+    "token_alignment_results.json",
+    "metrics_results.json",
+    "audit_sample.jsonl"
+  ],
+  "alignment_methods": {
+    "parent_block_sequence": 81,
+    "parent_label": 14,
+    "question_scope": 40,
+    "sequence_fuzzy": 23,
+    "unmatched": 34
+  },
+  "comparison_methods": {
+    "exact_text": 135,
+    "similarity": 23,
+    "unmatched": 34
+  },
+  "parent_fallback_pair_count": 0,
+  "excluded_units": {
+    "excluded_unit_count": 31,
+    "total_side_unit_count": 267,
+    "fraction": 0.116105
+  },
+  "syntax_semantic_errors": {
+    "semantic": 71,
+    "syntactic": 158
+  }
+}

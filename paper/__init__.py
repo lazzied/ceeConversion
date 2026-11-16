@@ -1,0 +1,1 @@
+"""OCR research evaluation pipeline."""

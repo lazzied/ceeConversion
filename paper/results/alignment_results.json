@@ -1,0 +1,421 @@
+[
+  {
+    "ocr_question": 1,
+    "reference_question": 1,
+    "ocr_ordinal": 1,
+    "reference_ordinal": 1,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 2,
+    "reference_question": 2,
+    "ocr_ordinal": 2,
+    "reference_ordinal": 2,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 3,
+    "reference_question": 3,
+    "ocr_ordinal": 3,
+    "reference_ordinal": 3,
+    "similarity": 0.8835,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 4,
+    "reference_question": 4,
+    "ocr_ordinal": 4,
+    "reference_ordinal": 4,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 5,
+    "reference_question": 5,
+    "ocr_ordinal": 5,
+    "reference_ordinal": 5,
+    "similarity": 0.9931,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 6,
+    "reference_question": 6,
+    "ocr_ordinal": 6,
+    "reference_ordinal": 6,
+    "similarity": 0.9959,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 7,
+    "reference_question": 7,
+    "ocr_ordinal": 7,
+    "reference_ordinal": 7,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 3,
+    "reference_question": 8,
+    "ocr_ordinal": 8,
+    "reference_ordinal": 8,
+    "similarity": 0.7875,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 3,
+      "unmatched": 11
+    },
+    "unit_comparison_methods": {
+      "exact_text": 3,
+      "unmatched": 11
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 9,
+    "reference_question": 9,
+    "ocr_ordinal": 9,
+    "reference_ordinal": 9,
+    "similarity": 0.9528,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 10,
+    "reference_question": 10,
+    "ocr_ordinal": 10,
+    "reference_ordinal": 10,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 11,
+    "reference_question": 11,
+    "ocr_ordinal": 11,
+    "reference_ordinal": 11,
+    "similarity": 0.9926,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 9
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8,
+      "similarity": 1
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 12,
+    "reference_question": 12,
+    "ocr_ordinal": 12,
+    "reference_ordinal": 12,
+    "similarity": 0.9701,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_block_sequence": 4,
+      "question_scope": 4
+    },
+    "unit_comparison_methods": {
+      "exact_text": 8
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 13,
+    "reference_question": 13,
+    "ocr_ordinal": 13,
+    "reference_ordinal": 13,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {},
+    "unit_comparison_methods": {},
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 14,
+    "reference_question": 14,
+    "ocr_ordinal": 14,
+    "reference_ordinal": 14,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {},
+    "unit_comparison_methods": {},
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 15,
+    "reference_question": 15,
+    "ocr_ordinal": 15,
+    "reference_ordinal": 15,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {},
+    "unit_comparison_methods": {},
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 16,
+    "reference_question": 16,
+    "ocr_ordinal": 16,
+    "reference_ordinal": 16,
+    "similarity": 0.9844,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {},
+    "unit_comparison_methods": {},
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 17,
+    "reference_question": 17,
+    "ocr_ordinal": 17,
+    "reference_ordinal": 17,
+    "similarity": 0.9845,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_label": 2
+    },
+    "unit_comparison_methods": {
+      "exact_text": 1,
+      "similarity": 1
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 18,
+    "reference_question": 18,
+    "ocr_ordinal": 18,
+    "reference_ordinal": 18,
+    "similarity": 0.9068,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_block_sequence": 29,
+      "parent_label": 2,
+      "unmatched": 21
+    },
+    "unit_comparison_methods": {
+      "exact_text": 29,
+      "similarity": 2,
+      "unmatched": 21
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 19,
+    "reference_question": 19,
+    "ocr_ordinal": 19,
+    "reference_ordinal": 19,
+    "similarity": 0.8712,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_label": 2,
+      "unmatched": 2
+    },
+    "unit_comparison_methods": {
+      "similarity": 2,
+      "unmatched": 2
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 20,
+    "reference_question": 20,
+    "ocr_ordinal": 20,
+    "reference_ordinal": 20,
+    "similarity": 1.0,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "exact_text",
+    "unit_match_methods": {
+      "parent_label": 2
+    },
+    "unit_comparison_methods": {
+      "exact_text": 2
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 21,
+    "reference_question": 21,
+    "ocr_ordinal": 21,
+    "reference_ordinal": 21,
+    "similarity": 0.9117,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_label": 2
+    },
+    "unit_comparison_methods": {
+      "similarity": 2
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 22,
+    "reference_question": 22,
+    "ocr_ordinal": 22,
+    "reference_ordinal": 22,
+    "similarity": 0.9185,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_label": 2
+    },
+    "unit_comparison_methods": {
+      "similarity": 2
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  },
+  {
+    "ocr_question": 23,
+    "reference_question": 23,
+    "ocr_ordinal": 23,
+    "reference_ordinal": 23,
+    "similarity": 0.9758,
+    "match_method": "sequence_fuzzy",
+    "comparison_method": "similarity",
+    "unit_match_methods": {
+      "parent_label": 2
+    },
+    "unit_comparison_methods": {
+      "exact_text": 1,
+      "similarity": 1
+    },
+    "used_parent_fallback": false,
+    "parent_fallback_units": [],
+    "similarity_backend": "rapidfuzz.fuzz.ratio"
+  }
+]

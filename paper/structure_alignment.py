@@ -8,6 +8,15 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+try:
+    from .alignment_core import SIMILARITY_BACKEND, align_questions as align_question_pairs
+    from .alignment_core import similarity
+except ImportError:
+    from alignment_core import SIMILARITY_BACKEND, align_questions as align_question_pairs
+    from alignment_core import similarity
+
 
 def load_segmentation(path):
     with open(path, "r", encoding="utf-8") as stream:
@@ -16,54 +25,16 @@ def load_segmentation(path):
 
 def flatten_questions(document):
     """Flatten sections in reading order while retaining section metadata."""
-    return [
-        {**question, "_section_index": section_index, "_section_title": section["title"]}
-        for section_index, section in enumerate(document.get("sections", []))
-        for question in section.get("questions", [])
-    ]
-
-
-def similarity(text_a, text_b):
-    if not text_a and not text_b:
-        return 1.0
-    if not text_a or not text_b:
-        return 0.0
-    return SequenceMatcher(a=str(text_a), b=str(text_b), autojunk=False).ratio()
-
-
-def monotonic_alignment(left, right, similarity_fn, gap_penalty=-0.35):
-    """Needleman-Wunsch sequence alignment. Return match/left_only/right_only ops."""
-    n, m = len(left), len(right)
-    dp = [[0.0] * (m + 1) for _ in range(n + 1)]
-    trace = [[None] * (m + 1) for _ in range(n + 1)]
-    for i in range(1, n + 1):
-        dp[i][0], trace[i][0] = i * gap_penalty, "left_only"
-    for j in range(1, m + 1):
-        dp[0][j], trace[0][j] = j * gap_penalty, "right_only"
-
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            match = dp[i - 1][j - 1] + 2 * similarity_fn(left[i - 1], right[j - 1]) - 1
-            delete = dp[i - 1][j] + gap_penalty
-            insert = dp[i][j - 1] + gap_penalty
-            best = max(match, delete, insert)
-            dp[i][j] = best
-            trace[i][j] = "match" if best == match else ("left_only" if best == delete else "right_only")
-
-    result = []
-    i, j = n, m
-    while i or j:
-        op = trace[i][j]
-        if op == "match":
-            result.append((op, i - 1, j - 1))
-            i, j = i - 1, j - 1
-        elif op == "left_only":
-            result.append((op, i - 1, None))
-            i -= 1
-        else:
-            result.append((op, None, j - 1))
-            j -= 1
-    return list(reversed(result))
+    questions = []
+    for section_index, section in enumerate(document.get("sections", [])):
+        for question_index, question in enumerate(section.get("questions", [])):
+            questions.append({
+                **question, "_section_index": section_index,
+                "_section_title": section.get("title", ""),
+                "_ordinal": len(questions) + 1,
+                "_unit_id": f"s{section_index + 1}.q{question_index + 1}",
+            })
+    return questions
 
 
 def question_alignment_score(ocr_question, gold_question):
@@ -74,11 +45,14 @@ def question_alignment_score(ocr_question, gold_question):
 
 
 def align_questions(ocr_questions, gold_questions):
-    return monotonic_alignment(
-        ocr_questions,
-        gold_questions,
-        lambda ocr, gold: question_alignment_score(ocr, gold)[1],
-    )
+    """Compatibility tuple form for callers of the original helper."""
+    return [
+        ("match", pair["ocr_index"], pair["gold_index"])
+        if pair["operation"] == "match"
+        else (("left_only", pair["ocr_index"], None) if pair["operation"] == "ocr_only"
+              else ("right_only", None, pair["gold_index"]))
+        for pair in align_question_pairs(ocr_questions, gold_questions)
+    ]
 
 
 def _block_signature(block):
@@ -200,24 +174,52 @@ def _question_similarity(ocr_question, gold_question):
     return round(similarity(view(ocr_question), view(gold_question)), 4)
 
 
-def _run_reports(ocr_path, gold_path):
+def _run_reports(ocr_path, gold_path, *, min_similarity=0.35):
     """Build compact similarity rows and separate structural findings."""
-    ocr_questions = flatten_questions(load_segmentation(ocr_path))
-    gold_questions = flatten_questions(load_segmentation(gold_path))
-    pair_ops = align_questions(ocr_questions, gold_questions)
+    ocr_document = load_segmentation(ocr_path)
+    gold_document = load_segmentation(gold_path)
+    ocr_questions = flatten_questions(ocr_document)
+    gold_questions = flatten_questions(gold_document)
+    pair_ops = align_question_pairs(ocr_questions, gold_questions, min_similarity=min_similarity)
+    try:
+        from .unit_matching import align_documents
+    except ImportError:
+        from unit_matching import align_documents
+    child_rows = align_documents(ocr_document, gold_document, min_similarity=min_similarity)
     similarities, structures = [], []
 
-    for operation, oi, gi in pair_ops:
+    for pair in pair_ops:
+        operation, oi, gi = pair["operation"], pair["ocr_index"], pair["gold_index"]
         ocr_q = ocr_questions[oi] if oi is not None else None
         gold_q = gold_questions[gi] if gi is not None else None
+        child_rows_for_pair = [
+            row for row in child_rows
+            if (ocr_q and row.get("ocr_unit_id") and row["ocr_unit_id"].startswith(ocr_q["_unit_id"] + "."))
+            or (gold_q and row.get("gold_unit_id") and row["gold_unit_id"].startswith(gold_q["_unit_id"] + "."))
+        ]
+        child_methods = Counter(row["match_method"] for row in child_rows_for_pair)
+        child_comparison_methods = Counter(row.get("comparison_method", "unknown") for row in child_rows_for_pair)
+        child_fallbacks = [
+            {"ocr_unit_id": row.get("ocr_unit_id"), "gold_unit_id": row.get("gold_unit_id"), "method": row["match_method"]}
+            for row in child_rows_for_pair if row.get("used_parent_fallback")
+        ]
         similarities.append({
             "ocr_question": ocr_q.get("number") if ocr_q else None,
             "reference_question": gold_q.get("number") if gold_q else None,
+            "ocr_ordinal": ocr_q.get("_ordinal") if ocr_q else None,
+            "reference_ordinal": gold_q.get("_ordinal") if gold_q else None,
             "similarity": _question_similarity(ocr_q, gold_q) if ocr_q and gold_q else 0.0,
+            "match_method": pair["match_method"],
+            "comparison_method": pair.get("comparison_method", pair["match_method"]),
+            "unit_match_methods": dict(sorted(child_methods.items())),
+            "unit_comparison_methods": dict(sorted(child_comparison_methods.items())),
+            "used_parent_fallback": pair["used_parent_fallback"] or bool(child_fallbacks),
+            "parent_fallback_units": child_fallbacks,
+            "similarity_backend": SIMILARITY_BACKEND,
         })
-        if operation == "left_only":
+        if operation == "ocr_only":
             errors = [_error("extra_question_in_ocr", "question", {"ocr_number": ocr_q.get("number")})]
-        elif operation == "right_only":
+        elif operation == "gold_only":
             errors = [_error("question_missing_in_ocr", "question", {"reference_number": gold_q.get("number")})]
         else:
             errors = detect_structure_errors(ocr_q, gold_q)
@@ -225,27 +227,46 @@ def _run_reports(ocr_path, gold_path):
             structures.append({
                 "ocr_question": ocr_q.get("number") if ocr_q else None,
                 "reference_question": gold_q.get("number") if gold_q else None,
+                "ocr_ordinal": ocr_q.get("_ordinal") if ocr_q else None,
+                "reference_ordinal": gold_q.get("_ordinal") if gold_q else None,
+                "match_method": pair["match_method"],
+                "comparison_method": pair.get("comparison_method", pair["match_method"]),
+                "used_parent_fallback": pair["used_parent_fallback"],
                 "errors": errors,
             })
     return similarities, structures
 
 
-def run_alignment(ocr_path, gold_path):
+def run_alignment(ocr_path, gold_path, *, min_similarity=0.35):
     """Compatibility entry point returning the compact similarity rows."""
-    return _run_reports(ocr_path, gold_path)[0]
+    return _run_reports(ocr_path, gold_path, min_similarity=min_similarity)[0]
 
 
-def write_reports(ocr_path, gold_path, alignment_path="alignment_results.json", structure_path="structure_results.json"):
-    similarities, structures = _run_reports(ocr_path, gold_path)
-    Path(alignment_path).write_text(json.dumps(similarities, ensure_ascii=False, indent=2), encoding="utf-8")
+def write_reports(ocr_path, gold_path, alignment_path="alignment_results.json", structure_path="structure_results.json", *, min_similarity=0.35):
+    similarities, structures = _run_reports(ocr_path, gold_path, min_similarity=min_similarity)
+    alignment_path, structure_path = Path(alignment_path), Path(structure_path)
+    alignment_path.parent.mkdir(parents=True, exist_ok=True)
+    structure_path.parent.mkdir(parents=True, exist_ok=True)
+    alignment_path.write_text(json.dumps(similarities, ensure_ascii=False, indent=2), encoding="utf-8")
     counts = Counter(error["type"] for item in structures for error in item["errors"])
     report = {"question_pair_count": len(similarities), "error_counts": dict(sorted(counts.items())), "questions": structures}
     Path(structure_path).write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return similarities, report
 
 
-if __name__ == "__main__":
+def main(ocr_segmentation_path=PROJECT_ROOT / "paper/results/ocr_segmented.json",
+         gold_segmentation_path=PROJECT_ROOT / "paper/results/gold_segmented.json",
+         alignment_output_path=PROJECT_ROOT / "paper/results/alignment_results.json",
+         structure_output_path=PROJECT_ROOT / "paper/results/structure_results.json", *, min_similarity=0.35):
+    """Write structure reports from editable function arguments."""
     similarities, report = write_reports(
-        "paper/ocr_exam_segmented.json", "paper/exam_segmented.json"
+        ocr_segmentation_path, gold_segmentation_path,
+        alignment_output_path, structure_output_path,
+        min_similarity=min_similarity,
     )
     print(f"Wrote {len(similarities)} similarity rows and {sum(report['error_counts'].values())} structural findings")
+    return similarities, report
+
+
+if __name__ == "__main__":
+    main()

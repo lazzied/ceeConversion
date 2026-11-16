@@ -1,4 +1,8 @@
 import re
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 CIRCLED = {"1": "①", "2": "②", "3": "③", "4": "④", "5": "⑤"}
 
@@ -146,13 +150,15 @@ def convert_solutions(tex):
     return "\n\n".join(parts) + "\n"
 
 
-def main():
-    input_file = "national_paper_a_liberal.tex"
-    output_file = "solutions_out.md"
+def main(input_path=PROJECT_ROOT / "Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex",
+         output_path=PROJECT_ROOT / "paper/results/solutions_out.md"):
+    """Extract solutions from the paths provided as function arguments."""
+    input_file, output_file = Path(input_path), Path(output_path)
 
     with open(input_file, encoding="utf-8") as f:
         tex = f.read()
     md = convert_solutions(tex)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(md)
     print("Wrote", output_file)

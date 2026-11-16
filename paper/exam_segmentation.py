@@ -1,9 +1,14 @@
 import json
 import re
+import html
+import unicodedata
+from pathlib import Path
 from dataclasses import dataclass, field, asdict
 from typing import Optional
 
 CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SUBQUESTION_LABEL = re.compile(r"^[（(]([0-9０-９]+|[一二三四五六七八九十]+)[)）]\s*(.*)$", re.S)
 
 
 # ---------- data model ----------
@@ -113,6 +118,37 @@ def split_blocks(md):
     return [b.strip() for b in re.split(r"\n\s*\n", md) if b.strip()]
 
 
+def _markdown_table_html(block):
+    """Convert a pipe table to the HTML representation used for table scoring."""
+    lines = [line.strip() for line in block.splitlines() if "|" in line]
+    if len(lines) < 2 or not all(line.startswith("|") and line.endswith("|") for line in lines):
+        return None
+    rows = [[cell.strip() for cell in line.strip("|").split("|")] for line in lines]
+    separator = re.compile(r"^:?-{3,}:?$")
+    if len(rows) > 1 and rows[1] and all(separator.fullmatch(cell.replace(" ", "")) for cell in rows[1]):
+        rows.pop(1)
+    if not rows:
+        return None
+    body = "".join(
+        "<tr>" + "".join(f"<td>{html.escape(cell)}</td>" for cell in row) + "</tr>"
+        for row in rows
+    )
+    return f"<table>{body}</table>"
+
+
+def _question_number(text):
+    patterns = (
+        r"^\s*(?:第\s*)?([0-9０-９]+)\s*[.．、]\s*",
+        r"^\s*第\s*([0-9０-９]+)\s*题\s*[：:]?\s*",
+    )
+    for pattern in patterns:
+        match = re.match(pattern, text)
+        if match:
+            digits = "".join(str(unicodedata.digit(char)) for char in match.group(1))
+            return int(digits), text[match.end():].strip()
+    return None
+
+
 # ---------- main parser ----------
 def parse_exam(md):
     exam = Exam()
@@ -121,15 +157,18 @@ def parse_exam(md):
     current_sub = None  # label of the last sub-question seen in this question
 
     for text in split_blocks(md):
+        pipe_table = None if text.startswith("<table") else _markdown_table_html(text)
+        if re.fullmatch(r"<!--\s*page_number:\s*\d+\s*-->", text):
+            continue
         if text.startswith("## "):
             section = Section(title=text[3:].strip())
             exam.sections.append(section)
             question = None
         elif text.startswith("# "):
             exam.title = text[2:].strip()
-        elif re.match(r"\d+\.\s", text):
-            m = re.match(r"(\d+)\.\s+(.*)", text, re.S)
-            question = Question(number=int(m.group(1)), stem=m.group(2).strip())
+        elif (numbered := _question_number(text)) is not None:
+            number, stem = numbered
+            question = Question(number=number, stem=stem)
             current_sub = None
             if section is None:  # exam without "##" headings
                 section = Section(title="")
@@ -140,13 +179,14 @@ def parse_exam(md):
         elif text.startswith("\\includegraphics"):
             question.blocks.append(Block("figure", figure=parse_figure(text),
                                          follows_sub_question=current_sub))
-        elif text.startswith("<table"):
-            question.blocks.append(Block("table", text=text, follows_sub_question=current_sub))
+        elif text.startswith("<table") or pipe_table:
+            table_text = text if text.startswith("<table") else pipe_table
+            question.blocks.append(Block("table", text=table_text, follows_sub_question=current_sub))
         elif re.match(r"\([A-H]\)", text):
             question.blocks.extend(parse_choices(text))
-        elif re.match(r"\(\d+\)\s", text):
-            m = re.match(r"\((\d+)\)\s+(.*)", text, re.S)
-            current_sub = m.group(1)
+        elif SUBQUESTION_LABEL.match(text):
+            m = SUBQUESTION_LABEL.match(text)
+            current_sub = "".join(str(unicodedata.digit(char)) for char in m.group(1)) if m.group(1).isdigit() else m.group(1)
             question.blocks.append(Block("sub_question", label=current_sub,
                                          text=m.group(2).strip(),
                                          follows_sub_question=current_sub))
@@ -168,14 +208,15 @@ def describe(q):
     return " > ".join(names)
 
 
-def main():
-
-    files = [
-        ("paper/exam_out.md", "paper/exam_segmented.json"),
-        ("data/output/exam.md", "paper/ocr_exam_segmented.json"),
-    ]
-
-    for input_file, output_json in files:
+def main(gold_markdown_path=PROJECT_ROOT / "paper/example_01_exam_markdown.md",
+         ocr_markdown_path=PROJECT_ROOT / "data/input/exam.md",
+         gold_output_path=PROJECT_ROOT / "paper/results/manual_gold_segmentation.json",
+         ocr_output_path=PROJECT_ROOT / "paper/results/manual_ocr_segmentation.json"):
+    """Segment the two Markdown inputs supplied as function arguments."""
+    for input_file, output_json in (
+        (Path(gold_markdown_path), Path(gold_output_path)),
+        (Path(ocr_markdown_path), Path(ocr_output_path)),
+    ):
         print(f"\nProcessing: {input_file}")
 
         with open(input_file, encoding="utf-8") as f:
@@ -188,6 +229,7 @@ def main():
             for q in s.questions:
                 print(f"    Q{q.number:<2} {q.kind:<13} {describe(q)}")
 
+        output_json.parent.mkdir(parents=True, exist_ok=True)
         with open(output_json, "w", encoding="utf-8") as f:
             json.dump(asdict(exam), f, ensure_ascii=False, indent=2)
 

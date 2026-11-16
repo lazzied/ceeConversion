@@ -159,7 +159,7 @@ def convert_math(tex: str) -> str:
 # 7. ONE BLOCK
 # ---------------------------------------------------------
 
-def clean_block(tex: str) -> str:
+def clean_block(tex: str, *, normalize: bool = True) -> str:
     tex = convert_images(tex)
     tex = convert_tables(tex)
     tex = convert_lists(tex)
@@ -174,14 +174,14 @@ def clean_block(tex: str) -> str:
     tex = normalize_includegraphics(tex)
 
     # Everything style-related happens here, identical to the OCR side.
-    return normalize_markdown(tex).strip()
+    return (normalize_markdown(tex) if normalize else tex).strip()
 
 
 # ---------------------------------------------------------
 # 8. WHOLE DOCUMENT
 # ---------------------------------------------------------
 
-def convert_tex(tex: str, keep_solutions: bool = False) -> str:
+def convert_tex(tex: str, keep_solutions: bool = False, *, normalize: bool = True) -> str:
     pattern = re.compile(
         r"\\chapter\{(?P<chapter>[^}]*)\}"
         r"|\\section\{(?P<section>[^}]*)\}"
@@ -198,21 +198,23 @@ def convert_tex(tex: str, keep_solutions: bool = False) -> str:
             parts.append("## " + m.group("section").strip())
         elif m.group("problem") is not None:
             number += 1
-            parts.append(f"{number}. " + clean_block(m.group("problem")))
+            parts.append(f"{number}. " + clean_block(m.group("problem"), normalize=normalize))
         elif keep_solutions and m.group("answer") is not None:
-            parts.append("**答案：** " + clean_block(m.group("answer")))
+            parts.append("**答案：** " + clean_block(m.group("answer"), normalize=normalize))
         elif keep_solutions and m.group("solution") is not None:
-            parts.append("**解析：**\n\n" + clean_block(m.group("solution")))
+            parts.append("**解析：**\n\n" + clean_block(m.group("solution"), normalize=normalize))
     return "\n\n".join(parts).strip() + "\n"
 
 
-def main():
-    input_file = "Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex"
-    output_file = "paper/exam_out.md"
+def main(input_path=PROJECT_ROOT / "Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex",
+         output_path=PROJECT_ROOT / "paper/example_01_exam_markdown.md", *, keep_solutions=False):
+    """Convert a reference TeX file using editable function arguments."""
+    input_file, output_file = Path(input_path), Path(output_path)
     with open(input_file, encoding="utf-8") as f:
         tex = f.read()
+    output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write(convert_tex(tex, keep_solutions=False))
+        f.write(convert_tex(tex, keep_solutions=keep_solutions))
     print("Wrote", output_file)
 
 

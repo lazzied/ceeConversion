@@ -1,0 +1,3095 @@
+{
+  "alignment_backend": "rapidfuzz.fuzz.ratio",
+  "raw_do_nothing_baseline": {
+    "alignable_unit_count": 79,
+    "overall": {
+      "substitutions": 122,
+      "insertions": 146,
+      "deletions": 307,
+      "reference_characters": 2636,
+      "total_errors": 575,
+      "cer": 0.218134,
+      "error_percent": 21.813
+    },
+    "by_content_class": {
+      "cjk_text": {
+        "substitutions": 1,
+        "insertions": 0,
+        "deletions": 13,
+        "reference_characters": 733,
+        "total_errors": 14,
+        "cer": 0.0191,
+        "error_percent": 1.91
+      },
+      "latin_text": {
+        "substitutions": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "reference_characters": 8,
+        "total_errors": 0,
+        "cer": 0.0,
+        "error_percent": 0.0
+      },
+      "math": {
+        "substitutions": 71,
+        "insertions": 146,
+        "deletions": 268,
+        "reference_characters": 1694,
+        "total_errors": 485,
+        "cer": 0.286305,
+        "error_percent": 28.63
+      },
+      "other_text": {
+        "substitutions": 50,
+        "insertions": 0,
+        "deletions": 26,
+        "reference_characters": 199,
+        "total_errors": 76,
+        "cer": 0.38191,
+        "error_percent": 38.191
+      },
+      "table": {
+        "substitutions": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "reference_characters": 2,
+        "total_errors": 0,
+        "cer": 0.0,
+        "error_percent": 0.0
+      }
+    }
+  },
+  "normalized_ocr_vs_normalized_gold": {
+    "alignable_unit_count": 118,
+    "overall": {
+      "substitutions": 18,
+      "insertions": 6,
+      "deletions": 214,
+      "reference_characters": 3019,
+      "total_errors": 238,
+      "cer": 0.078834,
+      "error_percent": 7.883
+    },
+    "by_content_class": {
+      "cjk_text": {
+        "substitutions": 1,
+        "insertions": 0,
+        "deletions": 13,
+        "reference_characters": 733,
+        "total_errors": 14,
+        "cer": 0.0191,
+        "error_percent": 1.91
+      },
+      "latin_text": {
+        "substitutions": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "reference_characters": 47,
+        "total_errors": 0,
+        "cer": 0.0,
+        "error_percent": 0.0
+      },
+      "math": {
+        "substitutions": 14,
+        "insertions": 6,
+        "deletions": 197,
+        "reference_characters": 2028,
+        "total_errors": 217,
+        "cer": 0.107002,
+        "error_percent": 10.7
+      },
+      "other_text": {
+        "substitutions": 3,
+        "insertions": 0,
+        "deletions": 4,
+        "reference_characters": 209,
+        "total_errors": 7,
+        "cer": 0.033493,
+        "error_percent": 3.349
+      },
+      "table": {
+        "substitutions": 0,
+        "insertions": 0,
+        "deletions": 0,
+        "reference_characters": 2,
+        "total_errors": 0,
+        "cer": 0.0,
+        "error_percent": 0.0
+      }
+    }
+  },
+  "raw_word_error": {
+    "word_error_rate": 0.235822,
+    "tokenization": "Latin words, one character per CJK symbol, LaTeX-aware math atoms, and no whitespace tokens; interpret as a mixed-content word/token error rate.",
+    "word_edits": {
+      "substitutions": 157,
+      "insertions": 93,
+      "deletions": 249,
+      "reference_tokens": 2116,
+      "total_errors": 499
+    },
+    "exact_match": {
+      "exact_units": 31,
+      "matched_units": 79,
+      "rate": 0.392405
+    },
+    "word_errors_by_content_class": {
+      "cjk_text": {
+        "substitution": 2,
+        "deletion": 13,
+        "reference_tokens": 733,
+        "word_error_rate": 0.020464
+      },
+      "latin_text": {
+        "reference_tokens": 8,
+        "word_error_rate": 0.0
+      },
+      "math": {
+        "insertion": 91,
+        "substitution": 61,
+        "deletion": 81,
+        "reference_tokens": 867,
+        "word_error_rate": 0.268743
+      },
+      "math_syntax": {
+        "deletion": 129,
+        "substitution": 43,
+        "insertion": 2,
+        "reference_tokens": 318,
+        "word_error_rate": 0.54717
+      },
+      "other_text": {
+        "substitution": 51,
+        "deletion": 26,
+        "reference_tokens": 188,
+        "word_error_rate": 0.409574
+      },
+      "table": {
+        "reference_tokens": 2,
+        "word_error_rate": 0.0
+      }
+    }
+  },
+  "normalized_word_error": {
+    "word_error_rate": 0.097075,
+    "tokenization": "Latin words, one character per CJK symbol, LaTeX-aware math atoms, and no whitespace tokens; interpret as a mixed-content word/token error rate.",
+    "word_edits": {
+      "substitutions": 41,
+      "insertions": 3,
+      "deletions": 185,
+      "reference_tokens": 2359,
+      "total_errors": 229
+    },
+    "exact_match": {
+      "exact_units": 95,
+      "matched_units": 118,
+      "rate": 0.805085
+    },
+    "word_errors_by_content_class": {
+      "cjk_text": {
+        "deletion": 13,
+        "substitution": 1,
+        "reference_tokens": 733,
+        "word_error_rate": 0.0191
+      },
+      "latin_text": {
+        "reference_tokens": 47,
+        "word_error_rate": 0.0
+      },
+      "math": {
+        "deletion": 54,
+        "substitution": 20,
+        "reference_tokens": 997,
+        "word_error_rate": 0.074223
+      },
+      "math_syntax": {
+        "deletion": 114,
+        "insertion": 3,
+        "substitution": 17,
+        "reference_tokens": 382,
+        "word_error_rate": 0.350785
+      },
+      "other_text": {
+        "substitution": 3,
+        "deletion": 4,
+        "reference_tokens": 198,
+        "word_error_rate": 0.035354
+      },
+      "table": {
+        "reference_tokens": 2,
+        "word_error_rate": 0.0
+      }
+    }
+  },
+  "exact_match_after_normalization": {
+    "exact_units": 95,
+    "matched_units": 118,
+    "rate": 0.805085
+  },
+  "equation_similarity_after_normalization": {
+    "method": "mean normalized token edit similarity; this is an equation-similarity proxy, not Formula-CDM",
+    "matched_equations": 40,
+    "mean_similarity": 1.0,
+    "exact_equation_rate": 1.0
+  },
+  "table_structure_after_normalization": {
+    "exact_table_layouts": 2,
+    "reference_tables": 3,
+    "accuracy": 0.666667,
+    "comparison": "row count and number of cells in each row; cell text is scored separately"
+  },
+  "reading_order_after_normalization": {
+    "method": "share of reference block types retained in the same order within matched questions",
+    "matched_questions_with_blocks": 19,
+    "accuracy_proxy": 0.979323
+  },
+  "alignment_quality": {
+    "raw_coverage": {
+      "matched_pairs": 79,
+      "unmatched_or_excluded_rows": 73,
+      "ocr_only_units": 15,
+      "reference_only_units": 49,
+      "unmatched_row_fraction": 0.480263,
+      "ocr_units": 103,
+      "reference_units": 137,
+      "ocr_coverage": 0.76699,
+      "reference_coverage": 0.576642,
+      "combined_coverage": 0.658333
+    },
+    "normalized_coverage": {
+      "matched_pairs": 118,
+      "unmatched_or_excluded_rows": 31,
+      "ocr_only_units": 12,
+      "reference_only_units": 19,
+      "unmatched_row_fraction": 0.208054,
+      "ocr_units": 130,
+      "reference_units": 137,
+      "ocr_coverage": 0.907692,
+      "reference_coverage": 0.861314,
+      "combined_coverage": 0.883895
+    },
+    "manual_review": {
+      "labels": {},
+      "sampled_rows": 30,
+      "reviewed_rows": 0,
+      "alignment_precision": null,
+      "alignment_recall": null,
+      "reviewed_matched_rows": 0,
+      "reviewed_unmatched_rows": 0,
+      "guidance": "If both unit IDs are present, choose correct_match or incorrect_match. If only one side exists, choose missed_match when its counterpart exists elsewhere, otherwise no_counterpart. Leave unreviewed rows blank."
+    }
+  },
+  "unit_outcomes_after_normalization": {
+    "overall": {
+      "better": 20,
+      "worse": 0,
+      "same": 1,
+      "perfect": 68,
+      "excluded": 60
+    },
+    "by_unit_type": {
+      "choice": {
+        "better": 0,
+        "worse": 0,
+        "same": 0,
+        "perfect": 20,
+        "excluded": 28
+      },
+      "figure": {
+        "better": 0,
+        "worse": 0,
+        "same": 0,
+        "perfect": 0,
+        "excluded": 10
+      },
+      "question": {
+        "better": 11,
+        "worse": 0,
+        "same": 1,
+        "perfect": 11,
+        "excluded": 0
+      },
+      "statement": {
+        "better": 1,
+        "worse": 0,
+        "same": 0,
+        "perfect": 3,
+        "excluded": 0
+      },
+      "sub_question": {
+        "better": 7,
+        "worse": 0,
+        "same": 0,
+        "perfect": 5,
+        "excluded": 2
+      },
+      "table": {
+        "better": 0,
+        "worse": 0,
+        "same": 0,
+        "perfect": 2,
+        "excluded": 1
+      },
+      "table_cell": {
+        "better": 0,
+        "worse": 0,
+        "same": 0,
+        "perfect": 25,
+        "excluded": 16
+      },
+      "text": {
+        "better": 1,
+        "worse": 0,
+        "same": 0,
+        "perfect": 2,
+        "excluded": 3
+      }
+    },
+    "units": [
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q1",
+        "gold_unit_id": "s1.q1",
+        "status": "perfect",
+        "raw_edit_distance": 9,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.333333,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q1.block1",
+        "gold_unit_id": "s1.q1.block1",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.4,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q1.block2",
+        "gold_unit_id": "s1.q1.block2",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q1.block3",
+        "gold_unit_id": "s1.q1.block3",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q1.block4",
+        "gold_unit_id": "s1.q1.block4",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.5,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q2",
+        "gold_unit_id": "s1.q2",
+        "status": "perfect",
+        "raw_edit_distance": 4,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.070175,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q2.block1",
+        "gold_unit_id": "s1.q2.block1",
+        "status": "perfect",
+        "raw_edit_distance": 34,
+        "normalized_edit_distance": 0,
+        "raw_cer": 2.833333,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q2.block2",
+        "gold_unit_id": "s1.q2.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q2.block3",
+        "gold_unit_id": "s1.q2.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q2.block4",
+        "gold_unit_id": "s1.q2.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q3",
+        "gold_unit_id": "s1.q3",
+        "status": "better",
+        "raw_edit_distance": 47,
+        "normalized_edit_distance": 45,
+        "raw_cer": 0.350746,
+        "normalized_cer": 0.335821
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q3.block1",
+        "gold_unit_id": "s1.q3.block1",
+        "status": "perfect",
+        "raw_edit_distance": 54,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.909091,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q3.block2",
+        "gold_unit_id": "s1.q3.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q3.block3",
+        "gold_unit_id": "s1.q3.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q3.block4",
+        "gold_unit_id": "s1.q3.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q4",
+        "gold_unit_id": "s1.q4",
+        "status": "perfect",
+        "raw_edit_distance": 6,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.089552,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q4.block1",
+        "gold_unit_id": "s1.q4.block1",
+        "status": "perfect",
+        "raw_edit_distance": 53,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.818182,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q4.block2",
+        "gold_unit_id": "s1.q4.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q4.block3",
+        "gold_unit_id": "s1.q4.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q4.block4",
+        "gold_unit_id": "s1.q4.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q5",
+        "gold_unit_id": "s1.q5",
+        "status": "better",
+        "raw_edit_distance": 13,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.254902,
+        "normalized_cer": 0.039216
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q5.block1",
+        "gold_unit_id": "s1.q5.block1",
+        "status": "perfect",
+        "raw_edit_distance": 53,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.818182,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q5.block2",
+        "gold_unit_id": "s1.q5.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q5.block3",
+        "gold_unit_id": "s1.q5.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q5.block4",
+        "gold_unit_id": "s1.q5.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q6",
+        "gold_unit_id": "s1.q6",
+        "status": "same",
+        "raw_edit_distance": 1,
+        "normalized_edit_distance": 1,
+        "raw_cer": 0.017241,
+        "normalized_cer": 0.017241
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q6.block1",
+        "gold_unit_id": "s1.q6.block1",
+        "status": "perfect",
+        "raw_edit_distance": 20,
+        "normalized_edit_distance": 0,
+        "raw_cer": 5.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q6.block2",
+        "gold_unit_id": "s1.q6.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q6.block3",
+        "gold_unit_id": "s1.q6.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q6.block4",
+        "gold_unit_id": "s1.q6.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q7",
+        "gold_unit_id": "s1.q7",
+        "status": "perfect",
+        "raw_edit_distance": 15,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.172414,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q7.block1",
+        "gold_unit_id": "s1.q7.block1",
+        "status": "perfect",
+        "raw_edit_distance": 53,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.818182,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q7.block2",
+        "gold_unit_id": "s1.q7.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q7.block3",
+        "gold_unit_id": "s1.q7.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q7.block4",
+        "gold_unit_id": "s1.q7.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q8",
+        "gold_unit_id": "s1.q8",
+        "status": "perfect",
+        "raw_edit_distance": 27,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.391304,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s1.q8.figure1",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": "s1.q8.figure1",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": "s1.q8.figure2",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q8.block3",
+        "gold_unit_id": "s1.q8.block1",
+        "status": "perfect",
+        "raw_edit_distance": 39,
+        "normalized_edit_distance": 0,
+        "raw_cer": 39.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s1.q8.figure2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q8.block4",
+        "gold_unit_id": "s1.q8.block2",
+        "status": "perfect",
+        "raw_edit_distance": 39,
+        "normalized_edit_distance": 0,
+        "raw_cer": 39.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s1.q8.figure3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s1.q8.block5",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": "s1.q8.figure6",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q8.block7",
+        "gold_unit_id": "s1.q8.block3",
+        "status": "perfect",
+        "raw_edit_distance": 39,
+        "normalized_edit_distance": 0,
+        "raw_cer": 39.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s1.q8.figure4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s1.q8.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": "s1.q8.figure8",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q9",
+        "gold_unit_id": "s1.q9",
+        "status": "better",
+        "raw_edit_distance": 13,
+        "normalized_edit_distance": 8,
+        "raw_cer": 0.245283,
+        "normalized_cer": 0.150943
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q9.block1",
+        "gold_unit_id": "s1.q9.block1",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.5,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q9.block2",
+        "gold_unit_id": "s1.q9.block2",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.5,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q9.block3",
+        "gold_unit_id": "s1.q9.block3",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.5,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q9.block4",
+        "gold_unit_id": "s1.q9.block4",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.4,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q10",
+        "gold_unit_id": "s1.q10",
+        "status": "perfect",
+        "raw_edit_distance": 8,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.086022,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q10.block1",
+        "gold_unit_id": "s1.q10.block1",
+        "status": "perfect",
+        "raw_edit_distance": 56,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.666667,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q10.block2",
+        "gold_unit_id": "s1.q10.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q10.block3",
+        "gold_unit_id": "s1.q10.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q10.block4",
+        "gold_unit_id": "s1.q10.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q11",
+        "gold_unit_id": "s1.q11",
+        "status": "better",
+        "raw_edit_distance": 11,
+        "normalized_edit_distance": 4,
+        "raw_cer": 0.171875,
+        "normalized_cer": 0.0625
+      },
+      {
+        "unit_type": "statement",
+        "ocr_unit_id": "s1.q11.block1",
+        "gold_unit_id": "s1.q11.block1",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.037037,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "statement",
+        "ocr_unit_id": "s1.q11.block2",
+        "gold_unit_id": "s1.q11.block2",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.047619,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "statement",
+        "ocr_unit_id": "s1.q11.block3",
+        "gold_unit_id": "s1.q11.block3",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.037037,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "statement",
+        "ocr_unit_id": "s1.q11.block4",
+        "gold_unit_id": "s1.q11.block4",
+        "status": "better",
+        "raw_edit_distance": 6,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.15,
+        "normalized_cer": 0.05
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s1.q11.block5",
+        "gold_unit_id": "s1.q11.block5",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q11.block6",
+        "gold_unit_id": "s1.q11.block6",
+        "status": "perfect",
+        "raw_edit_distance": 17,
+        "normalized_edit_distance": 0,
+        "raw_cer": 5.666667,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q11.block7",
+        "gold_unit_id": "s1.q11.block7",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q11.block8",
+        "gold_unit_id": "s1.q11.block8",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q11.block9",
+        "gold_unit_id": "s1.q11.block9",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s1.q12",
+        "gold_unit_id": "s1.q12",
+        "status": "better",
+        "raw_edit_distance": 28,
+        "normalized_edit_distance": 12,
+        "raw_cer": 0.291667,
+        "normalized_cer": 0.125
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q12.block1",
+        "gold_unit_id": "s1.q12.block1",
+        "status": "perfect",
+        "raw_edit_distance": 63,
+        "normalized_edit_distance": 0,
+        "raw_cer": 5.727273,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q12.block2",
+        "gold_unit_id": "s1.q12.block2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q12.block3",
+        "gold_unit_id": "s1.q12.block3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "choice",
+        "ocr_unit_id": "s1.q12.block4",
+        "gold_unit_id": "s1.q12.block4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s2.q1",
+        "gold_unit_id": "s2.q1",
+        "status": "perfect",
+        "raw_edit_distance": 2,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.042553,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s2.q2",
+        "gold_unit_id": "s2.q2",
+        "status": "perfect",
+        "raw_edit_distance": 3,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.034091,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s2.q3",
+        "gold_unit_id": "s2.q3",
+        "status": "perfect",
+        "raw_edit_distance": 12,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.190476,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s2.q4",
+        "gold_unit_id": "s2.q4",
+        "status": "better",
+        "raw_edit_distance": 8,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.140351,
+        "normalized_cer": 0.035088
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q1",
+        "gold_unit_id": "s3.q1",
+        "status": "better",
+        "raw_edit_distance": 8,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.166667,
+        "normalized_cer": 0.041667
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q1.sub1.1",
+        "gold_unit_id": "s3.q1.sub1.1",
+        "status": "perfect",
+        "raw_edit_distance": 3,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.1875,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q1.sub2.1",
+        "gold_unit_id": "s3.q1.sub2.1",
+        "status": "better",
+        "raw_edit_distance": 4,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.2,
+        "normalized_cer": 0.1
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q2",
+        "gold_unit_id": "s3.q2",
+        "status": "perfect",
+        "raw_edit_distance": 13,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.203125,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q2.sub1.1",
+        "gold_unit_id": "s3.q2.sub1.1",
+        "status": "perfect",
+        "raw_edit_distance": 1,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.125,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q2.sub2.1",
+        "gold_unit_id": "s3.q2.sub2.1",
+        "status": "better",
+        "raw_edit_distance": 46,
+        "normalized_edit_distance": 13,
+        "raw_cer": 0.232323,
+        "normalized_cer": 0.065
+      },
+      {
+        "unit_type": "table",
+        "ocr_unit_id": "s3.q2.table1",
+        "gold_unit_id": "s3.q2.table1",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell1",
+        "gold_unit_id": "s3.q2.table1.cell1",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell2",
+        "gold_unit_id": "s3.q2.table1.cell2",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell3",
+        "gold_unit_id": "s3.q2.table1.cell3",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell4",
+        "gold_unit_id": "s3.q2.table1.cell4",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell5",
+        "gold_unit_id": "s3.q2.table1.cell5",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell6",
+        "gold_unit_id": "s3.q2.table1.cell6",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell7",
+        "gold_unit_id": "s3.q2.table1.cell7",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell8",
+        "gold_unit_id": "s3.q2.table1.cell8",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell9",
+        "gold_unit_id": "s3.q2.table1.cell9",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell10",
+        "gold_unit_id": "s3.q2.table1.cell10",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell11",
+        "gold_unit_id": "s3.q2.table1.cell11",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell12",
+        "gold_unit_id": "s3.q2.table1.cell12",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell13",
+        "gold_unit_id": "s3.q2.table1.cell13",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell14",
+        "gold_unit_id": "s3.q2.table1.cell14",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell15",
+        "gold_unit_id": "s3.q2.table1.cell15",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell16",
+        "gold_unit_id": "s3.q2.table1.cell16",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell17",
+        "gold_unit_id": "s3.q2.table1.cell17",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell18",
+        "gold_unit_id": "s3.q2.table1.cell18",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell19",
+        "gold_unit_id": "s3.q2.table1.cell19",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table1.cell20",
+        "gold_unit_id": "s3.q2.table1.cell20",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table",
+        "ocr_unit_id": "s3.q2.table3",
+        "gold_unit_id": "s3.q2.table3",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell1",
+        "gold_unit_id": "s3.q2.table3.cell1",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell2",
+        "gold_unit_id": "s3.q2.table3.cell2",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell3",
+        "gold_unit_id": "s3.q2.table3.cell3",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell4",
+        "gold_unit_id": "s3.q2.table3.cell4",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table3.cell5",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table3.cell6",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell5",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell6",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell7",
+        "gold_unit_id": "s3.q2.table3.cell7",
+        "status": "perfect",
+        "raw_edit_distance": 0,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table3.cell8",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table3.cell9",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell8",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": "s3.q2.table3.cell9",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s3.q2.block4",
+        "gold_unit_id": "s3.q2.block4",
+        "status": "perfect",
+        "raw_edit_distance": 8,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.125,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s3.q2.block6",
+        "gold_unit_id": "s3.q2.block6",
+        "status": "better",
+        "raw_edit_distance": 25,
+        "normalized_edit_distance": 20,
+        "raw_cer": 0.367647,
+        "normalized_cer": 0.294118
+      },
+      {
+        "unit_type": "table",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell1",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell2",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell4",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell5",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell6",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell7",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "table_cell",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q2.table7.cell8",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s3.q2.block7",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "text",
+        "ocr_unit_id": "s3.q2.block8",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q3",
+        "gold_unit_id": "s3.q3",
+        "status": "better",
+        "raw_edit_distance": 151,
+        "normalized_edit_distance": 44,
+        "raw_cer": 0.974194,
+        "normalized_cer": 0.283871
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q3.sub1.1",
+        "gold_unit_id": "s3.q3.sub1.1",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q3.sub2.1",
+        "gold_unit_id": "s3.q3.sub2.1",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": null,
+        "gold_unit_id": "s3.q3.figure3",
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "figure",
+        "ocr_unit_id": "s3.q3.figure3",
+        "gold_unit_id": null,
+        "status": "excluded",
+        "raw_edit_distance": null,
+        "normalized_edit_distance": null,
+        "raw_cer": null,
+        "normalized_cer": null
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q4",
+        "gold_unit_id": "s3.q4",
+        "status": "perfect",
+        "raw_edit_distance": 110,
+        "normalized_edit_distance": 0,
+        "raw_cer": 4.4,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q4.sub1.1",
+        "gold_unit_id": "s3.q4.sub1.1",
+        "status": "perfect",
+        "raw_edit_distance": 12,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.923077,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q4.sub2.1",
+        "gold_unit_id": "s3.q4.sub2.1",
+        "status": "perfect",
+        "raw_edit_distance": 43,
+        "normalized_edit_distance": 0,
+        "raw_cer": 0.977273,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q5",
+        "gold_unit_id": "s3.q5",
+        "status": "better",
+        "raw_edit_distance": 97,
+        "normalized_edit_distance": 17,
+        "raw_cer": 0.915094,
+        "normalized_cer": 0.160377
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q5.sub1.1",
+        "gold_unit_id": "s3.q5.sub1.1",
+        "status": "better",
+        "raw_edit_distance": 10,
+        "normalized_edit_distance": 2,
+        "raw_cer": 1.25,
+        "normalized_cer": 0.25
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q5.sub2.1",
+        "gold_unit_id": "s3.q5.sub2.1",
+        "status": "better",
+        "raw_edit_distance": 69,
+        "normalized_edit_distance": 16,
+        "raw_cer": 0.907895,
+        "normalized_cer": 0.210526
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q6",
+        "gold_unit_id": "s4.q1",
+        "status": "better",
+        "raw_edit_distance": 99,
+        "normalized_edit_distance": 11,
+        "raw_cer": 1.2375,
+        "normalized_cer": 0.1375
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q6.sub1.1",
+        "gold_unit_id": "s4.q1.sub1.1",
+        "status": "better",
+        "raw_edit_distance": 9,
+        "normalized_edit_distance": 2,
+        "raw_cer": 0.692308,
+        "normalized_cer": 0.153846
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q6.sub2.1",
+        "gold_unit_id": "s4.q1.sub2.1",
+        "status": "better",
+        "raw_edit_distance": 90,
+        "normalized_edit_distance": 20,
+        "raw_cer": 0.9,
+        "normalized_cer": 0.2
+      },
+      {
+        "unit_type": "question",
+        "ocr_unit_id": "s3.q7",
+        "gold_unit_id": "s4.q2",
+        "status": "better",
+        "raw_edit_distance": 63,
+        "normalized_edit_distance": 4,
+        "raw_cer": 2.73913,
+        "normalized_cer": 0.173913
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q7.sub1.1",
+        "gold_unit_id": "s4.q2.sub1.1",
+        "status": "perfect",
+        "raw_edit_distance": 19,
+        "normalized_edit_distance": 0,
+        "raw_cer": 1.0,
+        "normalized_cer": 0.0
+      },
+      {
+        "unit_type": "sub_question",
+        "ocr_unit_id": "s3.q7.sub2.1",
+        "gold_unit_id": "s4.q2.sub2.1",
+        "status": "better",
+        "raw_edit_distance": 67,
+        "normalized_edit_distance": 1,
+        "raw_cer": 2.481481,
+        "normalized_cer": 0.037037
+      }
+    ]
+  },
+  "normalization_correct_character_harm": {
+    "raw_correct_character_count": 3236,
+    "correct_characters_wrongly_changed": 57,
+    "share_wrongly_changed": 0.017614,
+    "definition": "A raw OCR/gold character match is counted as damaged if normalization does not preserve a matching normalized OCR/gold character."
+  },
+  "top_50_gold_to_ocr_character_confusions_raw": [
+    {
+      "gold": "$",
+      "ocr": ",",
+      "category": "math",
+      "count": 22
+    },
+    {
+      "gold": "，",
+      "ocr": ",",
+      "category": "other_text",
+      "count": 17
+    },
+    {
+      "gold": "，",
+      "ocr": "、",
+      "category": "other_text",
+      "count": 8
+    },
+    {
+      "gold": "；",
+      "ocr": ";",
+      "category": "other_text",
+      "count": 7
+    },
+    {
+      "gold": "）",
+      "ocr": ")",
+      "category": "other_text",
+      "count": 4
+    },
+    {
+      "gold": ".",
+      "ocr": "。",
+      "category": "other_text",
+      "count": 4
+    },
+    {
+      "gold": "b",
+      "ocr": "v",
+      "category": "math",
+      "count": 3
+    },
+    {
+      "gold": "a",
+      "ocr": "e",
+      "category": "math",
+      "count": 3
+    },
+    {
+      "gold": "（",
+      "ocr": "(",
+      "category": "other_text",
+      "count": 3
+    },
+    {
+      "gold": "：",
+      "ocr": ":",
+      "category": "other_text",
+      "count": 3
+    },
+    {
+      "gold": "r",
+      "ocr": "e",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "m",
+      "ocr": "^",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "e",
+      "ocr": "x",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "$",
+      "ocr": "(",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "e",
+      "ocr": "/",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "l",
+      "ocr": "/",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "$",
+      "ocr": "M",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "\\",
+      "ocr": "$",
+      "category": "math",
+      "count": 2
+    },
+    {
+      "gold": "(",
+      "ocr": "\\",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "\\",
+      "ocr": "l",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "m",
+      "ocr": "e",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "a",
+      "ocr": "f",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "h",
+      "ocr": "(",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "t",
+      "ocr": "e",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "h",
+      "ocr": "^",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "r",
+      "ocr": "{",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "m",
+      "ocr": "-",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "{",
+      "ocr": "x",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "e",
+      "ocr": "}",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "}",
+      "ocr": "\\",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "^",
+      "ocr": "r",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "{",
+      "ocr": "i",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "-",
+      "ocr": "g",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "x",
+      "ocr": "h",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "}",
+      "ocr": "t",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "（",
+      "ocr": "$",
+      "category": "other_text",
+      "count": 1
+    },
+    {
+      "gold": "$",
+      "ocr": ")",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "）",
+      "ocr": "$",
+      "category": "other_text",
+      "count": 1
+    },
+    {
+      "gold": "3",
+      "ocr": "{",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "$",
+      "ocr": "3",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "，",
+      "ocr": "}",
+      "category": "other_text",
+      "count": 1
+    },
+    {
+      "gold": "M",
+      "ocr": ",",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "$",
+      "ocr": "∥",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "d",
+      "ocr": "\\",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "M",
+      "ocr": "$",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "x",
+      "ocr": "$",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "$",
+      "ocr": "x",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "为",
+      "ocr": ":",
+      "category": "cjk_text",
+      "count": 1
+    },
+    {
+      "gold": "$",
+      "ocr": ";",
+      "category": "math",
+      "count": 1
+    },
+    {
+      "gold": "；",
+      "ocr": "$",
+      "category": "other_text",
+      "count": 1
+    }
+  ],
+  "error_distribution_raw": {
+    "document": "exam.md",
+    "by_document": {
+      "exam.md": {
+        "by_content_class": {
+          "cjk_text": {
+            "substitution": 2,
+            "deletion": 13
+          },
+          "math": {
+            "insertion": 91,
+            "substitution": 61,
+            "deletion": 81
+          },
+          "math_syntax": {
+            "deletion": 129,
+            "substitution": 43,
+            "insertion": 2
+          },
+          "other_text": {
+            "substitution": 51,
+            "deletion": 26
+          }
+        },
+        "by_unit_type": {
+          "choice": {
+            "deletion": 13,
+            "substitution": 1
+          },
+          "question": {
+            "insertion": 69,
+            "substitution": 106,
+            "deletion": 129
+          },
+          "statement": {
+            "substitution": 8,
+            "deletion": 4
+          },
+          "sub_question": {
+            "insertion": 20,
+            "substitution": 35,
+            "deletion": 79
+          },
+          "text": {
+            "deletion": 24,
+            "substitution": 7,
+            "insertion": 4
+          }
+        },
+        "by_operation": {
+          "deletion": {
+            "math_syntax": 129,
+            "math": 81,
+            "other_text": 26,
+            "cjk_text": 13
+          },
+          "insertion": {
+            "math": 91,
+            "math_syntax": 2
+          },
+          "substitution": {
+            "math": 61,
+            "other_text": 51,
+            "math_syntax": 43,
+            "cjk_text": 2
+          }
+        },
+        "by_math_subtype": {
+          "braces_and_delimiters": {
+            "insertion": 79,
+            "deletion": 146,
+            "substitution": 48
+          },
+          "digits": {
+            "deletion": 13,
+            "substitution": 3
+          },
+          "latex_commands": {
+            "insertion": 13,
+            "substitution": 26,
+            "deletion": 9
+          },
+          "latin_letters": {
+            "insertion": 1,
+            "substitution": 24,
+            "deletion": 40
+          },
+          "operators": {
+            "substitution": 3
+          },
+          "superscript_subscript": {
+            "deletion": 2
+          }
+        },
+        "substitution_confusions_by_class": {
+          "cjk_text": [
+            {
+              "gold": "设",
+              "ocr": "\\overline",
+              "count": 1
+            },
+            {
+              "gold": "为",
+              "ocr": ":",
+              "count": 1
+            }
+          ],
+          "math": [
+            {
+              "gold": "\\dfrac",
+              "ocr": "\\frac",
+              "count": 6
+            },
+            {
+              "gold": "\\dfrac",
+              "ocr": "{",
+              "count": 6
+            },
+            {
+              "gold": "B",
+              "ocr": "AB",
+              "count": 3
+            },
+            {
+              "gold": "A",
+              "ocr": ",",
+              "count": 3
+            },
+            {
+              "gold": "\\bar",
+              "ocr": "{",
+              "count": 2
+            },
+            {
+              "gold": "{",
+              "ocr": "150",
+              "count": 2
+            },
+            {
+              "gold": "\\ge",
+              "ocr": "\\geqslant",
+              "count": 2
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "^",
+              "count": 1
+            },
+            {
+              "gold": "e",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "+",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "(",
+              "ocr": "+",
+              "count": 1
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "\\left",
+              "count": 1
+            },
+            {
+              "gold": "{",
+              "ocr": "(",
+              "count": 1
+            },
+            {
+              "gold": "x",
+              "ocr": "{",
+              "count": 1
+            },
+            {
+              "gold": "-",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "{",
+              "ocr": "-",
+              "count": 1
+            },
+            {
+              "gold": "0",
+              "ocr": "0.5",
+              "count": 1
+            },
+            {
+              "gold": "5",
+              "ocr": "设",
+              "count": 1
+            },
+            {
+              "gold": "\\bar",
+              "ocr": "p",
+              "count": 1
+            },
+            {
+              "gold": "p",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "\\%",
+              "ocr": "95",
+              "count": 1
+            },
+            {
+              "gold": "\\%",
+              "ocr": "99",
+              "count": 1
+            },
+            {
+              "gold": "B",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "C",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "\\parallel",
+              "ocr": "AD",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "BC",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "AD",
+              "count": 1
+            },
+            {
+              "gold": "C",
+              "ocr": "BC",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": "EF",
+              "count": 1
+            },
+            {
+              "gold": "E",
+              "ocr": "ED",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "=",
+              "count": 1
+            },
+            {
+              "gold": "=",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": ",",
+              "count": 1
+            },
+            {
+              "gold": "B",
+              "ocr": "FB",
+              "count": 1
+            },
+            {
+              "gold": "3",
+              "ocr": "{",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": ",",
+              "count": 1
+            },
+            {
+              "gold": "\\parallel",
+              "ocr": "BM",
+              "count": 1
+            },
+            {
+              "gold": "\\le",
+              "ocr": "\\leqslant",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": "MF",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "x",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "\\ ",
+              "ocr": "$",
+              "count": 1
+            }
+          ],
+          "math_syntax": [
+            {
+              "gold": "$",
+              "ocr": ",",
+              "count": 18
+            },
+            {
+              "gold": "$",
+              "ocr": "(",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "%",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "AD",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "M",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "10",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "{",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": ")",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "ABCD",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "ADEF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "EF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "3",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "∥",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "CDE",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "FAB",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "FP",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "NB",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "MF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "xOy",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": ";",
+              "count": 1
+            }
+          ],
+          "other_text": [
+            {
+              "gold": "，",
+              "ocr": ",",
+              "count": 17
+            },
+            {
+              "gold": "，",
+              "ocr": "、",
+              "count": 8
+            },
+            {
+              "gold": "；",
+              "ocr": ";",
+              "count": 7
+            },
+            {
+              "gold": "）",
+              "ocr": ")",
+              "count": 4
+            },
+            {
+              "gold": ".",
+              "ocr": "。",
+              "count": 4
+            },
+            {
+              "gold": "（",
+              "ocr": "(",
+              "count": 3
+            },
+            {
+              "gold": "：",
+              "ocr": ":",
+              "count": 3
+            },
+            {
+              "gold": "（",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "）",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "，",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "，",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "；",
+              "ocr": "$",
+              "count": 1
+            }
+          ]
+        },
+        "math_substitution_confusions": {
+          "braces_and_delimiters": [
+            {
+              "gold": "$",
+              "ocr": ",",
+              "count": 18
+            },
+            {
+              "gold": "{",
+              "ocr": "150",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "(",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "%",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "AD",
+              "count": 2
+            },
+            {
+              "gold": "$",
+              "ocr": "M",
+              "count": 2
+            },
+            {
+              "gold": "(",
+              "ocr": "+",
+              "count": 1
+            },
+            {
+              "gold": "{",
+              "ocr": "(",
+              "count": 1
+            },
+            {
+              "gold": "{",
+              "ocr": "-",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "10",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "{",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": ")",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "ABCD",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "ADEF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "EF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "3",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "∥",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "CDE",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "FAB",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "FP",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "NB",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "MF",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": "xOy",
+              "count": 1
+            },
+            {
+              "gold": "$",
+              "ocr": ";",
+              "count": 1
+            }
+          ],
+          "digits": [
+            {
+              "gold": "0",
+              "ocr": "0.5",
+              "count": 1
+            },
+            {
+              "gold": "5",
+              "ocr": "设",
+              "count": 1
+            },
+            {
+              "gold": "3",
+              "ocr": "{",
+              "count": 1
+            }
+          ],
+          "latex_commands": [
+            {
+              "gold": "\\dfrac",
+              "ocr": "\\frac",
+              "count": 6
+            },
+            {
+              "gold": "\\dfrac",
+              "ocr": "{",
+              "count": 6
+            },
+            {
+              "gold": "\\bar",
+              "ocr": "{",
+              "count": 2
+            },
+            {
+              "gold": "\\ge",
+              "ocr": "\\geqslant",
+              "count": 2
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "^",
+              "count": 1
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "\\left",
+              "count": 1
+            },
+            {
+              "gold": "\\mathrm",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "\\bar",
+              "ocr": "p",
+              "count": 1
+            },
+            {
+              "gold": "\\%",
+              "ocr": "95",
+              "count": 1
+            },
+            {
+              "gold": "\\%",
+              "ocr": "99",
+              "count": 1
+            },
+            {
+              "gold": "\\parallel",
+              "ocr": "AD",
+              "count": 1
+            },
+            {
+              "gold": "\\parallel",
+              "ocr": "BM",
+              "count": 1
+            },
+            {
+              "gold": "\\le",
+              "ocr": "\\leqslant",
+              "count": 1
+            },
+            {
+              "gold": "\\ ",
+              "ocr": "$",
+              "count": 1
+            }
+          ],
+          "latin_letters": [
+            {
+              "gold": "B",
+              "ocr": "AB",
+              "count": 3
+            },
+            {
+              "gold": "A",
+              "ocr": ",",
+              "count": 3
+            },
+            {
+              "gold": "e",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "x",
+              "ocr": "{",
+              "count": 1
+            },
+            {
+              "gold": "p",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "B",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "C",
+              "ocr": "/",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "BC",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "AD",
+              "count": 1
+            },
+            {
+              "gold": "C",
+              "ocr": "BC",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": "EF",
+              "count": 1
+            },
+            {
+              "gold": "E",
+              "ocr": "ED",
+              "count": 1
+            },
+            {
+              "gold": "D",
+              "ocr": "=",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": ",",
+              "count": 1
+            },
+            {
+              "gold": "B",
+              "ocr": "FB",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": ",",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "M",
+              "ocr": "MF",
+              "count": 1
+            },
+            {
+              "gold": "F",
+              "ocr": "$",
+              "count": 1
+            },
+            {
+              "gold": "x",
+              "ocr": "$",
+              "count": 1
+            }
+          ],
+          "operators": [
+            {
+              "gold": "+",
+              "ocr": "}",
+              "count": 1
+            },
+            {
+              "gold": "-",
+              "ocr": "x",
+              "count": 1
+            },
+            {
+              "gold": "=",
+              "ocr": "$",
+              "count": 1
+            }
+          ]
+        },
+        "confidence": {
+          "available": false,
+          "reason": "OCR confidence is absent from the structured output or is not attached to text spans."
+        }
+      }
+    }
+  },
+  "excluded_unit_fraction": {
+    "raw": {
+      "excluded_side_units": 82,
+      "total_side_units": 240,
+      "fraction": 0.341667
+    },
+    "normalized": {
+      "excluded_side_units": 31,
+      "total_side_units": 267,
+      "fraction": 0.116105
+    }
+  },
+  "gate": {
+    "raw_cer_threshold": 0.05,
+    "raw_cer_is_low": false,
+    "recommendation": "correction_may_be_valuable"
+  },
+  "notes": {
+    "cer_classes": "CJK text, Latin text, math, figures, tables, and other visible characters are reported separately.",
+    "raw_baseline": "OCR input is measured before shared style normalization; gold TeX has only been structurally converted to Markdown.",
+    "unit_outcomes": "better/worse/same compare character edit distance before and after normalization; perfect means zero normalized edit distance."
+  },
+  "structure_error_counts": {
+    "extra_block_in_ocr": 2,
+    "question_number_mismatch": 1,
+    "table_not_rendered": 1,
+    "unexpected_figure": 4
+  },
+  "structure_error_counts_by_document": {
+    "exam.md": {
+      "extra_block_in_ocr": 2,
+      "question_number_mismatch": 1,
+      "table_not_rendered": 1,
+      "unexpected_figure": 4
+    }
+  },
+  "ocr_baseline_manifest": "ocr_baseline/baseline_manifest.json",
+  "error_taxonomy_report": "error_taxonomy_results.json",
+  "top_correction_experiment_candidates": [
+    {
+      "category": "character_deletion",
+      "count": 307,
+      "impact_weight": 1.0,
+      "priority_score": 307.0
+    },
+    {
+      "category": "character_insertion",
+      "count": 146,
+      "impact_weight": 1.0,
+      "priority_score": 146.0
+    },
+    {
+      "category": "mathematical_symbol_confusion",
+      "count": 71,
+      "impact_weight": 1.8,
+      "priority_score": 127.8
+    },
+    {
+      "category": "latex_command_error",
+      "count": 48,
+      "impact_weight": 1.5,
+      "priority_score": 72.0
+    },
+    {
+      "category": "character_substitution",
+      "count": 51,
+      "impact_weight": 1.0,
+      "priority_score": 51.0
+    }
+  ],
+  "ocr_baseline_metadata": {
+    "engine": null,
+    "version": null,
+    "configuration": null,
+    "processing_seconds": null,
+    "structured_json_available": false
+  },
+  "markdown_to_latex_compile": {
+    "skipped": true,
+    "reason": "--skip-compile"
+  },
+  "inputs": {
+    "ocr": "/home/ziedlazreg/Desktop/ceeConversion/data/input/exam.md",
+    "ocr_snapshot": "/home/ziedlazreg/Desktop/ceeConversion/paper/results/ocr_baseline/ocr.md",
+    "gold": "/home/ziedlazreg/Desktop/ceeConversion/Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex",
+    "gold_format": "tex",
+    "output_dir": "/home/ziedlazreg/Desktop/ceeConversion/paper/results"
+  },
+  "audit_sample": {
+    "requested": 30,
+    "written": 30,
+    "file": "audit_sample.jsonl"
+  }
+}

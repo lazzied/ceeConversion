@@ -1,39 +1,147 @@
-# A Structural and Textual Evaluation Pipeline for OCR of Mathematics Examinations
+# Comparing Exam OCR with a Reference Paper
 
 ## Abstract
 
-The `paper` folder contains a small pipeline for converting an exam’s LaTeX source and OCR-produced Markdown into structured question data, aligning corresponding questions and content blocks, and measuring OCR differences against a reference. The shared normalizer, [`structural_fixes/normalization.py`](/home/ziedlazreg/Desktop/ceeConversion/structural_fixes/normalization.py), is part of the preparation stage: it canonicalizes text and math formatting on both sides so the comparison is less affected by stylistic variation.
+This project examines how closely an OCR transcription preserves the contents and organization of a mathematics exam. It compares the transcription with a reference paper, first in its original form and then after the same formatting cleanup has been applied to both. The resulting reports describe structural differences, text and formula discrepancies, overall character accuracy, and examples for human review. The method is designed to make OCR errors visible; it does not automatically decide which source is correct or repair the exam.
+
+## Purpose
+
+Exam pages contain more than running text. Question numbers, sub-questions, figures, tables, answer choices, and displayed formulas all carry meaning. A comparison that treats the exam as one long string can miss a misplaced figure or confuse a numbering change with a recognition error. This pipeline therefore follows the exam’s reading order and compares its parts at several levels: the whole question, its smaller sections, and its text or mathematical content.
 
 ## Method
 
-### 1. Prepare a reference and OCR document
+The process begins with two inputs: OCR output and a reference exam. A LaTeX reference is converted to Markdown so it can be compared with the OCR transcription. Both documents then pass through the shared, deterministic formatting cleanup in [`structural_fixes/normalization.py`](structural_fixes/normalization.py). The original versions are retained, allowing the reports to show both the initial OCR quality and the effect of normalization. No language model is used to alter either document.
 
-[`paper/normalize_tex.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/normalize_tex.py) converts the LaTeX source into Markdown. It extracts chapters, sections, and problem environments; converts choices, lists, tables, figures, and source-specific math macros; and can optionally retain answers and solutions.
+Each document is divided into sections, questions, paragraphs, and ordered content blocks. Display equations, tables, figures, and sub-questions are also retained as separate parts. The pipeline first tries exact and normalized comparisons, then uses wording and reading order to find likely counterparts while allowing for questions that are missing or extra. When a question is skipped but its printed number and wording provide enough evidence, the report records that recovery method. Smaller parts are then matched within their question so that similar content elsewhere in the exam is less likely to be paired by mistake.
 
-After that conversion, it calls `normalize_markdown()` from `structural_fixes/normalization.py`. The OCR side uses the same normalizer in the structural-fixes stage: it standardizes items such as math notation, punctuation, blanks, option labels, spacing, and figure markup. The normalization code protects math, tables, and other structured spans while applying text or math rules in the appropriate places. In the broader OCR workflow, `structural_fixes/main.py` also applies structural corrections to the normalized Markdown.
+Structural comparison focuses on the document’s arrangement. It reports changed question or sub-question numbering, missing or extra blocks, tables that appear to have lost their table structure, and figures that are missing or placed differently. Figure placement is judged from neighboring blocks and the figure reference; the method does not compare the visual pixels of images.
 
-This shared step matters for evaluation: it reduces differences caused by inconsistent formatting before alignment and metric calculation. The normalizer is intended mainly for style consistency; it does not recover arbitrary text missing or misread by OCR.
+Content comparison looks inside the matched parts. Chinese characters are compared one at a time. Mathematical expressions are separated from ordinary text so that commands, digits, braces, and operators can be inspected directly. Whitespace is ignored. Figures are compared by their references, while table cells are compared as text. Differences are recorded as matching, changed, missing, or extra characters and tokens, with their positions kept in the alignment file. The error taxonomy refines these into measured character, glyph, operator, math-symbol, LaTeX-command, structural, reading-order, and possible equation-splitting or merging categories. Formula and text differences are marked as likely syntax or meaning issues by simple rules; these labels are prompts for review, not final judgments about correctness.
 
-### 2. Segment Markdown into exam structure
+Finally, the pipeline calculates character and token error rates for the original and normalized documents, with separate results for Chinese, Latin text, and mathematics. It counts exact units, units that improved, worsened, stayed the same, or were already perfect; estimates equation similarity, table layout preservation, and reading order; lists frequent gold-to-OCR confusions; estimates changes introduced by normalization; and reports alignment coverage and unmatched material. Equation similarity is a transparent token-edit estimate, not Formula-CDM. Error counts are grouped by text or math class, mathematical symbol type, content unit, and document. If the external OCR JSON includes confidence scores attached to text, the taxonomy attempts to associate them with aligned units and reports error counts by confidence band; these approximate matches should be audited. A small, balanced sample is prepared for a person to inspect, especially for alignment mistakes and errors caused by converting LaTeX to Markdown. The report calculates alignment precision and recall from this sample after it has been manually labeled; these values remain blank until review is entered.
 
-[`paper/segmentation.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/segmentation.py) parses Markdown into a hierarchy of exams, sections, questions, and ordered blocks. Blocks retain types such as choices, subquestions, statements, tables, figures, and ordinary text, along with labels and subquestion context.
+### Preserving the OCR baseline
 
-The current reference and OCR JSON files contain 23 questions each. Their section groupings differ, so the alignment stage flattens questions in reading order before matching them.
+OCR is performed outside this project, for example in Google Colab. This repository accepts the resulting Markdown and never starts an OCR engine. The baseline importer copies the Markdown unchanged and can also preserve the OCR system's structured JSON, run details, and log. Set the paths in the function call:
 
-### 3. Compare question similarity and exam structure
+```python
+from pathlib import Path
+from paper.ocr_baseline import main as save_ocr_baseline
 
-[`paper/block_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/block_alignment.py) matches questions in reading order using a monotonic sequence alignment. It writes a compact `alignment_results.json`: each row contains the OCR question number, reference question number, and one general similarity score.
+save_ocr_baseline(
+    markdown_path=Path("path/to/external_ocr.md"),
+    output_dir=Path("paper/results/ocr_baseline"),
+    structured_json=Path("path/to/external_ocr.json"),  # optional
+    metadata_json=Path("path/to/ocr_run_metadata.json"),  # optional
+    log_path=Path("path/to/ocr_run.log"),  # optional
+)
+```
 
-Structural diagnostics are written separately to `structure_results.json`. They report missing or extra questions and blocks, question or subquestion numbering mismatches, tables that were not rendered, unexpected/missing figures, and figure placement differences. The structural comparison follows the ordered block sequence and focuses on document organization rather than text accuracy.
+The JSON, metadata, and log are optional. The metadata file can record the external engine and version, its settings, and elapsed time. Page numbers and bounding boxes are retained in the structured JSON when the external OCR system supplies them. Markdown is not rewritten during import. To import and evaluate in one step, provide the same files to the pipeline:
 
-### 4. Compare content units and report OCR errors
+For example, the metadata JSON can use this shape:
 
-[`paper/token_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/token_alignment.py) aligns ordered content units and creates `token_alignment_results.json`, with separate `syntactic` and `semantic` findings. It distinguishes prose from math, treats LaTeX commands as tokens and math punctuation/digits as separate tokens, gives each Chinese character its own token, and ignores whitespace. Figure references must match exactly. Tables use a `<table>` placeholder and compare their ordered cell content.
+```json
+{
+  "engine": "PaddleOCR-VL",
+  "version": "<version used in Colab>",
+  "configuration": {"device": "<device>", "other_settings": "<values>"},
+  "processing_seconds": 123.4
+}
+```
 
-[`paper/metrics.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/metrics.py) independently calculates character error rate and content-token error rate, overall and by unit type. This makes math and prose scores inspectable separately from the structural report. `paper/extract_solution.py` remains a separate LaTeX-to-Markdown utility for extracting answers and solutions.
+```python
+from pathlib import Path
+from paper.run_pipeline import main
 
-## Interpretation and limitations
+main(
+    ocr_path=Path("path/to/external_ocr.md"),
+    gold_path=Path("path/to/reference.tex"),
+    output_dir=Path("paper/results"),
+    ocr_structured_json=Path("path/to/external_ocr.json"),  # optional
+    ocr_metadata_json=Path("path/to/ocr_run_metadata.json"),  # optional
+    ocr_log_path=Path("path/to/ocr_run.log"),  # optional
+)
+```
 
-The normalizer is shared between OCR Markdown and the gold conversion so stylistic differences are reduced before comparison. It does not correct arbitrary OCR recognition errors. The syntax/semantic labels in the token report are rule-based indicators: LaTeX commands, delimiters, and brace structure are classified as syntactic, while prose and formula-content differences are classified as semantic. They are useful for review, but they do not prove that a formula is mathematically wrong. Alignment quality also depends on the input segmentation and on question matching.
+The regular command uses `data/input/exam.md` as its externally produced OCR transcript. Keeping this file fixed lets later correction experiments share the same OCR baseline.
 
-The evaluation path is **convert and normalize → segment → align structure → align content units → calculate metrics**. Similarity, structural findings, content-error detections, and aggregate metrics are kept in separate output files so each report has one purpose.
+## Running the analysis
+
+The pipeline's input paths are function arguments, so you can set them directly in your Python file or IDE. The defaults use the repository's current OCR Markdown and reference document:
+
+```python
+from paper.run_pipeline import main
+
+main()
+```
+
+For another exam, replace the path arguments:
+
+```python
+from pathlib import Path
+from paper.run_pipeline import main
+
+main(
+    ocr_path=Path("path/to/ocr.md"),
+    gold_path=Path("path/to/reference.tex"),
+    output_dir=Path("paper/results"),
+    skip_compile=True,
+)
+```
+
+The reference can be LaTeX or Markdown. Set `skip_compile=True` to skip the check that converts Markdown to LaTeX and attempts to build a PDF. The audit sample is prepared with blank review fields; a human still needs to inspect and label it.
+
+## Reports
+
+The pipeline writes its current results to `paper/results/`:
+
+- `alignment_results.json` gives one overall similarity score per question and records how each question was matched, including whether a parent fallback was used.
+- `structure_results.json` lists detected differences in numbering, block types, tables, and figure placement.
+- `error_taxonomy_results.json` classifies raw-alignment errors, gives Chinese and math confusion tables, reports structural and equation-segmentation candidates, and ranks likely first correction experiments by measured frequency with transparent impact weights.
+- `alignment_pairs.jsonl` contains matched and unmatched questions and content units, with their text, matching method, and identified differences.
+- `token_alignment_results.json` summarizes likely syntax and meaning errors and the amount of content excluded from scoring.
+- `metrics_results.json` contains raw and normalized character and token accuracy, exact-unit rate, equation-similarity estimate, table layout accuracy, reading-order estimate, alignment coverage, error groupings, unit outcomes, frequent character confusions, normalization effects, and optional compilation results.
+- `audit_sample.jsonl` contains up to 30 examples selected across content types for manual review. If both unit IDs are present, set `alignment_review_label` to `correct_match` or `incorrect_match`. If only one side is present, use `missed_match` when its counterpart exists elsewhere or `no_counterpart` otherwise. The next run preserves these labels and calculates alignment precision and recall.
+- `ocr_baseline/` contains the unchanged Markdown snapshot, optional structured OCR JSON and log, optional external run metadata, and a manifest with file hashes and provenance.
+- The Markdown files and segmentation JSON files preserve the input and intermediate forms used to make the reports.
+- `compile_checks/` stores the generated TeX, logs, and PDFs when compilation is enabled. `run_summary.json` gives a short overview of the run.
+
+The similarity and error labels are estimates based on text and structure. A high score does not guarantee that a formula is mathematically correct, and a successful PDF build does not guarantee that the transcription is faithful.
+
+For multiple exams, run the pipeline once for each OCR Markdown and gold pair, then combine the per-exam taxonomy reports:
+
+```python
+from pathlib import Path
+from paper.error_taxonomy import aggregate_report_files
+
+aggregate_report_files(
+    [
+        Path("exam_a/results/error_taxonomy_results.json"),
+        Path("exam_b/results/error_taxonomy_results.json"),
+    ],
+    Path("corpus_error_taxonomy.json"),
+)
+```
+
+The corpus report keeps per-document counts while adding their totals. Its suggested correction categories are a review aid; inspect the confusions and alignment audit before choosing experiments.
+
+## Source file guide
+
+The files below are listed in the order the main workflow uses them.
+
+1. [`paper/ocr_baseline.py`](paper/ocr_baseline.py) imports and freezes externally generated OCR Markdown and optional structured JSON, metadata, and logs. It does not run OCR.
+2. [`paper/gold_normalization.py`](paper/gold_normalization.py) converts common exam structures in LaTeX—such as figures, tables, choices, lists, and formulas—into Markdown. The shared formatting cleanup is applied consistently to OCR and reference text by the runner.
+3. [`paper/exam_segmentation.py`](paper/exam_segmentation.py) reads Markdown and preserves the exam as sections, questions, paragraphs, and ordered blocks, including figures and tables.
+4. [`paper/alignment_core.py`](paper/alignment_core.py) compares question wording and finds a reading-order alignment. It allows gaps for content that is missing or extra and records how each match was found.
+5. [`paper/unit_extraction.py`](paper/unit_extraction.py) turns questions and their contents into smaller records, keeping track of which question each record belongs to.
+6. [`paper/unit_matching.py`](paper/unit_matching.py) pairs sub-questions, formulas, figures, tables, and text within their question. It records matching tokens, their positions, and changed, missing, and extra tokens.
+7. [`paper/structure_alignment.py`](paper/structure_alignment.py) compares the order and kind of blocks in corresponding questions and writes the question-similarity and structure reports.
+8. [`paper/content_tokenizer.py`](paper/content_tokenizer.py) prepares text and formulas for comparison, keeping Chinese characters separate and recognizing mathematical commands and symbols while ignoring whitespace.
+9. [`paper/content_alignment.py`](paper/content_alignment.py) compares the extracted content, labels likely syntax and meaning differences, and prepares the detailed alignment rows.
+10. [`paper/evaluation_metrics.py`](paper/evaluation_metrics.py) calculates character and token accuracy, exact matches, equation and table measures, reading order, character confusions, and alignment coverage.
+11. [`paper/error_taxonomy.py`](paper/error_taxonomy.py) classifies aligned OCR errors, builds confusion tables, flags possible reading-order and equation-segmentation problems, and combines reports across exams.
+12. [`paper/run_pipeline.py`](paper/run_pipeline.py) coordinates the complete process, writes the reports, prepares the review sample, and optionally checks whether the documents can be converted and compiled.
+13. [`paper/solution_extraction.py`](paper/solution_extraction.py) is a separate helper for extracting answers and worked solutions from LaTeX. It is not part of the OCR comparison run.
+
+[`paper/__init__.py`](paper/__init__.py) marks `paper` as an importable Python package. Main functions accept paths and settings as arguments; they do not parse terminal arguments. The files `paper/example_01_exam_markdown.md`, `paper/example_02_gold_exam_segmentation.json`, and `paper/example_03_ocr_exam_segmentation.json` are retained example snapshots from earlier processing; current reports are written under `paper/results/`.
