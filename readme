@@ -1,0 +1,49 @@
+# A Structural and Textual Evaluation Pipeline for OCR of Mathematics Examinations
+
+## Abstract
+
+The `paper` folder contains a small pipeline for converting an exam’s LaTeX source and OCR-produced Markdown into structured question data, aligning corresponding questions and content blocks, and measuring OCR differences against a reference. The shared normalizer, [`structural_fixes/normalization.py`](/home/ziedlazreg/Desktop/ceeConversion/structural_fixes/normalization.py), is part of the preparation stage: it canonicalizes text and math formatting on both sides so the comparison is less affected by stylistic variation.
+
+## Method
+
+### 1. Prepare a reference and OCR document
+
+[`paper/normalize_tex.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/normalize_tex.py) converts the LaTeX source into Markdown. It extracts chapters, sections, and problem environments; converts choices, lists, tables, figures, and source-specific math macros; and can optionally retain answers and solutions.
+
+After that conversion, it calls `normalize_markdown()` from `structural_fixes/normalization.py`. The OCR side uses the same normalizer in the structural-fixes stage: it standardizes items such as math notation, punctuation, blanks, option labels, spacing, and figure markup. The normalization code protects math, tables, and other structured spans while applying text or math rules in the appropriate places. In the broader OCR workflow, `structural_fixes/main.py` also applies structural corrections to the normalized Markdown.
+
+This shared step matters for evaluation: it reduces differences caused by inconsistent formatting before alignment and metric calculation. The normalizer is intended mainly for style consistency; it does not recover arbitrary text missing or misread by OCR.
+
+### 2. Segment Markdown into exam structure
+
+[`paper/segmentation.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/segmentation.py) parses Markdown into a hierarchy of exams, sections, questions, and ordered blocks. Blocks retain types such as choices, subquestions, statements, tables, figures, and ordinary text, along with labels and subquestion context.
+
+The current reference and OCR JSON files contain 23 questions each. Their section groupings differ, so the alignment stage flattens questions in reading order before matching them.
+
+### 3. Align questions and blocks
+
+[`paper/block_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/block_alignment.py) uses a Needleman–Wunsch-style monotonic sequence alignment. It first pairs questions using stem similarity and a question-number bonus. It then aligns blocks separately by kind, such as choices with choices, using fuzzy text similarity.
+
+The reported question score combines stem similarity (60%) and content similarity (40%) when blocks are available. Missing blocks receive a zero similarity contribution, so omissions can lower the content score. Alignment statuses are labeled `aligned`, `weak`, or `unaligned` using similarity thresholds.
+
+### 4. Calculate error metrics
+
+[`paper/metrics.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/metrics.py) calculates character error rate (CER), a multilingual and LaTeX-aware token error rate, and word error rate (WER) for applicable Latin-script prose. OCR is treated as the hypothesis and the reference as the gold text. Unmatched blocks are compared with empty text, so extra or missing blocks contribute errors.
+
+[`paper/extract_solution.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/extract_solution.py) is a separate LaTeX-to-Markdown utility for extracting answers and solutions. It is adjacent to the evaluation workflow, rather than one of its alignment or metric stages. [`paper/token_alignment.py`](/home/ziedlazreg/Desktop/ceeConversion/paper/token_alignment.py) is currently empty.
+
+## Current results
+
+The saved [`metrics_results.json`](/home/ziedlazreg/Desktop/ceeConversion/metrics_results.json) reports 23 aligned question results. Across stems and blocks, it records:
+
+- **CER:** 14.636% across 3,874 reference characters.
+- **Token error rate:** 13.326% across 2,634 reference tokens.
+- **Latin-prose WER:** 21.429%, based on 17 eligible pairs and 28 reference words.
+
+The stem CER is 9.527%; the content-block CER is 18.859%. In this snapshot, block content contributes more measured character errors than question stems.
+
+## Interpretation and limitations
+
+These figures describe the current OCR-to-reference comparison after the inputs have been prepared. They are not, by themselves, a before-and-after estimate of the normalizer’s effect; that would require evaluating both normalized and unnormalized inputs under the same setup. The alignment scores and error rates also depend on segmentation and question/block matching, so a structural parsing or matching error can affect the measured text errors.
+
+In short, the folder’s evaluation path is **convert and normalize → segment → align → score**. `normalization.py` belongs in the preparation path for both the OCR text and the gold reference, before their structural comparison.

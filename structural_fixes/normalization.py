@@ -1,696 +1,465 @@
-"""Deterministic cleanup passes for OCR-derived exam Markdown."""
+"""Deterministic style normalization for exam Markdown.
 
+Direction: OCR style -> gold style. Apply the SAME function to gold and OCR
+(on gold it only rewrites the gold's own inconsistent outliers).
+"""
 from pathlib import Path
 import html
 import re
-from collections.abc import Callable
 
+CJK = r'\u4e00-\u9fff'
+CHINESE = re.compile(f'[{CJK}]')
 
-# Protect mathematical expressions, HTML tags and Markdown images.
+# Protected tokens (odd split indices). Only '$...' tokens are ever edited.
 SPLIT_PATTERN = re.compile(
-    r'(\$\$.+?\$\$|\$[^$\n]+\$|<[^>]+>|!\[[^\]]*\]\([^)]*\))',
-    re.S,
+    r'(<table\b.*?</table>'
+    r'|\\includegraphics\{[^}]*\}'
+    r'|(?m:^\#{1,6}[ \t][^\n]*)'
+    r'|\$\$.+?\$\$'
+    r'|\$(?:(?!\n[ \t]*\n)[^$])+\$'          # inline math, may span single newlines
+    r'|<[^>]+>'
+    r'|!\[[^\]]*\]\([^)]*\))',
+    re.S | re.I,
 )
-
-CHINESE = re.compile(r'[\u4e00-\u9fff]')
+INLINE = re.compile(r'^\$(?!\$)(.*)\$$', re.S)
 
 UNICODE_TO_LATEX = {
-    '∥': r'\parallel',
-    '⊥': r'\perp',
-    '⩾': r'\geqslant',
-    '≥': r'\geqslant',
-    '⩽': r'\leqslant',
-    '≤': r'\leqslant',
-    '≈': r'\approx',
-    '∈': r'\in',
-    '∩': r'\cap',
-    '∪': r'\cup',
+    '∥': r'\parallel', '⊥': r'\perp', '⩾': r'\ge', '≥': r'\ge',
+    '⩽': r'\le', '≤': r'\le', '≈': r'\approx', '∈': r'\in',
+    '∩': r'\cap', '∪': r'\cup',
 }
-
-UNICODE_PATTERN = re.compile(
-    '|'.join(re.escape(k) for k in UNICODE_TO_LATEX)
-)
-
-PUNCTUATION_MAP = str.maketrans({
-    '，': ',',
-    '；': ';',
-    '：': ':',
-    '（': '(',
-    '）': ')',
-    '。': '.',
-})
+UNICODE_PATTERN = re.compile('|'.join(re.escape(k) for k in UNICODE_TO_LATEX))
 
 
-def edit_parts(
-    markdown: str,
-    edit_text: Callable[[str], str] | None = None,
-    edit_math: Callable[[str], str] | None = None,
-) -> str:
-    """Apply separate cleanup functions to prose and math spans.
-
-    HTML tags and Markdown images are protected tokens.
-    """
-
+def edit_parts(markdown, edit_text=None, edit_math=None):
     parts = SPLIT_PATTERN.split(markdown)
-
     for i, part in enumerate(parts):
         if i % 2 == 0 and edit_text:
             parts[i] = edit_text(part)
-
         elif i % 2 == 1 and part.startswith('$') and edit_math:
             parts[i] = edit_math(part)
-
     return ''.join(parts)
 
 
-# ---------------------------------------------------------
-# 1. BASIC NORMALIZATION
-# ---------------------------------------------------------
-
-def decode_html_entities(markdown: str) -> str:
-    """Decode HTML character references."""
-
-    return html.unescape(markdown)
-
-
-def remove_math_emphasis(markdown: str) -> str:
-    """Remove accidental Markdown bold markers around LaTeX commands."""
-
-    def clean(math: str) -> str:
-        return re.sub(
-            r'\*\*(\\[a-zA-Z]+)\*\*',
-            r'\1',
-            math,
-        )
-
-    return edit_parts(markdown, edit_math=clean)
+def edit_text_ctx(markdown, fn):
+    """Like edit_parts(edit_text=...) but a '$' sentinel marks 'not at line start'
+    for gaps that follow a protected token."""
+    parts = SPLIT_PATTERN.split(markdown)
+    for i in range(0, len(parts), 2):
+        pre = '$' if i else ''
+        parts[i] = fn(pre + parts[i])[len(pre):]
+    return ''.join(parts)
 
 
-def normalize_punctuation(markdown: str) -> str:
-    """Normalize equivalent Chinese and ASCII punctuation in prose."""
+# ------------------------------------------------------------------ basics
+def decode_html_entities(md):
+    return html.unescape(md)
 
+
+def convert_figures(md):
+    def img(m):
+        src = re.search(r'''src\s*=\s*["']([^"']+)["']''', m.group(0), re.I)
+        return rf"\includegraphics{{{src.group(1).strip()}}}" if src else m.group(0)
+    md = re.sub(r'<img\b[^>]*>', img, md, flags=re.I)
+    return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)',
+                  lambda m: rf"\includegraphics{{{m.group(2).strip()}}}", md)
+
+
+def unwrap_divs(md):
+    return re.sub(r'</?div\b[^>]*>', '', md, flags=re.I)
+
+
+def normalize_tables(md):
+    def clean(m):
+        t = re.match(r'<\s*(/?)\s*([a-zA-Z0-9]+)', m.group(0))
+        if not t or t.group(2).lower() not in {'table', 'tr', 'td', 'th'}:
+            return m.group(0)
+        return f"<{t.group(1)}{t.group(2).lower()}>"
+    return re.sub(r'<[^>]+>', clean, md)
+
+
+def replace_unicode_symbols(md):
     return edit_parts(
-        markdown,
-        edit_text=lambda text: text.translate(PUNCTUATION_MAP),
-    )
+        md,
+        edit_text=lambda t: UNICODE_PATTERN.sub(lambda m: '$' + UNICODE_TO_LATEX[m.group()] + '$', t),
+    )  # inside math it is handled by canon_math
 
 
-def normalize_latex_commands(markdown: str) -> str:
-    """Canonicalize selected equivalent LaTeX commands."""
-
-    def normalize(math: str) -> str:
-        math = re.sub(
-            r'\\(?:dfrac|tfrac)(?![a-zA-Z])',
-            r'\\frac',
-            math,
-        )
-
-        # \bar{z} -> \overline{z}
-        math = re.sub(
-            r'\\bar\s*\{([^{}]*)\}',
-            r'\\overline{\1}',
-            math,
-        )
-
-        # \bar z -> \overline{z}, for a single Latin symbol.
-        math = re.sub(
-            r'\\bar\s*([A-Za-z])(?![A-Za-z])',
-            r'\\overline{\1}',
-            math,
-        )
-
-        return math
-
-    return edit_parts(markdown, edit_math=normalize)
+def replace_degree_sign(md):
+    return edit_parts(md, edit_text=lambda t: re.sub(r'(\d+)\s*[°◦]', r'$\1^\\circ$', t))
 
 
-# ---------------------------------------------------------
-# 2. FIGURE NORMALIZATION
-# ---------------------------------------------------------
-
-def convert_figures(markdown: str) -> str:
-    """Convert HTML images and Markdown images to includegraphics only."""
-
-    def convert_html_image(match: re.Match[str]) -> str:
-        tag = match.group(0)
-
-        src = re.search(
-            r'''src\s*=\s*["']([^"']+)["']''',
-            tag,
-            re.IGNORECASE,
-        )
-
-        if not src:
-            return tag
-
-        return rf"\includegraphics{{{src.group(1).strip()}}}"
-
-    def convert_markdown_image(match: re.Match[str]) -> str:
-        image_path = match.group(2).strip()
-        return rf"\includegraphics{{{image_path}}}"
-
-    # HTML <img> tags.
-    markdown = re.sub(
-        r'<img\b[^>]*>',
-        convert_html_image,
-        markdown,
-        flags=re.IGNORECASE,
-    )
-
-    # Markdown ![alt](path) images.
-    markdown = re.sub(
-        r'!\[([^\]]*)\]\(([^)]+)\)',
-        convert_markdown_image,
-        markdown,
-    )
-
-    return markdown
-
-
-def unwrap_divs(markdown: str) -> str:
-    """Remove layout-only div wrappers."""
-
-    return re.sub(
-        r'</?div\b[^>]*>',
-        '',
-        markdown,
-        flags=re.IGNORECASE,
-    )
-
-
-# ---------------------------------------------------------
-# 3. TABLE NORMALIZATION
-# ---------------------------------------------------------
-
-def normalize_tables(markdown: str) -> str:
-    """Preserve table structure and remove all table styling attributes.
-
-    Preserved:
-        table, tr, td, th
-
-    Other HTML tags are left untouched.
-    """
-
-    allowed_tags = {"table", "tr", "td", "th"}
-
-    def clean_tag(match: re.Match[str]) -> str:
-        tag = match.group(0)
-
-        tag_match = re.match(
-            r'<\s*(/?)\s*([a-zA-Z0-9]+)',
-            tag,
-        )
-
-        if not tag_match:
-            return tag
-
-        closing, tag_name = tag_match.groups()
-        tag_name = tag_name.lower()
-
-        if tag_name not in allowed_tags:
-            return tag
-
-        if closing:
-            return f"</{tag_name}>"
-
-        return f"<{tag_name}>"
-
-    return re.sub(
-        r'<[^>]+>',
-        clean_tag,
-        markdown,
-        flags=re.IGNORECASE,
-    )
-
-
-# ---------------------------------------------------------
-# 4. MATHEMATICAL SYMBOL NORMALIZATION
-# ---------------------------------------------------------
-
-def replace_unicode_symbols(markdown: str) -> str:
-    """Replace supported Unicode mathematical symbols with LaTeX."""
-
-    return edit_parts(
-        markdown,
-        edit_text=lambda text: UNICODE_PATTERN.sub(
-            lambda m: '$' + UNICODE_TO_LATEX[m.group()] + '$',
-            text,
-        ),
-        edit_math=lambda math: UNICODE_PATTERN.sub(
-            lambda m: UNICODE_TO_LATEX[m.group()],
-            math,
-        ),
-    )
-
-
-def replace_degree_sign(markdown: str) -> str:
-    """Convert degree symbols into LaTeX math notation."""
-
-    return edit_parts(
-        markdown,
-        edit_text=lambda text: re.sub(
-            r'(\d+)\s*[°◦]',
-            r'$\1^{\\circ}$',
-            text,
-        ),
-        edit_math=lambda math: re.sub(
-            r'(\d+)\s*[°◦]',
-            r'\1^{\\circ}',
-            math,
-        ),
-    )
-
-
-def fullwidth_to_halfwidth_in_math(markdown: str) -> str:
-    """Convert full-width ASCII characters inside math only."""
-
-    def convert(math: str) -> str:
-        return ''.join(
-            chr(ord(c) - 0xFEE0)
-            if 0xFF01 <= ord(c) <= 0xFF5E
-            else c
-            for c in math
-        )
-
-    return edit_parts(markdown, edit_math=convert)
-
-
-def trim_math_spaces(markdown: str) -> str:
-    """Remove padding immediately inside math delimiters."""
-
-    return edit_parts(
-        markdown,
-        edit_math=lambda math: re.sub(
-            r'^(\$+)\s*(.*?)\s*(\$+)$',
-            r'\1\2\3',
-            math,
-            flags=re.S,
-        ),
-    )
-
-
-# ---------------------------------------------------------
-# 4b. COMPACT MATH STYLE  ( \frac{2}{3} -> \frac23 , x^{2} -> x^2 ... )
-# ---------------------------------------------------------
-
-def normalize_math_symbols(markdown: str) -> str:
-    r"""Canonical spelling of equivalent LaTeX symbols (math only).
-
-        \geqslant, \geq -> \ge        \leqslant, \leq -> \le
-        \left| ... \right| -> | ... |
-        e^{x} -> \mathrm{e}^{x}
-    """
-
-    def normalize(math: str) -> str:
-        math = re.sub(r'\\(?:geqslant|geq)(?![a-zA-Z])', r'\\ge', math)
-        math = re.sub(r'\\(?:leqslant|leq)(?![a-zA-Z])', r'\\le', math)
-        math = re.sub(r'\\left\s*\|', '|', math)
-        math = re.sub(r'\\right\s*\|', '|', math)
-        math = re.sub(r'(?<![A-Za-z\\])e(?=\^)', r'\\mathrm{e}', math)
-        return math
-
-    return edit_parts(markdown, edit_math=normalize)
-
-
-# A "single token" is one letter, one digit or one control word (\pi, \alpha ...).
+# --------------------------------------------------------- math-internal
 SINGLE_TOKEN = re.compile(r'[A-Za-z0-9]|\\[A-Za-z]+')
-FRAC = re.compile(r'\\frac(?![A-Za-z])')
+FRAC = re.compile(r'\\dfrac(?![A-Za-z])')
 
 
-def _strip_spaces(s: str) -> str:
-    """Delete spaces, except where TeX needs one:
-    after a control word that is followed by a letter (\\sin x, \\mid x),
-    and after a backslash ("\\ ")."""
-
-    def keep(m: re.Match[str]) -> str:
+def _strip_spaces(s):
+    def keep(m):
         before, after = s[:m.start()], s[m.end():]
-
         if before.endswith('\\') and not before.endswith('\\\\'):
             return ' '
-
         if re.search(r'\\[A-Za-z]+$', before) and re.match(r'[A-Za-z]', after):
             return ' '
-
         return ''
-
-    return re.sub(r'\s+', keep, s)
-
-
-def remove_math_spaces(markdown: str) -> str:
-    r"""Remove spaces inside math:  $x = 2 \mid x + 1$  ->  $x=2\mid x+1$.
-
-    Text inside \text{...} is left untouched.
-    """
-
-    def tidy(math: str) -> str:
-        pieces = re.split(r'(\\text\{[^{}]*\})', math)
-
-        for i in range(0, len(pieces), 2):
-            pieces[i] = _strip_spaces(pieces[i])
-
-        return ''.join(pieces)
-
-    return edit_parts(markdown, edit_math=tidy)
+    pieces = re.split(r'(\\text\{[^{}]*\})', s)
+    out = []
+    for i, p in enumerate(pieces):
+        if i % 2:
+            out.append(p)
+        else:
+            # re-run keep() with full-string context is unnecessary inside a piece
+            def keep_p(m, p=p):
+                before, after = p[:m.start()], p[m.end():]
+                if before.endswith('\\') and not before.endswith('\\\\'):
+                    return ' '
+                if re.search(r'\\[A-Za-z]+$', before) and re.match(r'[A-Za-z]', after):
+                    return ' '
+                return ''
+            out.append(re.sub(r'\s+', keep_p, p))
+    return ''.join(out)
 
 
-def _read_arg(s: str, i: int):
-    """Read one TeX argument starting at s[i].
-
-    Returns (text, was_braced, end_index) or None.
-    """
-
+def _read_arg(s, i):
     while i < len(s) and s[i] == ' ':
         i += 1
-
     if i >= len(s):
         return None
-
     if s[i] == '{':
         depth = 0
-
         for j in range(i, len(s)):
             if s[j] in '{}' and s[j - 1:j] == '\\':
-                continue  # escaped brace \{ or \}
-
+                continue
             if s[j] == '{':
                 depth += 1
             elif s[j] == '}':
                 depth -= 1
-
                 if depth == 0:
                     return s[i + 1:j], True, j + 1
-
         return None
-
     m = re.match(r'\\[A-Za-z]+|.', s[i:], re.S)
     return m.group(), False, i + m.end()
 
 
-def _compact_fracs(s: str) -> str:
-    r"""\frac{2}{3} -> \frac23,  \frac{\pi}{4} -> \frac\pi4,
-    \frac{1}{\log_8a} -> \frac1{\log_8a}   (braces kept for longer arguments)."""
-
+def _canon_fracs(s):
+    """Gold style: \\dfrac52 when both args are single tokens, else \\dfrac{..}{..}."""
     result, i = '', 0
-
     while True:
         m = FRAC.search(s, i)
-
         if not m:
             return result + s[i:]
-
         result += s[i:m.start()]
-
         a = _read_arg(s, m.end())
         b = _read_arg(s, a[2]) if a else None
-
         if not a or not b:
             result += m.group()
             i = m.end()
             continue
-
-        args = []
-
-        for text, braced, _ in (a, b):
-            if braced:
-                text = _compact_fracs(text)
-
-                if not SINGLE_TOKEN.fullmatch(text):
-                    text = '{' + text + '}'
-
-            args.append(text)
-
-        first, second = args
-
-        out = r'\frac'
-
-        if first[0].isalpha():
-            out += ' '  # \frac a b  (a control word must not touch a letter)
-
-        out += first
-
-        if re.fullmatch(r'\\[A-Za-z]+', first) and second[0].isalpha():
-            out += ' '  # \pi a
-
-        out += second
-
+        first, second = (_canon_fracs(t) if br else t for t, br, _ in (a, b))
+        if SINGLE_TOKEN.fullmatch(first) and SINGLE_TOKEN.fullmatch(second):
+            out = r'\dfrac' + (' ' if first[0].isalpha() else '') + first
+            if re.fullmatch(r'\\[A-Za-z]+', first) and second[0].isalpha():
+                out += ' '
+            out += second
+        else:
+            out = '\\dfrac{' + first + '}{' + second + '}'
         result += out
         i = b[2]
 
-# ---------------------------------------------------------
-# 5b. STANDALONE NUMBERS -> MATH
-# ---------------------------------------------------------
 
-# Never touch: tables, \includegraphics paths, heading lines.
-PROTECT_NUMBERS = re.compile(
-    r'(<table\b.*?</table>|\\includegraphics\{[^}]*\}|^#{1,6}[ \t][^\n]*)',
-    re.S | re.I | re.M,
-)
+LR = re.compile(r'\\(left|right)(?![A-Za-z])\s*(.)', re.S)
+CLOSER = {'(': ')', '[': ']'}
 
-# group 1: a question / sub-question label at line start -> kept as is
-# group 2: a standalone number (optional minus, decimal, percent)
+
+def _strip_flat_left_right(s):
+    """Gold keeps \\left( \\right) only when the inside holds a fraction."""
+    stack, pairs = [], []
+    for m in LR.finditer(s):
+        if m.group(1) == 'left':
+            stack.append(m)
+        elif stack:
+            pairs.append((stack.pop(), m))
+    edits = []
+    for l, r in pairs:
+        if CLOSER.get(l.group(2)) == r.group(2) and not re.search(r'\\dfrac|\\frac', s[l.end():r.start()]):
+            edits += [(l.start(), l.end(), l.group(2)), (r.start(), r.end(), r.group(2))]
+    for a, b, rep in sorted(edits, reverse=True):
+        s = s[:a] + rep + s[b:]
+    return s
+
+
+def canon_math(span):
+    d = '$$' if span.startswith('$$') else '$'
+    s = span[len(d):-len(d)]
+    s = re.sub(r'\*\*(\\[A-Za-z]+)\*\*', r'\1', s)
+    s = ''.join(chr(ord(c) - 0xFEE0) if 0xFF01 <= ord(c) <= 0xFF5E else c for c in s)
+    s = UNICODE_PATTERN.sub(lambda m: UNICODE_TO_LATEX[m.group()] + ' ', s)
+    s = re.sub(r'(\d)\s*[°◦]', r'\1^\\circ', s)
+    s = re.sub(r'\\t?frac(?![A-Za-z])', lambda m: r'\dfrac', s)
+    s = re.sub(r'\\(?:overline|bar)\s*\{([A-Za-z])\}', r'\\bar \1', s)
+    s = re.sub(r'\\(?:geqslant|geq)(?![A-Za-z])', lambda m: r'\ge', s)
+    s = re.sub(r'\\(?:leqslant|leq)(?![A-Za-z])', lambda m: r'\le', s)
+    s = re.sub(r'\\(?:left|right)(?![A-Za-z])\s*\|', '|', s)
+    s = _strip_flat_left_right(s)
+    s = re.sub(r'(?<![A-Za-z\\])e(?=\^)', lambda m: r'\mathrm{e}', s)
+    s = _strip_spaces(s)
+    s = re.sub(r'([\^_])\{([A-Za-z])\}', r'\1\2', s)
+    s = re.sub(r'([\^_])\{(\d)\}(?!\d)', r'\1\2', s)
+    s = re.sub(r'([\^_])\{(\\[A-Za-z]+)\}(?![A-Za-z])', r'\1\2', s)
+    s = re.sub(r'\\sqrt\{(\d)\}', r'\\sqrt\1', s)
+    s = _canon_fracs(s)
+    return d + s + d
+
+
+def canon_math_spans(md):
+    return edit_parts(md, edit_math=canon_math)
+
+
+# ------------------------------------------------------- prose-level rules
+def remove_page_numbers(md):
+    return re.sub(r'(?m)^[ \t]*\d{3,4}[ \t]*(?:\n|\Z)', '', md)
+
+
+def fix_answer_brackets(md):
+    return edit_parts(md, edit_text=lambda t: re.sub(r'[ \t]*[（(]\s*[）)]', '（ ）', t))
+
+
+def fix_fill_in_blanks(md):
+    return edit_parts(md, edit_text=lambda t: re.sub(r'[ \t]*(?:\\_|_){3,}', '___', t))
+
+
+def wrap_set_literals(md):
+    r"""{1, 2, 3} -> $\{1,2,3\}$ (before number wrapping)."""
+    pat = re.compile(r'\{\s*([0-9A-Za-z.\-]+(?:\s*[,，]\s*[0-9A-Za-z.\-]+)*)\s*\}')
+    return edit_parts(md, edit_text=lambda t: pat.sub(
+        lambda m: '$\\{' + re.sub(r'\s*[,，]\s*', ',', m.group(1)) + '\\}$', t))
+
+
 NUMBER = re.compile(
     r'(?m)(^[ \t]*(?:\d{1,2}[.．、](?!\d)|[（(]\d{1,2}[）)]))'
     r'|(?<![A-Za-z0-9_$\\.])(?<!\d-)(-?\d+(?:\.\d+)?%?)(?![A-Za-z0-9_$])'
 )
 
 
-def wrap_standalone_numbers(markdown: str) -> str:
-    r"""Wrap bare numbers in prose: 150 -> $150$, 95% -> $95\%$, -2 -> $-2$.
-
-    Skipped: numbers touching letters (2x, a2), numbering labels at line
-    start (1.  (1)), tables, image paths, headings, and anything already
-    inside $...$ (edit_parts only passes prose here).
-    """
-    def repl(m: re.Match[str]) -> str:
+def wrap_standalone_numbers(md):
+    def repl(m):
         if m.group(1):
             return m.group(1)
-        num = m.group(2)
-        if num.endswith('%'):
-            return '$' + num[:-1] + r'\%$'
-        return '$' + num + '$'
+        n = m.group(2)
+        return '$' + (n[:-1] + r'\%' if n.endswith('%') else n) + '$'
+    return edit_text_ctx(md, lambda t: NUMBER.sub(repl, t))
 
-    pieces = PROTECT_NUMBERS.split(markdown)
-    for i in range(0, len(pieces), 2):          # odd indices = protected blocks
-        pieces[i] = edit_parts(pieces[i], edit_text=lambda t: NUMBER.sub(repl, t))
-    return ''.join(pieces)
 
-def compact_math_braces(markdown: str) -> str:
-    r"""Drop unnecessary braces around single-token arguments.
+def wrap_abs_bars(md):
+    r"""|$AB$| -> $|AB|$"""
+    return re.sub(r'(?<![\\$\w|])\|[ \t]*\$([^$\n]+)\$[ \t]*\|', r'$|\1|$', md)
 
-        \frac{2}{3}      -> \frac23
-        \frac{\pi}{4}    -> \frac\pi4
-        x^{2}, S_{n}     -> x^2, S_n
-        60^{\circ}       -> 60^\circ
-        \sqrt{3}         -> \sqrt3
-    Longer arguments keep their braces:  a_{n+1},  \sqrt{10},  \frac{\sqrt3}{2}
+
+OPS = r'[=<>+\-]'
+
+
+def wrap_bare_operands(md):
+    """A bare token glued to a math span by an operator joins that span: 2x - $y$ -> $2x-$$y$."""
+    parts = SPLIT_PATTERN.split(md)
+    isinl = lambda k: 0 <= k < len(parts) and bool(INLINE.match(parts[k]))
+    for i in range(0, len(parts), 2):
+        t = parts[i]
+        if isinl(i + 1):
+            t = re.sub(rf'(?<![\w$\\.])([A-Za-z0-9]{{1,3}})[ \t]*({OPS})[ \t]*$',
+                       lambda m: '$' + m.group(1) + m.group(2) + '$', t)
+        if isinl(i - 1):
+            t = re.sub(rf'^[ \t]*({OPS})[ \t]*([A-Za-z0-9]{{1,3}})(?![A-Za-z0-9])',
+                       lambda m: '$' + m.group(1) + m.group(2) + '$', t)
+        parts[i] = t
+    return ''.join(parts)
+
+
+REL_ONLY = re.compile(r'^\\(?:ge|le|parallel|perp|approx|in|cap|cup)$')
+REL_END = re.compile(r'\\(?:ge|le|parallel|perp|approx|in|cap|cup)$')
+JOIN_OP = re.compile(rf'^[ \t]*({OPS})[ \t]*$')
+
+
+def _glue(a, b):
+    if re.search(r'\\[A-Za-z]+$', a) and re.match(r'[A-Za-z]', b):
+        return a + ' ' + b
+    return a + b
+
+
+def merge_math_spans(md):
+    """$a$$b$ , $a$ = $b$ , $a$ \\perp $b$  ->  one span."""
+    parts = SPLIT_PATTERN.split(md)
+    out = [parts[0]]
+    for k in range(1, len(parts), 2):
+        tok = parts[k]
+        after = parts[k + 1] if k + 1 < len(parts) else ''
+        merged = False
+        if len(out) >= 3 and INLINE.match(out[-2]) and INLINE.match(tok):
+            gap = out[-1]
+            a, b = INLINE.match(out[-2]).group(1), INLINE.match(tok).group(1)
+            op = JOIN_OP.match(gap)
+            call = gap.strip() == '' and re.fullmatch(r'[A-Za-z]', a) and re.match(r'(?:\\left)?\(', b)
+            colon = re.fullmatch(r'[ \t]*[:：][ \t]*', gap) and re.fullmatch(r'[A-Za-z]', a) and '=' in b
+            coef = gap.strip() == '' and re.search(r'\d$', a) and re.match(r'\\(?:sqrt|pi)', b)
+            if gap == '' or op or call or coef or colon or (gap.strip() == '' and (REL_ONLY.match(a) or REL_ONLY.match(b) or REL_END.search(a))):
+                glue = op.group(1) if op else (':' if colon else '')
+                out[-2] = '$' + _glue(_glue(a, glue) if glue else a, b) + '$'
+                out[-1] = after
+                merged = True
+        if not merged:
+            out += [tok, after]
+    return ''.join(out)
+
+
+SYM = r'(?:[A-Za-z](?:_[A-Za-z0-9])?|\\[A-Za-z]+)'
+SYMLIST = re.compile(rf'^{SYM}(?:\s*,\s*{SYM})+$')
+UNITS = ('件',)
+
+
+def split_symbol_lists(md):
+    r"""$A, B$ -> $A$，$B$  (gold keeps symbol lists as separate spans)."""
+    def fix(span):
+        m = INLINE.match(span)
+        if m and SYMLIST.match(m.group(1)):
+            return '，'.join('$' + x.strip() + '$' for x in m.group(1).split(','))
+        return span
+    return edit_parts(md, edit_math=fix)
+
+
+def attach_units(md):
+    r"""$150$ 件 -> $150\text{ 件}$"""
+    parts = SPLIT_PATTERN.split(md)
+    for k in range(1, len(parts) - 1, 2):
+        m = INLINE.match(parts[k])
+        u = re.match(r'^[ \t]*(' + '|'.join(UNITS) + ')', parts[k + 1])
+        if m and u and re.fullmatch(r'[A-Za-z0-9.\\{}^_]+', m.group(1)):
+            parts[k] = '$' + m.group(1) + '\\text{ ' + u.group(1) + '}$'
+            parts[k + 1] = parts[k + 1][u.end():]
+    return ''.join(parts)
+
+
+def param_note(md):
+    r"""$\begin{cases}..\end{cases}$ (t 为参数) -> ...\end{cases}\ (t\text{ 为参数})$"""
+    return re.sub(r'\\end\{cases\}\$[ \t]*[（(]\s*([A-Za-z])\s*为参数\s*[）)]',
+                  lambda m: '\\end{cases}\\ (' + m.group(1) + '\\text{ 为参数})$', md)
+
+
+def move_trailing_punct(md):
+    """$...;$ -> $...$；  (punctuation belongs outside the span)."""
+    parts = SPLIT_PATTERN.split(md)
+    for k in range(1, len(parts) - 1, 2):
+        m = INLINE.match(parts[k])
+        if m and len(m.group(1)) > 1 and m.group(1)[-1] in ';,.' and not m.group(1).endswith('\\,'):
+            parts[k + 1] = m.group(1)[-1] + parts[k + 1]
+            parts[k] = '$' + m.group(1)[:-1] + '$'
+    return ''.join(parts)
+
+
+def gold_punctuation(md):
+    """Prose punctuation in gold style: ， ； ： ？ ！ fullwidth, '.' ASCII."""
+    def fix(t):
+        t = t.replace('。', '.').replace('、', '，')
+        t = t.replace(',', '，').replace(';', '；').replace(':', '：')
+        t = t.replace('?', '？').replace('!', '！')
+        t = re.sub(r'(?<![0-9])\.(?=[' + CJK + r'])', '. ', t)
+        t = re.sub(r'[ \t]+(?=[，；：？！])', '', t)
+        t = re.sub(r'(?<=[，；：？！])[ \t]+', '', t)
+        return t
+    return edit_parts(md, edit_text=fix)
+
+
+def space_cjk_math(md):
+    """Gold: one space between a Chinese character and an adjacent $span$."""
+    parts = SPLIT_PATTERN.split(md)
+    for k in range(1, len(parts), 2):
+        if not INLINE.match(parts[k]):
+            continue
+        parts[k - 1] = re.sub(f'([{CJK}])[ \t]*$', r'\1 ', parts[k - 1])
+        if k + 1 < len(parts):
+            parts[k + 1] = re.sub(f'^[ \t]*(?=[{CJK}])', ' ', parts[k + 1])
+    return ''.join(parts)
+
+
+def fullwidth_parens_around_math(md):
+    r"""($a>b>0$) -> （$a>b>0$）"""
+    parts = SPLIT_PATTERN.split(md)
+    for k in range(1, len(parts) - 1, 2):
+        if INLINE.match(parts[k]) and parts[k - 1].endswith('(') and parts[k + 1].startswith(')') \
+                and not re.search(r'\([A-D1-9]$', parts[k - 1]):
+            parts[k - 1] = parts[k - 1][:-1].rstrip(' \t') + '（'
+            parts[k + 1] = '）' + parts[k + 1][1:]
+    return ''.join(parts)
+
+
+def label_spacing(md):
+    """Option labels: '（A）x' / '(A)x' -> '(A) x' at line start."""
+    return edit_text_ctx(md, lambda t: re.sub(
+        r'(?m)^([ \t]*)[（(]([A-D])[）)][ \t]*', r'\1(\2) ', t))
+
+
+def absorb_trailing_equals(md):
+    """$x$ =（ ） / $a$ = ___  ->  $x=$（ ） / $a=$___"""
+    parts = SPLIT_PATTERN.split(md)
+    for k in range(1, len(parts) - 1, 2):
+        m = INLINE.match(parts[k])
+        g = re.match(r'^[ \t]*=[ \t]*(?=（ ）|___)', parts[k + 1])
+        if m and g:
+            parts[k] = '$' + m.group(1) + '=$'
+            parts[k + 1] = parts[k + 1][g.end():]
+    return ''.join(parts)
+
+
+def split_options(md):
+    opt = r"(?:\([A-D]\)|（[A-D]）)"
+    return edit_parts(md, edit_text=lambda t: re.sub(rf"[ \t]+(?={opt})", "\n", t))
+
+
+def clean_whitespace(md):
+    md = re.sub(r'(?<=\S)[ \t]{2,}', ' ', md)
+    md = re.sub(r'(?m)[ \t]+$', '', md)
+    return re.sub(r'\n{3,}', '\n\n', md).strip() + '\n'
+
+
+def wrap_loose_symbols(md):
+    loose = re.compile(r'(?<![A-Za-z0-9$\\(])[A-Za-z]{1,4}(?:\s*[,、]\s*[A-Za-z]{1,4})*(?![A-Za-z0-9$])')
+    def line(l):
+        if not CHINESE.search(l):
+            return l
+        return edit_parts(l, edit_text=lambda t: loose.sub(lambda m: '$' + m.group() + '$', t))
+    return '\n'.join(line(l) for l in md.split('\n'))
+
+
+STEPS = [
+    decode_html_entities, convert_figures, normalize_tables, unwrap_divs,
+    replace_unicode_symbols, replace_degree_sign,
+    canon_math_spans,
+    wrap_set_literals, remove_page_numbers,
+    fix_answer_brackets, fix_fill_in_blanks,
+    wrap_standalone_numbers, wrap_abs_bars, wrap_bare_operands,
+    merge_math_spans, split_symbol_lists, attach_units, param_note,
+    absorb_trailing_equals, move_trailing_punct, gold_punctuation,
+    fullwidth_parens_around_math, space_cjk_math,
+    label_spacing, split_options, clean_whitespace,
+]
+
+
+def normalize_markdown(markdown, wrap_symbols=False):
+    """Style-only normalization. Use the SAME call for gold and OCR.
+
+    wrap_symbols=True adds a content-changing OCR heuristic; keep it False when
+    measuring the baseline or building training pairs, and use fix_ocr() later.
     """
-
-    def compact(math: str) -> str:
-        # superscripts / subscripts
-        math = re.sub(r'([\^_])\{([A-Za-z0-9])\}', r'\1\2', math)
-        math = re.sub(r'([\^_])\{(\\[A-Za-z]+)\}(?![A-Za-z])', r'\1\2', math)
-
-        # \sqrt{3} -> \sqrt3   (a letter needs a space:  \sqrt a)
-        math = re.sub(r'\\sqrt\{(\d)\}', r'\\sqrt\1', math)
-        math = re.sub(r'\\sqrt\{([A-Za-z])\}', r'\\sqrt \1', math)
-
-        # fractions
-        return _compact_fracs(math)
-
-    return edit_parts(markdown, edit_math=compact)
-
-
-# ---------------------------------------------------------
-# 5. OCR-SPECIFIC CORRECTIONS
-# ---------------------------------------------------------
-
-def remove_page_numbers(markdown: str) -> str:
-    """Remove standalone three- or four-digit page numbers."""
-
-    return re.sub(
-        r'(?m)^[ \t]*\d{3,4}[ \t]*(?:\n|\Z)',
-        '',
-        markdown,
-    )
-
-
-def fix_answer_brackets(markdown: str) -> str:
-    """Normalize empty answer parentheses in prose."""
-
-    return edit_parts(
-        markdown,
-        edit_text=lambda text: re.sub(
-            r'[（(]\s*[）)]',
-            '( )',
-            text,
-        ),
-    )
-
-
-def fix_fill_in_blanks(markdown: str) -> str:
-    """Normalize repeated underscore blanks."""
-
-    def fix(text: str) -> str:
-        return re.sub(
-            r'(?:\\_|_){3,}([.。]?)',
-            lambda m: r'\_\_\_' + m.group(1),
-            text,
-        )
-
-    return edit_parts(markdown, edit_text=fix)
-
-
-
-
-def split_options(markdown: str) -> str:
-    """
-    Put every multiple-choice option (A)-(D) on a separate line.
-
-    Supports:
-      - Options separated by spaces.
-      - Options separated by newlines.
-      - ASCII and full-width parentheses.
-      - Options containing inline LaTeX expressions.
-    """
-    option_pattern = r"(?:\([A-D]\)|（[A-D]）)"
-
-    def separate(text: str) -> str:
-        return re.sub(
-            rf"[ \t]+(?={option_pattern})",
-            "\n",
-            text,
-        )
-
-    return edit_parts(markdown, edit_text=separate)
-
-
-
-# ---------------------------------------------------------
-# 6. WHITESPACE NORMALIZATION
-# ---------------------------------------------------------
-
-def clean_whitespace(markdown: str) -> str:
-    """Normalize whitespace while preserving paragraph breaks."""
-
-    markdown = re.sub(
-        r'(?<=\S)[ \t]{2,}',
-        ' ',
-        markdown,
-    )
-
-    markdown = re.sub(
-        r'(?m)[ \t]+$',
-        '',
-        markdown,
-    )
-
-    markdown = re.sub(
-        r'\n{3,}',
-        '\n\n',
-        markdown,
-    )
-
-    return markdown.strip() + '\n'
-
-
-# ---------------------------------------------------------
-# 7. OPTIONAL CHINESE MATHEMATICAL SYMBOL DETECTION
-# ---------------------------------------------------------
-
-def wrap_loose_symbols(markdown: str) -> str:
-    """Wrap short Latin mathematical symbols in Chinese prose.
-
-    Heuristic: only operates on lines containing Chinese characters.
-    """
-
-    loose_symbol = re.compile(
-        r'(?<![A-Za-z0-9$\\(])'
-        r'[A-Za-z]{1,4}'
-        r'(?:\s*[,、]\s*[A-Za-z]{1,4})*'
-        r'(?![A-Za-z0-9$])'
-    )
-
-    def wrap_line(line: str) -> str:
-        if not CHINESE.search(line):
-            return line
-
-        return edit_parts(
-            line,
-            edit_text=lambda text: loose_symbol.sub(
-                lambda m: '$' + m.group() + '$',
-                text,
-            ),
-        )
-
-    return '\n'.join(
-        wrap_line(line)
-        for line in markdown.split('\n')
-    )
-
-
-# ---------------------------------------------------------
-# 8. COMPLETE NORMALIZATION PIPELINE
-# ---------------------------------------------------------
-
-def normalize_markdown(
-    markdown: str,
-    wrap_symbols: bool = True,
-) -> str:
-    """Normalize OCR Markdown using deterministic cleanup passes."""
-
-    steps = [
-        decode_html_entities,
-        convert_figures,
-        normalize_tables,
-        unwrap_divs,
-        remove_math_emphasis,
-        normalize_punctuation,
-        normalize_latex_commands,
-        replace_unicode_symbols,
-        replace_degree_sign,
-        fullwidth_to_halfwidth_in_math,
-        trim_math_spaces,
-        normalize_math_symbols,
-        remove_math_spaces,
-        compact_math_braces,
-        remove_page_numbers,
-        fix_answer_brackets,
-        fix_fill_in_blanks,
-        wrap_standalone_numbers,
-        split_options,
-        clean_whitespace,
-    ]
-
-    if wrap_symbols:
-        steps.append(wrap_loose_symbols)
-
-    for step in steps:
+    for step in STEPS:
         markdown = step(markdown)
+    return wrap_loose_symbols(markdown) if wrap_symbols else markdown
 
-    return markdown
 
+def fix_ocr(markdown):
+    """OCR-only repairs (content-changing). Run after the baseline is measured."""
+    return clean_whitespace(wrap_loose_symbols(markdown))
 
-# ---------------------------------------------------------
-# 9. SCRIPT ENTRY POINT
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
-
-    input_path = Path("data/input/exam.md")
-    output_path = Path("data/output/exam.md")
-
-    normalized = normalize_markdown(
-        input_path.read_text(encoding="utf-8")
-    )
-
-    output_path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    output_path.write_text(
-        normalized,
-        encoding="utf-8",
-    )
-
-    print(f"Written to {output_path}")
+    src, dst = Path("data/input/exam.md"), Path("data/output/exam.md")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(normalize_markdown(src.read_text(encoding="utf-8")), encoding="utf-8")
+    print(f"Written to {dst}")

@@ -3,13 +3,28 @@
     "question_status": "aligned",
     "ocr_number": 1,
     "gold_number": 1,
-    "question_similarity": 0.959,
+    "ocr_stem": "若 $z=\\sqrt2i$，则 $z\\bar z=$（ ）",
+    "gold_stem": "若 $z=\\sqrt2i$，则 $z\\bar z=$（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $-2$",
+          "gold_text": "A $-2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$-2$",
@@ -23,11 +38,14 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $-\\sqrt2$",
+          "gold_text": "B $-\\sqrt2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$-\\sqrt2$",
@@ -37,15 +55,18 @@
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$-\\sqrt{2}$",
+            "text": "$-\\sqrt2$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.917
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\sqrt2$",
+          "gold_text": "C $\\sqrt2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$\\sqrt2$",
@@ -55,15 +76,18 @@
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\sqrt{2}$",
+            "text": "$\\sqrt2$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.909
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $2$",
+          "gold_text": "D $2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$2$",
@@ -77,8 +101,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -87,16 +110,31 @@
     "question_status": "aligned",
     "ocr_number": 2,
     "gold_number": 2,
-    "question_similarity": 0.977,
+    "ocr_stem": "已知集合 $A=\\{1,2,3,4,5,9\\}$，$B=\\{x\\mid x+1\\in A\\}$，则 $A\\cap B=$（ ）",
+    "gold_stem": "已知集合 $A=\\{1,2,3,4,5,9\\}$，$B=\\{x\\mid x+1\\in A\\}$，则 $A\\cap B=$（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\{1,2,3\\}$",
+          "gold_text": "A $\\{1,2,3\\}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "{$1$, $2$, $3$}",
+            "text": "$\\{1,2,3\\}$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
@@ -107,14 +145,17 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.6
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\{3,4,9\\}$",
+          "gold_text": "B $\\{3,4,9\\}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "{$3$, $4$, $9$}",
+            "text": "$\\{3,4,9\\}$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
@@ -125,14 +166,17 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.6
+          }
         },
         {
-          "operation": "weak",
+          "kind": "choice",
+          "operation": "aligned",
+          "ocr_text": "C $\\{1,2,3,4\\}$",
+          "gold_text": "C $\\{1,2,3,4\\}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "{$1$, $2$, $3$, $4$}",
+            "text": "$\\{1,2,3,4\\}$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
@@ -143,14 +187,17 @@
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.595
+          }
         },
         {
-          "operation": "weak",
+          "kind": "choice",
+          "operation": "aligned",
+          "ocr_text": "D $\\{2,3,4,5\\}$",
+          "gold_text": "D $\\{2,3,4,5\\}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "{$2$, $3$, $4$, $5$}",
+            "text": "$\\{2,3,4,5\\}$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
@@ -161,8 +208,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.595
+          }
         }
       ]
     }
@@ -171,82 +217,105 @@
     "question_status": "aligned",
     "ocr_number": 3,
     "gold_number": 3,
-    "question_similarity": 0.803,
+    "ocr_stem": "设向量 $\\boldsymbol{a}=(x+1,x)$，$\\boldsymbol{b}=(x,2)$，$\\boldsymbol{c}=(1,1)$，若 a - 2b 与 c 共线，则 x =（ ）",
+    "gold_stem": "设向量 $\\boldsymbol{a}=(x+1,x)$，$\\boldsymbol{b}=(x,2)$，$\\boldsymbol{c}=(1,1)$，若 $\\boldsymbol{a}-2\\boldsymbol{b}$ 与 $\\boldsymbol{c}$ 共线，则 $x=$（ ）",
+    "stem_similarity": 0.8,
+    "content_similarity": 1.0,
+    "combined_similarity": 0.88,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\dfrac52$",
+          "gold_text": "A $\\dfrac52$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac52$",
+            "text": "$\\dfrac52$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac52$",
+            "text": "$\\dfrac52$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\dfrac12$",
+          "gold_text": "B $\\dfrac12$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $-\\dfrac12$",
+          "gold_text": "C $-\\dfrac12$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$-\\frac12$",
+            "text": "$-\\dfrac12$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$-\\frac12$",
+            "text": "$-\\dfrac12$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $-\\dfrac52$",
+          "gold_text": "D $-\\dfrac52$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$-\\frac52$",
+            "text": "$-\\dfrac52$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$-\\frac52$",
+            "text": "$-\\dfrac52$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -255,82 +324,105 @@
     "question_status": "aligned",
     "ocr_number": 4,
     "gold_number": 4,
-    "question_similarity": 0.949,
+    "ocr_stem": "某独唱比赛的决赛阶段共有甲，乙，丙，丁四人参加，每人出场一次，出场次序由随机抽签确定. 则丙不是第一个出场，且甲或乙最后出场的概率是（ ）",
+    "gold_stem": "某独唱比赛的决赛阶段共有甲，乙，丙，丁四人参加，每人出场一次，出场次序由随机抽签确定. 则丙不是第一个出场，且甲或乙最后出场的概率是（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\dfrac16$",
+          "gold_text": "A $\\dfrac16$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac16$",
+            "text": "$\\dfrac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac16$",
+            "text": "$\\dfrac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\dfrac14$",
+          "gold_text": "B $\\dfrac14$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac14$",
+            "text": "$\\dfrac14$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac14$",
+            "text": "$\\dfrac14$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\dfrac13$",
+          "gold_text": "C $\\dfrac13$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $\\dfrac12$",
+          "gold_text": "D $\\dfrac12$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -339,82 +431,105 @@
     "question_status": "aligned",
     "ocr_number": 5,
     "gold_number": 5,
-    "question_similarity": 0.984,
+    "ocr_stem": "记 $S_n$ 为等差数列 $\\{a_n\\}$ 的前 n 项和. 已知 $S_9=1$，则 $a_3+a_7=$（ ）",
+    "gold_stem": "记 $S_n$ 为等差数列 $\\{a_n\\}$ 的前 $n$ 项和. 已知 $S_9=1$，则 $a_3+a_7=$（ ）",
+    "stem_similarity": 0.983,
+    "content_similarity": 1.0,
+    "combined_similarity": 0.99,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\dfrac19$",
+          "gold_text": "A $\\dfrac19$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac19$",
+            "text": "$\\dfrac19$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac19$",
+            "text": "$\\dfrac19$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\dfrac29$",
+          "gold_text": "B $\\dfrac29$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac29$",
+            "text": "$\\dfrac29$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac29$",
+            "text": "$\\dfrac29$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\dfrac13$",
+          "gold_text": "C $\\dfrac13$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $\\dfrac23$",
+          "gold_text": "D $\\dfrac23$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac23$",
+            "text": "$\\dfrac23$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac23$",
+            "text": "$\\dfrac23$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -423,13 +538,28 @@
     "question_status": "aligned",
     "ocr_number": 6,
     "gold_number": 6,
-    "question_similarity": 0.984,
+    "ocr_stem": "已知双曲线的两个焦点分别为 $(0,4)$，$(0,-4)$，点 $(-6,4$ 在该双曲线上，则该双曲线的离心率为（ ）",
+    "gold_stem": "已知双曲线的两个焦点分别为 $(0,4)$，$(0,-4)$，点 $(-6,4)$ 在该双曲线上，则该双曲线的离心率为（ ）",
+    "stem_similarity": 0.992,
+    "content_similarity": 1.0,
+    "combined_similarity": 0.995,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $4$",
+          "gold_text": "A $4$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$4$",
@@ -443,11 +573,14 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $3$",
+          "gold_text": "B $3$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$3$",
@@ -461,11 +594,14 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $2$",
+          "gold_text": "C $2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$2$",
@@ -479,11 +615,14 @@
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $\\sqrt2$",
+          "gold_text": "D $\\sqrt2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$\\sqrt2$",
@@ -497,8 +636,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -507,82 +645,105 @@
     "question_status": "aligned",
     "ocr_number": 7,
     "gold_number": 7,
-    "question_similarity": 0.989,
+    "ocr_stem": "设函数 $f(x)=\\dfrac{\\mathrm{e}^x+2\\sin x}{1+x^2}$，则曲线 $y=f(x)$ 在点 $(0,1)$ 处的切线与两坐标轴所围成的三角形的面积为（ ）",
+    "gold_stem": "设函数 $f(x)=\\dfrac{\\mathrm{e}^x+2\\sin x}{1+x^2}$，则曲线 $y=f(x)$ 在点 $(0,1)$ 处的切线与两坐标轴所围成的三角形的面积为（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\dfrac16$",
+          "gold_text": "A $\\dfrac16$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac16$",
+            "text": "$\\dfrac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac16$",
+            "text": "$\\dfrac16$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\dfrac13$",
+          "gold_text": "B $\\dfrac13$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac13$",
+            "text": "$\\dfrac13$",
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\dfrac12$",
+          "gold_text": "C $\\dfrac12$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac12$",
+            "text": "$\\dfrac12$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $\\dfrac23$",
+          "gold_text": "D $\\dfrac23$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac23$",
+            "text": "$\\dfrac23$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac23$",
+            "text": "$\\dfrac23$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -591,24 +752,222 @@
     "question_status": "aligned",
     "ocr_number": 3,
     "gold_number": 8,
-    "question_similarity": 0.932,
+    "ocr_stem": "函数 $y=-x^2+(\\mathrm{e}^x-\\mathrm{e}^{-x})\\sin x$ 在区间 $[-2.8,2.8]$ 的图象大致为（ ）",
+    "gold_stem": "函数 $y=-x^2+(\\mathrm{e}^x-\\mathrm{e}^{-x})\\sin x$ 在区间 $[-2.8,2.8]$ 的图象大致为（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 0.045,
+    "combined_similarity": 0.618,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "figure": 0.0,
+        "choice": 0.136,
+        "text": 0.0
+      },
+      "content_similarity": 0.045,
+      "alignment": [
+        {
+          "kind": "figure",
+          "operation": "ocr_only",
+          "ocr_text": "<FIGURE>",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "figure",
+            "text": "",
+            "label": "",
+            "figure": {
+              "path": "imgs/img_in_image_box_177_1121_441_1323.jpg"
+            },
+            "follows_sub_question": null
+          },
+          "gold_block": null
+        },
+        {
+          "kind": "figure",
+          "operation": "ocr_only",
+          "ocr_text": "<FIGURE>",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "figure",
+            "text": "",
+            "label": "",
+            "figure": {
+              "path": "imgs/img_in_image_box_512_1126_779_1332.jpg"
+            },
+            "follows_sub_question": null
+          },
+          "gold_block": null
+        },
+        {
+          "kind": "figure",
+          "operation": "ocr_only",
+          "ocr_text": "<FIGURE>",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "figure",
+            "text": "",
+            "label": "",
+            "figure": {
+              "path": "imgs/img_in_image_box_177_1370_440_1556.jpg"
+            },
+            "follows_sub_question": null
+          },
+          "gold_block": null
+        },
+        {
+          "kind": "figure",
+          "operation": "ocr_only",
+          "ocr_text": "<FIGURE>",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "figure",
+            "text": "",
+            "label": "",
+            "figure": {
+              "path": "imgs/img_in_image_box_516_1353_785_1566.jpg"
+            },
+            "follows_sub_question": null
+          },
+          "gold_block": null
+        },
+        {
+          "kind": "choice",
+          "operation": "unaligned",
+          "ocr_text": "A",
+          "gold_text": "A <FIGURE>",
+          "similarity": 0.182,
+          "ocr_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "A",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "A",
+            "figure": {
+              "path": "img/2024/national_paper_a_liberal/q8_optA.png"
+            },
+            "follows_sub_question": null
+          }
+        },
+        {
+          "kind": "choice",
+          "operation": "unaligned",
+          "ocr_text": "B",
+          "gold_text": "B <FIGURE>",
+          "similarity": 0.182,
+          "ocr_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "B",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "B",
+            "figure": {
+              "path": "img/2024/national_paper_a_liberal/q8_optB.png"
+            },
+            "follows_sub_question": null
+          }
+        },
+        {
+          "kind": "choice",
+          "operation": "unaligned",
+          "ocr_text": "C",
+          "gold_text": "C <FIGURE>",
+          "similarity": 0.182,
+          "ocr_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "C",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "C",
+            "figure": {
+              "path": "img/2024/national_paper_a_liberal/q8_optC.png"
+            },
+            "follows_sub_question": null
+          }
+        },
+        {
+          "kind": "choice",
+          "operation": "gold_only",
+          "ocr_text": null,
+          "gold_text": "D <FIGURE>",
+          "similarity": 0.0,
+          "ocr_block": null,
+          "gold_block": {
+            "kind": "choice",
+            "text": "",
+            "label": "D",
+            "figure": {
+              "path": "img/2024/national_paper_a_liberal/q8_optD.png"
+            },
+            "follows_sub_question": null
+          }
+        },
+        {
+          "kind": "text",
+          "operation": "ocr_only",
+          "ocr_text": "$y_\\downarrow$",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "text",
+            "text": "$y_\\downarrow$",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": null
+        }
+      ]
     }
   },
   {
     "question_status": "aligned",
     "ocr_number": 9,
     "gold_number": 9,
-    "question_similarity": 0.842,
+    "ocr_stem": "直线 2x - $y-2=0$ 与圆 $x^2+y^2-6x-8y=0$ 交于 A，B 两点，则 |AB| =（ ）",
+    "gold_stem": "直线 $2x-y-2=0$ 与圆 $x^2+y^2-6x-8y=0$ 交于 $A$，$B$ 两点，则 $|AB|=$（ ）",
+    "stem_similarity": 0.908,
+    "content_similarity": 1.0,
+    "combined_similarity": 0.945,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $4$",
+          "gold_text": "A $4$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$4$",
@@ -622,11 +981,14 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $5$",
+          "gold_text": "B $5$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$5$",
@@ -640,11 +1002,14 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $8$",
+          "gold_text": "C $8$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$8$",
@@ -658,11 +1023,14 @@
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $10$",
+          "gold_text": "D $10$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$10$",
@@ -676,8 +1044,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -686,13 +1053,28 @@
     "question_status": "aligned",
     "ocr_number": 10,
     "gold_number": 10,
-    "question_similarity": 0.995,
+    "ocr_stem": "已知 $\\dfrac{\\cos\\alpha}{\\cos\\alpha-\\sin\\alpha}=\\sqrt3$，则 $\\tan\\left(\\alpha+\\dfrac\\pi4\\right)=$（ ）",
+    "gold_stem": "已知 $\\dfrac{\\cos\\alpha}{\\cos\\alpha-\\sin\\alpha}=\\sqrt3$，则 $\\tan\\left(\\alpha+\\dfrac\\pi4\\right)=$（ ）",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $2\\sqrt3+1$",
+          "gold_text": "A $2\\sqrt3+1$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$2\\sqrt3+1$",
@@ -706,11 +1088,14 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $2\\sqrt3-1$",
+          "gold_text": "B $2\\sqrt3-1$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$2\\sqrt3-1$",
@@ -724,29 +1109,35 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\dfrac{\\sqrt3}{2}$",
+          "gold_text": "C $\\dfrac{\\sqrt3}{2}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt3}2$",
+            "text": "$\\dfrac{\\sqrt3}{2}$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt3}{2}$",
+            "text": "$\\dfrac{\\sqrt3}{2}$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.947
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $1-\\sqrt3$",
+          "gold_text": "D $1-\\sqrt3$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$1-\\sqrt3$",
@@ -760,8 +1151,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -770,103 +1160,135 @@
     "question_status": "aligned",
     "ocr_number": 11,
     "gold_number": 11,
-    "question_similarity": 0.949,
+    "ocr_stem": "设 $\\alpha$，$\\beta$ 为两个平面，m，n 为两条直线，且 $\\alpha\\cap\\beta=m$. 下述四个命题：",
+    "gold_stem": "设 $\\alpha$，$\\beta$ 为两个平面，$m$，$n$ 为两条直线，且 $\\alpha\\cap\\beta=m$. 下述四个命题：",
+    "stem_similarity": 0.97,
+    "content_similarity": 0.998,
+    "combined_similarity": 0.981,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "statement": 0.995,
+        "text": 1.0,
+        "choice": 1.0
+      },
+      "content_similarity": 0.998,
       "alignment": [
         {
+          "kind": "statement",
           "operation": "aligned",
+          "ocr_text": "① 若 $m\\parallel n$，则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$；",
+          "gold_text": "① 若 $m\\parallel n$，则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "statement",
-            "text": "若 $m\\parallel n$, 则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$;",
+            "text": "若 $m\\parallel n$，则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$；",
             "label": "①",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "statement",
-            "text": "若 $m\\parallel n$,则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$;",
+            "text": "若 $m\\parallel n$，则 $n\\parallel\\alpha$ 或 $n\\parallel\\beta$；",
             "label": "①",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.992
+          }
         },
         {
+          "kind": "statement",
           "operation": "aligned",
+          "ocr_text": "② 若 $m\\perp n$，则 $n\\perp\\alpha$ 或 $n\\perp\\beta$；",
+          "gold_text": "② 若 $m\\perp n$，则 $n\\perp\\alpha$ 或 $n\\perp\\beta$；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "statement",
-            "text": "若 $m\\perp n$, 则 $n\\perp\\alpha$ 或 $n\\perp\\beta$;",
+            "text": "若 $m\\perp n$，则 $n\\perp\\alpha$ 或 $n\\perp\\beta$；",
             "label": "②",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "statement",
-            "text": "若 $m\\perp n$,则 $n\\perp\\alpha$ 或 $n\\perp\\beta$;",
+            "text": "若 $m\\perp n$，则 $n\\perp\\alpha$ 或 $n\\perp\\beta$；",
             "label": "②",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.99
+          }
         },
         {
+          "kind": "statement",
           "operation": "aligned",
+          "ocr_text": "③ 若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$，则 $m\\parallel n$；",
+          "gold_text": "③ 若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$，则 $m\\parallel n$；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "statement",
-            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$, 则 $m\\parallel n$;",
+            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$，则 $m\\parallel n$；",
             "label": "③",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "statement",
-            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$,则 $m\\parallel n$;",
+            "text": "若 $n\\parallel\\alpha$ 且 $n\\parallel\\beta$，则 $m\\parallel n$；",
             "label": "③",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.992
+          }
         },
         {
+          "kind": "statement",
           "operation": "aligned",
+          "ocr_text": "④ 若 n 与 $\\alpha$，$\\beta$ 所成的角相等，则 $m\\perp n$.",
+          "gold_text": "④ 若 $n$ 与 $\\alpha$，$\\beta$ 所成的角相等，则 $m\\perp n$.",
+          "similarity": 0.978,
           "ocr_block": {
             "kind": "statement",
-            "text": "若 $n$ 与 $\\alpha,\\beta$ 所成的角相等, 则 $m\\perp n$.",
+            "text": "若 n 与 $\\alpha$，$\\beta$ 所成的角相等，则 $m\\perp n$.",
             "label": "④",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "statement",
-            "text": "若 $n$ 与 $\\alpha$,$\\beta$ 所成的角相等,则 $m\\perp n$.",
+            "text": "若 $n$ 与 $\\alpha$，$\\beta$ 所成的角相等，则 $m\\perp n$.",
             "label": "④",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.968
+          }
         },
         {
+          "kind": "text",
           "operation": "aligned",
+          "ocr_text": "其中所有真命题的编号是（ ）",
+          "gold_text": "其中所有真命题的编号是（ ）",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "text",
-            "text": "其中所有真命题的编号是( )",
+            "text": "其中所有真命题的编号是（ ）",
             "label": "",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "text",
-            "text": "其中所有真命题的编号是( )",
+            "text": "其中所有真命题的编号是（ ）",
             "label": "",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A ①③",
+          "gold_text": "A ①③",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "①③",
@@ -880,11 +1302,14 @@
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B ②④",
+          "gold_text": "B ②④",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "②④",
@@ -898,11 +1323,14 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C ①②③",
+          "gold_text": "C ①②③",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "①②③",
@@ -916,11 +1344,14 @@
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D ①③④",
+          "gold_text": "D ①③④",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "①③④",
@@ -934,8 +1365,7 @@
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -944,31 +1374,49 @@
     "question_status": "aligned",
     "ocr_number": 12,
     "gold_number": 12,
-    "question_similarity": 0.925,
+    "ocr_stem": "记 $\\triangle ABC$ 的内角 A，B，C 的对边分别为 a，b，c，已知 $B=60^\\circ$，$b^2=\\dfrac94ac$，则 $\\sin A+\\sin C=$（ ）",
+    "gold_stem": "记 $\\triangle ABC$ 的内角 $A$，$B$，$C$ 的对边分别为 $a$，$b$，$c$，已知 $B=60^\\circ$，$b^2=\\dfrac94ac$，则 $\\sin A+\\sin C=$（ ）",
+    "stem_similarity": 0.941,
+    "content_similarity": 1.0,
+    "combined_similarity": 0.964,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "choice": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "A $\\dfrac32$",
+          "gold_text": "A $\\dfrac32$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac32$",
+            "text": "$\\dfrac32$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac32$",
+            "text": "$\\dfrac32$",
             "label": "A",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "B $\\sqrt2$",
+          "gold_text": "B $\\sqrt2$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
             "text": "$\\sqrt2$",
@@ -982,44 +1430,49 @@
             "label": "B",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "C $\\dfrac{\\sqrt7}{2}$",
+          "gold_text": "C $\\dfrac{\\sqrt7}{2}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt7}2$",
+            "text": "$\\dfrac{\\sqrt7}{2}$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt7}{2}$",
+            "text": "$\\dfrac{\\sqrt7}{2}$",
             "label": "C",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.947
+          }
         },
         {
+          "kind": "choice",
           "operation": "aligned",
+          "ocr_text": "D $\\dfrac{\\sqrt3}{2}$",
+          "gold_text": "D $\\dfrac{\\sqrt3}{2}$",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt3}2$",
+            "text": "$\\dfrac{\\sqrt3}{2}$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
           },
           "gold_block": {
             "kind": "choice",
-            "text": "$\\frac{\\sqrt3}{2}$",
+            "text": "$\\dfrac{\\sqrt3}{2}$",
             "label": "D",
             "figure": null,
             "follows_sub_question": null
-          },
-          "similarity": 0.947
+          }
         }
       ]
     }
@@ -1028,10 +1481,19 @@
     "question_status": "aligned",
     "ocr_number": 13,
     "gold_number": 13,
-    "question_similarity": 0.991,
+    "ocr_stem": "函数 $f(x)=\\sin x-\\sqrt3\\cos x$ 在区间 $[0,\\pi]$ 的最大值为___.",
+    "gold_stem": "函数 $f(x)=\\sin x-\\sqrt3\\cos x$ 在区间 $[0,\\pi]$ 的最大值为___.",
+    "stem_similarity": 1.0,
+    "content_similarity": null,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": null
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {},
+      "content_similarity": null,
       "alignment": []
     }
   },
@@ -1039,10 +1501,19 @@
     "question_status": "aligned",
     "ocr_number": 14,
     "gold_number": 14,
-    "question_similarity": 0.974,
+    "ocr_stem": "已知圆台甲，乙的上底面半径均为 $r_1$，下底面半径均为 $r_2$，圆台甲，乙的母线长分别为 $2(r_2-r_1)$，$3(r_2-r_1)$，则圆台甲与乙的体积之比为___.",
+    "gold_stem": "已知圆台甲，乙的上底面半径均为 $r_1$，下底面半径均为 $r_2$，圆台甲，乙的母线长分别为 $2(r_2-r_1)$，$3(r_2-r_1)$，则圆台甲与乙的体积之比为___.",
+    "stem_similarity": 1.0,
+    "content_similarity": null,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": null
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {},
+      "content_similarity": null,
       "alignment": []
     }
   },
@@ -1050,10 +1521,19 @@
     "question_status": "aligned",
     "ocr_number": 15,
     "gold_number": 15,
-    "question_similarity": 1.0,
+    "ocr_stem": "已知 $a>1$ 且 $\\dfrac{1}{\\log_8a}-\\dfrac{1}{\\log_a4}=-\\dfrac52$，则 $a=$___.",
+    "gold_stem": "已知 $a>1$ 且 $\\dfrac{1}{\\log_8a}-\\dfrac{1}{\\log_a4}=-\\dfrac52$，则 $a=$___.",
+    "stem_similarity": 1.0,
+    "content_similarity": null,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": null
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {},
+      "content_similarity": null,
       "alignment": []
     }
   },
@@ -1061,10 +1541,19 @@
     "question_status": "aligned",
     "ocr_number": 16,
     "gold_number": 16,
-    "question_similarity": 0.965,
+    "ocr_stem": "当 $x>0$ 时，曲线 $y=x^3-3x$ 与曲线 $y=-(x-1)^2+a$ 有两个交点，则 a 的取值范围是___.",
+    "gold_stem": "当 $x>0$ 时，曲线 $y=x^3-3x$ 与曲线 $y=-(x-1)^2+a$ 有两个交点，则 $a$ 的取值范围是___.",
+    "stem_similarity": 0.984,
+    "content_similarity": null,
+    "combined_similarity": 0.984,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": null
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {},
+      "content_similarity": null,
       "alignment": []
     }
   },
@@ -1072,34 +1561,52 @@
     "question_status": "aligned",
     "ocr_number": 17,
     "gold_number": 17,
-    "question_similarity": 1.0,
+    "ocr_stem": "记 $S_n$ 为等比数列 $\\{a_n\\}$ 的前 n 项和，已知 $2S_n=3a_{n+1}-3$.",
+    "gold_stem": "记 $S_n$ 为等比数列 $\\{a_n\\}$ 的前 $n$ 项和，已知 $2S_n=3a_{n+1}-3$.",
+    "stem_similarity": 0.981,
+    "content_similarity": 0.98,
+    "combined_similarity": 0.981,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 0.98
+      },
+      "content_similarity": 0.98,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 求 $\\{a_n\\}$ 的通项公式；",
+          "gold_text": "1 求 $\\{a_n\\}$ 的通项公式；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求 $\\{a_n\\}$ 的通项公式;",
+            "text": "求 $\\{a_n\\}$ 的通项公式；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "求 $\\{a_n\\}$ 的通项公式;",
+            "text": "求 $\\{a_n\\}$ 的通项公式；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 求数列 $\\{S_n\\}$ 的前 n 项和.",
+          "gold_text": "2 求数列 $\\{S_n\\}$ 的前 $n$ 项和.",
+          "similarity": 0.96,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求数列 $\\{S_n\\}$ 的前 $n$ 项和.",
+            "text": "求数列 $\\{S_n\\}$ 的前 n 项和.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -1110,8 +1617,7 @@
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -1120,45 +1626,249 @@
     "question_status": "aligned",
     "ocr_number": 18,
     "gold_number": 18,
-    "question_similarity": 0.892,
+    "ocr_stem": "某工厂进行生产线智能化升级改造. 升级改造后，从该工厂甲，乙两个车间的产品中随机抽取 $150\\text{ 件}$ 进行检验，数据如下：",
+    "gold_stem": "某工厂进行生产线智能化升级改造. 升级改造后，从该工厂甲，乙两个车间的产品中随机抽取 $150\\text{ 件}$ 进行检验，数据如下：",
+    "stem_similarity": 1.0,
+    "content_similarity": 0.696,
+    "combined_similarity": 0.878,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "parent_fallback",
-      "reason": "Different block-type distributions",
-      "alignment": []
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "table": 0.653,
+        "sub_question": 0.983,
+        "text": 0.453
+      },
+      "content_similarity": 0.696,
+      "alignment": [
+        {
+          "kind": "table",
+          "operation": "aligned",
+          "ocr_text": "<table><tr><td></td><td>优级品</td><td>合格品</td><td>不合格品</td><td>总计</td></tr><tr><td>甲车间</td><td>26</td><td>24</td><td>0</td><td>50</td></tr><tr><td>乙车间</td><td>70</td><td>28</td><td>2</td><td>100</td></tr><tr><td>总计</td><td>96</td><td>52</td><td>2</td><td>150</td></tr></table>",
+          "gold_text": "<table><tr><td></td><td>优级品</td><td>合格品</td><td>不合格品</td><td>总计</td></tr><tr><td>甲车间</td><td>26</td><td>24</td><td>0</td><td>50</td></tr><tr><td>乙车间</td><td>70</td><td>28</td><td>2</td><td>100</td></tr><tr><td>总计</td><td>96</td><td>52</td><td>2</td><td>150</td></tr></table>",
+          "similarity": 1.0,
+          "ocr_block": {
+            "kind": "table",
+            "text": "<table><tr><td></td><td>优级品</td><td>合格品</td><td>不合格品</td><td>总计</td></tr><tr><td>甲车间</td><td>26</td><td>24</td><td>0</td><td>50</td></tr><tr><td>乙车间</td><td>70</td><td>28</td><td>2</td><td>100</td></tr><tr><td>总计</td><td>96</td><td>52</td><td>2</td><td>150</td></tr></table>",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": null
+          },
+          "gold_block": {
+            "kind": "table",
+            "text": "<table><tr><td></td><td>优级品</td><td>合格品</td><td>不合格品</td><td>总计</td></tr><tr><td>甲车间</td><td>26</td><td>24</td><td>0</td><td>50</td></tr><tr><td>乙车间</td><td>70</td><td>28</td><td>2</td><td>100</td></tr><tr><td>总计</td><td>96</td><td>52</td><td>2</td><td>150</td></tr></table>",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": null
+          }
+        },
+        {
+          "kind": "table",
+          "operation": "aligned",
+          "ocr_text": "<table><tr><td></td><td>优级品</td><td>非优级品</td></tr><tr><td>甲车间</td><td></td><td></td></tr><tr><td>乙车间</td><td></td><td></td></tr></table>",
+          "gold_text": "<table><tr><td></td><td>优级品</td><td>非优级品</td></tr><tr><td>甲车间</td><td>___</td><td>___</td></tr><tr><td>乙车间</td><td>___</td><td>___</td></tr></table>",
+          "similarity": 0.958,
+          "ocr_block": {
+            "kind": "table",
+            "text": "<table><tr><td></td><td>优级品</td><td>非优级品</td></tr><tr><td>甲车间</td><td></td><td></td></tr><tr><td>乙车间</td><td></td><td></td></tr></table>",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "1"
+          },
+          "gold_block": {
+            "kind": "table",
+            "text": "<table><tr><td></td><td>优级品</td><td>非优级品</td></tr><tr><td>甲车间</td><td>___</td><td>___</td></tr><tr><td>乙车间</td><td>___</td><td>___</td></tr></table>",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "1"
+          }
+        },
+        {
+          "kind": "table",
+          "operation": "gold_only",
+          "ocr_text": null,
+          "gold_text": "<table><tr><td></td><td>0.050</td><td>0.010</td><td>0.001</td></tr><tr><td>$k$</td><td>3.841</td><td>6.635</td><td>10.828</td></tr></table>",
+          "similarity": 0.0,
+          "ocr_block": null,
+          "gold_block": {
+            "kind": "table",
+            "text": "<table><tr><td></td><td>0.050</td><td>0.010</td><td>0.001</td></tr><tr><td>$k$</td><td>3.841</td><td>6.635</td><td>10.828</td></tr></table>",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "2"
+          }
+        },
+        {
+          "kind": "sub_question",
+          "operation": "aligned",
+          "ocr_text": "1 填写如下列联表：",
+          "gold_text": "1 填写如下列联表：",
+          "similarity": 1.0,
+          "ocr_block": {
+            "kind": "sub_question",
+            "text": "填写如下列联表：",
+            "label": "1",
+            "figure": null,
+            "follows_sub_question": "1"
+          },
+          "gold_block": {
+            "kind": "sub_question",
+            "text": "填写如下列联表：",
+            "label": "1",
+            "figure": null,
+            "follows_sub_question": "1"
+          }
+        },
+        {
+          "kind": "sub_question",
+          "operation": "aligned",
+          "ocr_text": "2 已知升级改造前该工厂产品的优级品率 $p=0.5$. 设 $\\bar p$ 为升级改造后抽取的 n 件产品的优级品率，如果 $\\bar p>p+1.65\\sqrt{\\dfrac{p(1-p)}{n}}$，则认为该工厂产品的优级品率提高了. 根据抽取的 $150\\text{ 件}$ 产品的数据，能否认为生产线智能化升级改造后，该工厂产品的优级品率提高了？$(\\sqrt{150}\\approx12.247)$",
+          "gold_text": "2 已知升级改造前该工厂产品的优级品率 $p=0.5$. 设 $\\bar p$ 为升级改造后抽取的 $n\\text{ 件}$ 产品的优级品率，如果 $\\bar p>p+1.65\\sqrt{\\dfrac{p(1-p)}{n}}$，则认为该工厂产品的优级品率提高了. 根据抽取的 $150\\text{ 件}$ 产品的数据，能否认为生产线智能化升级改造后，该工厂产品的优级品率提高了？（$\\sqrt{150}\\approx12.247$）",
+          "similarity": 0.967,
+          "ocr_block": {
+            "kind": "sub_question",
+            "text": "已知升级改造前该工厂产品的优级品率 $p=0.5$. 设 $\\bar p$ 为升级改造后抽取的 n 件产品的优级品率，如果 $\\bar p>p+1.65\\sqrt{\\dfrac{p(1-p)}{n}}$，则认为该工厂产品的优级品率提高了. 根据抽取的 $150\\text{ 件}$ 产品的数据，能否认为生产线智能化升级改造后，该工厂产品的优级品率提高了？$(\\sqrt{150}\\approx12.247)$",
+            "label": "2",
+            "figure": null,
+            "follows_sub_question": "2"
+          },
+          "gold_block": {
+            "kind": "sub_question",
+            "text": "已知升级改造前该工厂产品的优级品率 $p=0.5$. 设 $\\bar p$ 为升级改造后抽取的 $n\\text{ 件}$ 产品的优级品率，如果 $\\bar p>p+1.65\\sqrt{\\dfrac{p(1-p)}{n}}$，则认为该工厂产品的优级品率提高了. 根据抽取的 $150\\text{ 件}$ 产品的数据，能否认为生产线智能化升级改造后，该工厂产品的优级品率提高了？（$\\sqrt{150}\\approx12.247$）",
+            "label": "2",
+            "figure": null,
+            "follows_sub_question": "2"
+          }
+        },
+        {
+          "kind": "text",
+          "operation": "aligned",
+          "ocr_text": "能否有 $95\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？",
+          "gold_text": "能否有 $95\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？",
+          "similarity": 1.0,
+          "ocr_block": {
+            "kind": "text",
+            "text": "能否有 $95\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "1"
+          },
+          "gold_block": {
+            "kind": "text",
+            "text": "能否有 $95\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？能否有 $99\\%$ 的把握认为甲，乙两车间产品的优级品率存在差异？",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "1"
+          }
+        },
+        {
+          "kind": "text",
+          "operation": "aligned",
+          "ocr_text": "附：$K^2=\\dfrac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}$",
+          "gold_text": "附：$K^2=\\dfrac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}$，$P(K^2\\ge k)$ 的临界值如下：",
+          "similarity": 0.814,
+          "ocr_block": {
+            "kind": "text",
+            "text": "附：$K^2=\\dfrac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}$",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "2"
+          },
+          "gold_block": {
+            "kind": "text",
+            "text": "附：$K^2=\\dfrac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}$，$P(K^2\\ge k)$ 的临界值如下：",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "2"
+          }
+        },
+        {
+          "kind": "text",
+          "operation": "ocr_only",
+          "ocr_text": "$\\dfrac{P(K^2\\ge k)}{k}$ | $0.050$ $0.010$ $0.001$",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "text",
+            "text": "$\\dfrac{P(K^2\\ge k)}{k}$ | $0.050$ $0.010$ $0.001$",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "2"
+          },
+          "gold_block": null
+        },
+        {
+          "kind": "text",
+          "operation": "ocr_only",
+          "ocr_text": "$3.841$ $6.635$ $10.828$",
+          "gold_text": null,
+          "similarity": 0.0,
+          "ocr_block": {
+            "kind": "text",
+            "text": "$3.841$ $6.635$ $10.828$",
+            "label": "",
+            "figure": null,
+            "follows_sub_question": "2"
+          },
+          "gold_block": null
+        }
+      ]
     }
   },
   {
     "question_status": "aligned",
     "ocr_number": 19,
     "gold_number": 19,
-    "question_similarity": 0.77,
+    "ocr_stem": "如图，在以 A，B，C，D，E，F 为顶点的五面体中，四边形 ABCD 与四边形 ADEF 均为等腰梯形，EF // AD，BC // AD，$AD=4$，AB = BC = $EF=2$，$ED=\\sqrt{10}$，$FB=2\\sqrt3$，M 为 AD 的中点.",
+    "gold_stem": "如图，在以 $A$，$B$，$C$，$D$，$E$，$F$ 为顶点的五面体中，四边形 $ABCD$ 与四边形 $ADEF$ 均为等腰梯形，$EF\\parallel AD$，$BC\\parallel AD$，$AD=4$，$AB=BC=EF=2$，$ED=\\sqrt{10}$，$FB=2\\sqrt3$，$M$ 为 $AD$ 的中点.",
+    "stem_similarity": 0.82,
+    "content_similarity": 0.952,
+    "combined_similarity": 0.873,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 0.903,
+        "figure": 1.0
+      },
+      "content_similarity": 0.952,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 证明：BM$\\parallel$ 平面CDE；",
+          "gold_text": "1 证明：$BM\\parallel$ 平面 $CDE$；",
+          "similarity": 0.906,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "证明:$BM$$\\parallel$平面$CDE$;",
+            "text": "证明：BM$\\parallel$ 平面CDE；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "证明:$BM\\parallel$ 平面 $CDE$;",
+            "text": "证明：$BM\\parallel$ 平面 $CDE$；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 0.929
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 求 M 到平面 FAB 的距离.",
+          "gold_text": "2 求 $M$ 到平面 $FAB$ 的距离.",
+          "similarity": 0.9,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求 $M$ 到平面 $FAB$ 的距离.",
+            "text": "求 M 到平面 FAB 的距离.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
@@ -1169,11 +1879,14 @@
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "figure",
           "operation": "aligned",
+          "ocr_text": "<FIGURE>",
+          "gold_text": "<FIGURE>",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "figure",
             "text": "",
@@ -1191,8 +1904,7 @@
               "path": "img/2024/national_paper_a_liberal/q19_fig1.png"
             },
             "follows_sub_question": "2"
-          },
-          "similarity": 1.0
+          }
         }
       ]
     }
@@ -1201,46 +1913,63 @@
     "question_status": "aligned",
     "ocr_number": 20,
     "gold_number": 20,
-    "question_similarity": 1.0,
+    "ocr_stem": "已知函数 $f(x)=a(x-1)-\\ln x+1$.",
+    "gold_stem": "已知函数 $f(x)=a(x-1)-\\ln x+1$.",
+    "stem_similarity": 1.0,
+    "content_similarity": 1.0,
+    "combined_similarity": 1.0,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 1.0
+      },
+      "content_similarity": 1.0,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 讨论 $f(x)$ 的单调性；",
+          "gold_text": "1 讨论 $f(x)$ 的单调性；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "讨论 $f(x)$ 的单调性;",
+            "text": "讨论 $f(x)$ 的单调性；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "讨论 $f(x)$ 的单调性;",
+            "text": "讨论 $f(x)$ 的单调性；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 设 $a\\le2$，证明：当 $x>1$ 时，$f(x)<\\mathrm{e}^{x-1}$.",
+          "gold_text": "2 设 $a\\le2$，证明：当 $x>1$ 时，$f(x)<\\mathrm{e}^{x-1}$.",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "设 $a\\le2$,证明:当 $x$ > $1$ 时, $f(x)<\\mathrm{e}^{x-1}$.",
+            "text": "设 $a\\le2$，证明：当 $x>1$ 时，$f(x)<\\mathrm{e}^{x-1}$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "设 $a\\le2$,证明:当 $x>1$ 时,$f(x)<\\mathrm{e}^{x-1}$.",
+            "text": "设 $a\\le2$，证明：当 $x>1$ 时，$f(x)<\\mathrm{e}^{x-1}$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 0.951
+          }
         }
       ]
     }
@@ -1249,46 +1978,63 @@
     "question_status": "aligned",
     "ocr_number": 21,
     "gold_number": 21,
-    "question_similarity": 0.911,
+    "ocr_stem": "设椭圆 C：$\\dfrac{x^2}{a^2}+\\dfrac{y^2}{b^2}=1$ (a > $b>0$) 的右焦点为 F，点 M $\\left(1,\\dfrac32\\right)$ 在 C 上，且 MF $\\perp$ x 轴.",
+    "gold_stem": "设椭圆 $C:\\dfrac{x^2}{a^2}+\\dfrac{y^2}{b^2}=1$（$a>b>0$） 的右焦点为 $F$，点 $M\\left(1,\\dfrac32\\right)$ 在 $C$ 上，且 $MF\\perp x$ 轴.",
+    "stem_similarity": 0.893,
+    "content_similarity": 0.908,
+    "combined_similarity": 0.899,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 0.908
+      },
+      "content_similarity": 0.908,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 求 C 的方程；",
+          "gold_text": "1 求 $C$ 的方程；",
+          "similarity": 0.909,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "求 $C$ 的方程;",
+            "text": "求 C 的方程；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "求 $C$ 的方程;",
+            "text": "求 $C$ 的方程；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 过点 $P(4,0)$ 的直线交 C 于 A，B 两点，N 为线段 FP 的中点，直线 NB 交直线 MF 于点 Q，证明：$AQ\\perp y$ 轴.",
+          "gold_text": "2 过点 $P(4,0)$ 的直线交 $C$ 于 $A$，$B$ 两点，$N$ 为线段 $FP$ 的中点，直线 $NB$ 交直线 $MF$ 于点 $Q$，证明：$AQ\\perp y$ 轴.",
+          "similarity": 0.907,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A, B$ 两点,$N$ 为线段 $FP$ 的中点,直线 $NB$ 交直线 $MF$ 于点 $Q$,证明: $AQ\\perp y$ 轴.",
+            "text": "过点 $P(4,0)$ 的直线交 C 于 A，B 两点，N 为线段 FP 的中点，直线 NB 交直线 MF 于点 Q，证明：$AQ\\perp y$ 轴.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A$,$B$ 两点,$N$ 为线段 $FP$ 的中点,直线 $NB$ 交直线 $MF$ 于点 $Q$,证明:$AQ\\perp y$ 轴.",
+            "text": "过点 $P(4,0)$ 的直线交 $C$ 于 $A$，$B$ 两点，$N$ 为线段 $FP$ 的中点，直线 $NB$ 交直线 $MF$ 于点 $Q$，证明：$AQ\\perp y$ 轴.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 0.979
+          }
         }
       ]
     }
@@ -1297,46 +2043,63 @@
     "question_status": "aligned",
     "ocr_number": 22,
     "gold_number": 22,
-    "question_similarity": 0.959,
+    "ocr_stem": "在直角坐标系 xOy 中，以坐标原点为极点，x 轴正半轴为极轴建立极坐标系，曲线 C 的极坐标方程为 $\\rho=\\rho\\cos\\theta+1$.",
+    "gold_stem": "在平面直角坐标系 $xOy$ 中，以坐标原点 $O$ 为极点，$x$ 轴正半轴为极轴建立极坐标系，曲线 $C$ 的极坐标方程为 $\\rho=\\rho\\cos\\theta+1$.",
+    "stem_similarity": 0.92,
+    "content_similarity": 0.914,
+    "combined_similarity": 0.918,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 0.914
+      },
+      "content_similarity": 0.914,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 写出 C 的直角坐标方程；",
+          "gold_text": "1 写出 $C$ 的直角坐标方程；",
+          "similarity": 0.938,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "写出 $C$ 的直角坐标方程;",
+            "text": "写出 C 的直角坐标方程；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "写出 $C$ 的直角坐标方程;",
+            "text": "写出 $C$ 的直角坐标方程；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 1.0
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 设直线 l：$\\begin{cases}x=t,\\\\y=t+a\\end{cases}\\ (t\\text{ 为参数})$，若 C 与 l 相交于 A，B 两点，且 |AB|=$2$，求 a.",
+          "gold_text": "2 设直线 $l$ 的参数方程为 $\\begin{cases}x=t,\\\\y=t+a\\end{cases}\\ (t\\text{ 为参数})$，若 $C$ 与 $l$ 相交于 $A$，$B$ 两点，且 $|AB|=2$，求 $a$.",
+          "similarity": 0.891,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "设直线 $l$: $\\begin{cases}x=t,\\\\y=t+a\\end{cases}$ (t 为参数),若 $C$ 与 $l$ 相交于 $A, B$ 两点,且 |$AB$|=$2$,求 $a$.",
+            "text": "设直线 l：$\\begin{cases}x=t,\\\\y=t+a\\end{cases}\\ (t\\text{ 为参数})$，若 C 与 l 相交于 A，B 两点，且 |AB|=$2$，求 a.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "设直线 $l$ 的参数方程为 $\\begin{cases}\nx=t,\\\\\ny=t+a\n\\end{cases}\\ (t\\text{ 为参数})$，若 $C$ 与 $l$ 相交于 $A$，$B$ 两点，且 $|AB|=2$，求 $a$.",
+            "text": "设直线 $l$ 的参数方程为 $\\begin{cases}x=t,\\\\y=t+a\\end{cases}\\ (t\\text{ 为参数})$，若 $C$ 与 $l$ 相交于 $A$，$B$ 两点，且 $|AB|=2$，求 $a$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 0.836
+          }
         }
       ]
     }
@@ -1345,46 +2108,63 @@
     "question_status": "aligned",
     "ocr_number": 23,
     "gold_number": 23,
-    "question_similarity": 0.941,
+    "ocr_stem": "已知实数 a，b 满足 $a+b\\ge3$.",
+    "gold_stem": "已知实数 $a$，$b$ 满足 $a+b\\ge3$.",
+    "stem_similarity": 0.917,
+    "content_similarity": 0.991,
+    "combined_similarity": 0.946,
+    "combined_weights": {
+      "stem": 0.6,
+      "content": 0.4
+    },
     "block_alignment": {
-      "mode": "block_alignment",
-      "reason": null,
+      "mode": "block_alignment_by_kind",
+      "per_kind_similarity": {
+        "sub_question": 0.991
+      },
+      "content_similarity": 0.991,
       "alignment": [
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "1 证明：$2a^2+2b^2>a+b$；",
+          "gold_text": "1 证明：$2a^2+2b^2>a+b$；",
+          "similarity": 1.0,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "证明: $2a^2+2b^2>a+b;$",
+            "text": "证明：$2a^2+2b^2>a+b$；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "证明:$2a^2+2b^2>a+b$;",
+            "text": "证明：$2a^2+2b^2>a+b$；",
             "label": "1",
             "figure": null,
             "follows_sub_question": "1"
-          },
-          "similarity": 0.93
+          }
         },
         {
+          "kind": "sub_question",
           "operation": "aligned",
+          "ocr_text": "2 证明：$|a-2b^2|+|b-2a^2|\\ge6$",
+          "gold_text": "2 证明：$|a-2b^2|+|b-2a^2|\\ge6$.",
+          "similarity": 0.982,
           "ocr_block": {
             "kind": "sub_question",
-            "text": "证明: $|a-2b^2|+|b-2a^2|\\ge6$",
+            "text": "证明：$|a-2b^2|+|b-2a^2|\\ge6$",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
           },
           "gold_block": {
             "kind": "sub_question",
-            "text": "证明:$|a-2b^2|+|b-2a^2|\\ge6$.",
+            "text": "证明：$|a-2b^2|+|b-2a^2|\\ge6$.",
             "label": "2",
             "figure": null,
             "follows_sub_question": "2"
-          },
-          "similarity": 0.966
+          }
         }
       ]
     }
