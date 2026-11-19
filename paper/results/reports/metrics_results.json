@@ -3035,8 +3035,7 @@
       "unexpected_figure": 4
     }
   },
-  "ocr_baseline_manifest": "ocr_baseline/baseline_manifest.json",
-  "error_taxonomy_report": "error_taxonomy_results.json",
+  "error_taxonomy_report": "reports/error_taxonomy_results.json",
   "top_correction_experiment_candidates": [
     {
       "category": "character_deletion",
@@ -3069,20 +3068,42 @@
       "priority_score": 51.0
     }
   ],
-  "ocr_baseline_metadata": {
-    "engine": null,
-    "version": null,
-    "configuration": null,
-    "processing_seconds": null,
-    "structured_json_available": false
-  },
   "markdown_to_latex_compile": {
-    "skipped": true,
-    "reason": "--skip-compile"
+    "raw_baseline_successes": 1,
+    "raw_baseline_attempts": 1,
+    "raw_baseline_compile_rate": 1.0,
+    "checks": [
+      {
+        "label": "raw_ocr",
+        "parse_success": true,
+        "render_success": true,
+        "compile_attempted": true,
+        "compile_success": true,
+        "engine": "xelatex",
+        "error": null
+      },
+      {
+        "label": "normalized_ocr",
+        "parse_success": true,
+        "render_success": true,
+        "compile_attempted": true,
+        "compile_success": true,
+        "engine": "xelatex",
+        "error": null
+      },
+      {
+        "label": "normalized_gold",
+        "parse_success": true,
+        "render_success": true,
+        "compile_attempted": true,
+        "compile_success": true,
+        "engine": "xelatex",
+        "error": null
+      }
+    ]
   },
   "inputs": {
     "ocr": "/home/ziedlazreg/Desktop/ceeConversion/data/input/exam.md",
-    "ocr_snapshot": "/home/ziedlazreg/Desktop/ceeConversion/paper/results/ocr_baseline/ocr.md",
     "gold": "/home/ziedlazreg/Desktop/ceeConversion/Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex",
     "gold_format": "tex",
     "output_dir": "/home/ziedlazreg/Desktop/ceeConversion/paper/results"
@@ -3090,6 +3111,6 @@
   "audit_sample": {
     "requested": 30,
     "written": 30,
-    "file": "audit_sample.jsonl"
+    "file": "review/audit_sample.jsonl"
   }
 }

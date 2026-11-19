@@ -1,3 +1,5 @@
+"""Extract answer and solution sections from a gold LaTeX exam."""
+
 import re
 from pathlib import Path
 
@@ -21,10 +23,12 @@ def read_group(s, i):
 
 
 def make_figure(path):
+    """Format an image path as the figure command used by the Markdown parser."""
     return f"\\includegraphics{{{path.strip()}}}"
 
 
 def convert_images(t):
+    """Convert the source's custom image commands to standard image references."""
     # images inside answer choices
     t = re.sub(r"\\choicebitmap(?:\[[^\]]*\])?\{([^}]*)\}",
                lambda m: make_figure(m.group(1)), t)
@@ -59,7 +63,9 @@ def convert_choices(t):
 
 
 def convert_tables(t):
+    """Convert supported tabular environments to HTML table markup."""
     def to_html(m):
+        """Convert one matched tabular body to HTML rows and cells."""
         rows = m.group(1).replace("\\hline", "").split("\\\\")
         html = "<table>"
         for row in rows:
@@ -77,12 +83,15 @@ def convert_tables(t):
 
 
 def convert_lists(t):
+    """Convert circled and numbered lists to readable Markdown lines."""
     def circle_list(m):
+        """Render each source list item with a circled number."""
         items = m.group(1).split("\\item")[1:]
         lines = [f"{CIRCLED[str(n)]} {x.strip()}" for n, x in enumerate(items, 1)]
         return "\n\n" + "\n\n".join(lines) + "\n\n"
 
     def number_list(m):
+        """Render each enumerate item with a simple numbered label."""
         items = m.group(1).split("\\item")[1:]
         lines = [f"({n}) {x.strip()}" for n, x in enumerate(items, 1)]
         return "\n\n" + "\n\n".join(lines) + "\n\n"
@@ -93,6 +102,7 @@ def convert_lists(t):
 
 
 def convert_math(t):
+    """Expand source-specific math macros and convert math delimiters."""
     # \circled{n} -> unicode circled numbers
     t = re.sub(r"\\\(((?:\s*\\circled\{\d\}\s*)+)\\\)",
                lambda m: "".join(CIRCLED[d] for d in re.findall(r"\d", m.group(1))), t)
@@ -111,6 +121,7 @@ def convert_math(t):
 
 
 def clean_block(t):
+    """Clean one answer or solution block using the supported TeX conversions."""
     t = convert_images(t)
     t = convert_tables(t)
     t = convert_lists(t)
@@ -151,7 +162,7 @@ def convert_solutions(tex):
 
 
 def main(input_path=PROJECT_ROOT / "Gaokao-Math-Problems-Compilation/content/2024/national_paper_a_liberal.tex",
-         output_path=PROJECT_ROOT / "paper/results/solutions_out.md"):
+         output_path=PROJECT_ROOT / "paper/results/solutions/solutions_out.md"):
     """Extract solutions from the paths provided as function arguments."""
     input_file, output_file = Path(input_path), Path(output_path)
 

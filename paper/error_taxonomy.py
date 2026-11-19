@@ -16,18 +16,6 @@ except ImportError:
     from unit_extraction import document_units, flatten_questions
 
 
-GLYPH_PAIRS = {
-    frozenset(pair) for pair in (
-        ("0", "O"), ("0", "o"), ("1", "l"), ("1", "I"), ("5", "S"),
-        ("2", "Z"), ("8", "B"), ("6", "G"), ("rn", "m"),
-    )
-}
-OPERATOR_PAIRS = {
-    frozenset(pair) for pair in (
-        ("x", "×"), ("*", "×"), ("-", "−"), ("-", "–"), ("−", "–"),
-        ("/", "÷"), (".", "·"), ("<=", "≤"), (">=", "≥"), ("!=", "≠"),
-    )
-}
 GREEK_COMMANDS = {
     "alpha", "beta", "gamma", "delta", "epsilon", "varepsilon", "zeta", "eta",
     "theta", "vartheta", "iota", "kappa", "lambda", "mu", "nu", "xi", "pi",
@@ -41,6 +29,7 @@ DELIMITERS = set("{}[]()|\\$")
 
 
 def _math_group(token):
+    """Group a math token as a Greek letter, digit, operator, command, or symbol."""
     token = str(token or "")
     bare = token[1:] if token.startswith("\\") else token
     if (token.startswith("\\") and bare in GREEK_COMMANDS) or any(char in GREEK_CHARS for char in token):
@@ -60,44 +49,25 @@ def _math_group(token):
     return "other_math_symbols"
 
 
-def _primary_character_category(error, content_class):
+def _primary_character_category(error):
+    """Group character edits by operation without guessing visual confusions."""
     operation = error.get("operation")
-    gold, ocr = str(error.get("gold") or ""), str(error.get("ocr") or "")
     if operation == "insertion":
         return "character_insertion"
     if operation == "deletion":
         return "character_deletion"
     if operation != "substitution":
         return "other_character_error"
-    if frozenset((gold, ocr)) in GLYPH_PAIRS:
-        return "glyph_confusion"
-    if frozenset((gold, ocr)) in OPERATOR_PAIRS:
-        return "operator_confusion"
-    if content_class == "math":
-        return "mathematical_symbol_confusion"
     return "character_substitution"
 
 
-def _increment_confusion(table, category, gold, ocr):
-    if gold is not None and ocr is not None and gold != ocr:
-        table[category][(str(gold), str(ocr))] += 1
-
-
 def _counter_report(counter):
+    """Convert a counter to a consistently ordered plain dictionary."""
     return dict(sorted(counter.items()))
 
 
-def _confusions_report(confusions):
-    return {
-        category: [
-            {"gold": gold, "ocr": ocr, "count": count}
-            for (gold, ocr), count in pairs.most_common()
-        ]
-        for category, pairs in sorted(confusions.items())
-    }
-
-
 def _block_text(block):
+    """Get comparable text from a block, using its path for a figure."""
     figure = block.get("figure")
     if isinstance(figure, dict):
         return str(figure.get("path", ""))
@@ -131,6 +101,7 @@ def _confidence_spans(data):
 
 
 def _confidence_error_report(rows, confidence_data):
+    """Group aligned character errors by the closest OCR confidence span."""
     spans = _confidence_spans(confidence_data)
     if not spans:
         return {
@@ -174,6 +145,7 @@ def _confidence_error_report(rows, confidence_data):
 
 
 def _reading_order_events(ocr_document, gold_document):
+    """Find matched same-kind blocks whose relative order differs between papers."""
     ocr_questions = flatten_questions(ocr_document)
     gold_questions = flatten_questions(gold_document)
     pairs = align_questions(ocr_questions, gold_questions)
@@ -218,6 +190,7 @@ def _reading_order_events(ocr_document, gold_document):
 
 
 def _equation_segmentation_events(ocr_document, gold_document, rows):
+    """Flag paired questions whose OCR and reference equation counts differ."""
     ocr_questions, ocr_tree = document_units(ocr_document)
     gold_questions, gold_tree = document_units(gold_document)
     pairs = align_questions(ocr_questions, gold_questions)
@@ -272,12 +245,8 @@ def analyze_document(rows, structure_report, ocr_document, gold_document, docume
     operations = Counter()
     by_language = defaultdict(Counter)
     by_content_type = defaultdict(Counter)
-    char_confusions = defaultdict(Counter)
-    math_confusions = defaultdict(Counter)
-    math_token_confusions = defaultdict(Counter)
     math_error_counts = defaultdict(Counter)
     command_errors = Counter()
-    command_confusions = Counter()
     eligible_rows = [
         row for row in rows
         if row.get("count_in_metrics", True)
@@ -290,16 +259,11 @@ def analyze_document(rows, structure_report, ocr_document, gold_document, docume
         for error in row.get("character_errors", []):
             operation = error.get("operation", "unknown")
             content_class = error.get("category") or "other_text"
-            category = _primary_character_category(error, content_class)
+            category = _primary_character_category(error)
             primary[category] += 1
             operations[operation] += 1
             by_language[content_class][operation] += 1
             by_content_type[unit_type][operation] += 1
-            if operation == "substitution":
-                _increment_confusion(char_confusions, content_class, error.get("gold"), error.get("ocr"))
-                if content_class == "math":
-                    group = _math_group(error.get("gold") or error.get("ocr"))
-                    _increment_confusion(math_confusions, group, error.get("gold"), error.get("ocr"))
         for error in row.get("token_errors", []):
             if error.get("category") not in {"math", "math_syntax"}:
                 continue
@@ -311,10 +275,6 @@ def analyze_document(rows, structure_report, ocr_document, gold_document, docume
             if isinstance(gold, str) and gold.startswith("\\") or isinstance(ocr, str) and ocr.startswith("\\"):
                 command_errors[operation] += 1
                 primary["latex_command_error"] += 1
-                if operation == "substitution":
-                    command_confusions[(str(gold or ""), str(ocr or ""))] += 1
-            if operation == "substitution":
-                _increment_confusion(math_token_confusions, group, gold, ocr)
 
     structure_counts = Counter(structure_report.get("error_counts", {}))
     reading_events = _reading_order_events(ocr_document, gold_document)
@@ -328,8 +288,6 @@ def analyze_document(rows, structure_report, ocr_document, gold_document, docume
     primary["reading_order_error"] += reading_structure_count + len(reading_events)
     primary["equation_segmentation_candidate"] += len(equation_events)
 
-    confusions = _confusions_report(char_confusions)
-    math_confusions_report = _confusions_report(math_confusions)
     documents = {
         document_name: {
             "character_error_categories": _counter_report(primary),
@@ -340,17 +298,9 @@ def analyze_document(rows, structure_report, ocr_document, gold_document, docume
             ),
             "errors_by_language_or_content_class": {key: _counter_report(value) for key, value in sorted(by_language.items())},
             "errors_by_content_type": {key: _counter_report(value) for key, value in sorted(by_content_type.items())},
-            "chinese_confusions": confusions.get("cjk_text", []),
-            "character_confusions_by_class": confusions,
-            "mathematical_confusions_by_symbol_type": math_confusions_report,
-            "math_token_confusions_by_symbol_type": _confusions_report(math_token_confusions),
             "math_token_errors_by_symbol_type": {key: _counter_report(value) for key, value in sorted(math_error_counts.items())},
             "latex_command_errors": {
                 "operation_counts": _counter_report(command_errors),
-                "confusions": [
-                    {"gold": gold, "ocr": ocr, "count": count}
-                    for (gold, ocr), count in command_confusions.most_common()
-                ],
             },
             "structural_error_counts": _counter_report(structure_counts),
             "reading_order_events": reading_events,
@@ -366,24 +316,55 @@ IMPACT_WEIGHTS = {
     "character_substitution": 1.0,
     "character_deletion": 1.0,
     "character_insertion": 1.0,
-    "glyph_confusion": 1.2,
-    "operator_confusion": 2.0,
-    "mathematical_symbol_confusion": 1.8,
     "latex_command_error": 1.5,
     "structural_error": 2.0,
     "reading_order_error": 2.0,
     "equation_segmentation_candidate": 2.0,
 }
+DEFERRED_CHARACTER_CATEGORIES = {
+    "glyph_confusion",
+    "operator_confusion",
+    "mathematical_symbol_confusion",
+}
+
+
+def _without_confusion_tables(report):
+    """Remove deferred pair tables while retaining general error counts."""
+    cleaned = dict(report)
+    categories = dict(report.get("character_error_categories", {}))
+    deferred_substitutions = sum(
+        categories.pop(category, 0) for category in DEFERRED_CHARACTER_CATEGORIES
+    )
+    if deferred_substitutions:
+        categories["character_substitution"] = (
+            categories.get("character_substitution", 0) + deferred_substitutions
+        )
+    cleaned["character_error_categories"] = categories
+    for key in (
+        "character_confusions_by_class",
+        "chinese_confusions",
+        "mathematical_confusions_by_symbol_type",
+        "math_token_confusions_by_symbol_type",
+    ):
+        cleaned.pop(key, None)
+    command_errors = report.get("latex_command_errors")
+    if isinstance(command_errors, dict):
+        cleaned["latex_command_errors"] = {
+            "operation_counts": command_errors.get("operation_counts", {})
+        }
+    return cleaned
 
 
 def aggregate_documents(documents):
     """Aggregate document reports while retaining the per-document breakdown."""
+    documents = {
+        name: _without_confusion_tables(report)
+        for name, report in documents.items()
+    }
     category_totals, operation_totals = Counter(), Counter()
     language_totals, content_totals, structure_totals = defaultdict(Counter), defaultdict(Counter), Counter()
-    class_confusions, math_confusions, math_token_confusions, math_tokens = (
-        defaultdict(Counter), defaultdict(Counter), defaultdict(Counter), defaultdict(Counter)
-    )
-    command_operations, command_pairs = Counter(), Counter()
+    math_tokens = defaultdict(Counter)
+    command_operations = Counter()
     reading_events, equation_events = [], []
     equation_event_totals = Counter()
     unaligned_rows = 0
@@ -392,7 +373,11 @@ def aggregate_documents(documents):
     confidence_mapped = confidence_unmapped = 0
     confidence_available = False
     for document, report in documents.items():
-        category_totals.update(report.get("character_error_categories", {}))
+        category_totals.update({
+            key: count
+            for key, count in report.get("character_error_categories", {}).items()
+            if key not in DEFERRED_CHARACTER_CATEGORIES
+        })
         operation_totals.update(report.get("character_operations", {}))
         structure_totals.update(report.get("structural_error_counts", {}))
         unaligned_rows += report.get("unaligned_unit_rows", 0)
@@ -407,21 +392,10 @@ def aggregate_documents(documents):
             language_totals[key].update(counts)
         for key, counts in report.get("errors_by_content_type", {}).items():
             content_totals[key].update(counts)
-        for key, values in report.get("character_confusions_by_class", {}).items():
-            for item in values:
-                class_confusions[key][(item["gold"], item["ocr"])] += item["count"]
-        for key, values in report.get("mathematical_confusions_by_symbol_type", {}).items():
-            for item in values:
-                math_confusions[key][(item["gold"], item["ocr"])] += item["count"]
-        for key, values in report.get("math_token_confusions_by_symbol_type", {}).items():
-            for item in values:
-                math_token_confusions[key][(item["gold"], item["ocr"])] += item["count"]
         for key, counts in report.get("math_token_errors_by_symbol_type", {}).items():
             math_tokens[key].update(counts)
         command = report.get("latex_command_errors", {})
         command_operations.update(command.get("operation_counts", {}))
-        for item in command.get("confusions", []):
-            command_pairs[(item["gold"], item["ocr"])] += item["count"]
         reading_events.extend({"document": document, **event} for event in report.get("reading_order_events", []))
         equation_events.extend({"document": document, **event} for event in report.get("equation_segmentation_candidates", []))
         equation_event_totals.update(report.get("equation_segmentation_counts", {}))
@@ -444,17 +418,9 @@ def aggregate_documents(documents):
         "unaligned_unit_rows": unaligned_rows,
         "errors_by_language_or_content_class": {key: _counter_report(value) for key, value in sorted(language_totals.items())},
         "errors_by_content_type": {key: _counter_report(value) for key, value in sorted(content_totals.items())},
-        "character_confusions_by_class": _confusions_report(class_confusions),
-        "chinese_confusions": _confusions_report(class_confusions).get("cjk_text", []),
-        "mathematical_confusions_by_symbol_type": _confusions_report(math_confusions),
-        "math_token_confusions_by_symbol_type": _confusions_report(math_token_confusions),
         "math_token_errors_by_symbol_type": {key: _counter_report(value) for key, value in sorted(math_tokens.items())},
         "latex_command_errors": {
             "operation_counts": _counter_report(command_operations),
-            "confusions": [
-                {"gold": gold, "ocr": ocr, "count": count}
-                for (gold, ocr), count in command_pairs.most_common()
-            ],
         },
         "structural_error_counts": _counter_report(structure_totals),
         "reading_order_events": reading_events,
@@ -462,7 +428,7 @@ def aggregate_documents(documents):
         "equation_segmentation_counts": _counter_report(equation_event_totals),
         "top_correction_experiment_candidates": candidates[:5],
         "priority_note": "Counts are measured from the paired data. Impact weights are explicit heuristics, not learned probabilities. Specialized findings such as LaTeX command errors can overlap with character-level counts.",
-        "classification_note": "Glyph and operator labels use explicit visual/symbol equivalence rules; their frequencies are measured from this alignment, not assumed in advance.",
+        "classification_note": "Character edits are grouped by insertion, deletion, or substitution. Pairwise character, glyph, and math-token confusion tables are deferred to a later analysis.",
         "confidence_analysis": {
             "available": confidence_available,
             "confidence_spans": confidence_spans,
@@ -476,10 +442,12 @@ def aggregate_documents(documents):
 
 
 def build_taxonomy_report(rows, structure_report, ocr_document, gold_document, document_name, confidence_data=None):
+    """Build one document's taxonomy from raw unit pairs and structure findings."""
     return analyze_document(rows, structure_report, ocr_document, gold_document, document_name, confidence_data)
 
 
 def aggregate_report_files(paths, output_path):
+    """Combine saved document reports and write corpus-level error totals."""
     documents = {}
     for path in paths:
         report = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -496,8 +464,8 @@ def aggregate_report_files(paths, output_path):
     return combined
 
 
-def main(report_paths=(Path("paper/results/error_taxonomy_results.json"),),
-         output_path=Path("paper/results/error_taxonomy_corpus.json")):
+def main(report_paths=(Path("paper/results/reports/error_taxonomy_results.json"),),
+         output_path=Path("paper/results/reports/error_taxonomy_corpus.json")):
     """Aggregate reports named in the function arguments; no CLI parsing."""
     result = aggregate_report_files(report_paths, output_path)
     print(json.dumps(result["aggregate"], ensure_ascii=False, indent=2))

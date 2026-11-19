@@ -1,12 +1,11 @@
 """Convert gold-standard LaTeX exam documents into canonical Markdown.
-
 Structure conversion lives here. ALL style normalization (dfrac, punctuation,
 spacing, blanks, brackets, number wrapping ...) is delegated to
 normalize_md.normalize_markdown, the same function the OCR side uses.
 """
+
 import sys
 from pathlib import Path
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 if str(PROJECT_ROOT) not in sys.path:
@@ -44,10 +43,12 @@ def read_group(s: str, i: int) -> tuple[str, int]:
 # ---------------------------------------------------------
 
 def make_figure(path: str) -> str:
+    """Convert an image path to the shared Markdown figure representation."""
     return rf"\includegraphics{{{path.strip()}}}"
 
 
 def convert_images(tex: str) -> str:
+    """Convert supported TeX image commands to Markdown figure references."""
     tex = re.sub(r"\\choicebitmap(?:\[[^\]]*\])?\{([^}]*)\}",
                  lambda m: make_figure(m.group(1)), tex)
     return re.sub(r"\\bitmapfigure(?:\[[^\]]*\])?\{([^}]*)\}",
@@ -65,7 +66,9 @@ def normalize_includegraphics(markdown: str) -> str:
 # ---------------------------------------------------------
 
 def convert_tables(tex: str) -> str:
+    """Convert supported TeX tabular environments into HTML tables."""
     def to_html(match: re.Match[str]) -> str:
+        """Turn one matched tabular body into rows and cells."""
         content = re.sub(r"\\(?:hline|toprule|midrule|bottomrule)", "", match.group(1))
         rows = re.split(r"\\\\(?:\s*\[[^\]]*\])?", content)
         out = ["<table>"]
@@ -90,6 +93,7 @@ def convert_tables(tex: str) -> str:
 # ---------------------------------------------------------
 
 def convert_choices(tex: str) -> str:
+    """Convert common multiple-choice TeX layouts into Markdown text."""
     result, pos, command = [], 0, r"\choices"
     while True:
         k = tex.find(command, pos)
@@ -115,19 +119,21 @@ def convert_choices(tex: str) -> str:
         pos = j
     return "".join(result)
 
-
 # ---------------------------------------------------------
 # 5. LISTS
 # ---------------------------------------------------------
 
 def convert_lists(tex: str) -> str:
+    """Convert supported enumerate and itemize environments to Markdown."""
     def circle_list(m):
+        """Render list items with the source's circled-number labels."""
         items = m.group(1).split(r"\item")[1:]
         lines = [f"{CIRCLED[str(n)]} {x.strip()}" if str(n) in CIRCLED else x.strip()
                  for n, x in enumerate(items, 1)]
         return "\n\n" + "\n\n".join(lines) + "\n\n"
 
     def number_list(m):
+        """Render each enumerate item with a simple numbered label."""
         items = m.group(1).split(r"\item")[1:]
         return "\n\n" + "\n\n".join(f"({n}) {x.strip()}" for n, x in enumerate(items, 1)) + "\n\n"
 
@@ -140,6 +146,7 @@ def convert_lists(tex: str) -> str:
 # ---------------------------------------------------------
 
 def convert_math(tex: str) -> str:
+    """Normalize supported TeX math environments to Markdown delimiters."""
     tex = re.sub(r"\\\(((?:\s*\\circled\{\d\}\s*)+)\\\)",
                  lambda m: "".join(CIRCLED[d] for d in re.findall(r"\d", m.group(1)) if d in CIRCLED),
                  tex)
@@ -160,6 +167,7 @@ def convert_math(tex: str) -> str:
 # ---------------------------------------------------------
 
 def clean_block(tex: str, *, normalize: bool = True) -> str:
+    """Remove layout commands and clean one TeX block for Markdown output."""
     tex = convert_images(tex)
     tex = convert_tables(tex)
     tex = convert_lists(tex)
@@ -182,6 +190,7 @@ def clean_block(tex: str, *, normalize: bool = True) -> str:
 # ---------------------------------------------------------
 
 def convert_tex(tex: str, keep_solutions: bool = False, *, normalize: bool = True) -> str:
+    """Convert a gold TeX exam to Markdown while preserving reading order."""
     pattern = re.compile(
         r"\\chapter\{(?P<chapter>[^}]*)\}"
         r"|\\section\{(?P<section>[^}]*)\}"

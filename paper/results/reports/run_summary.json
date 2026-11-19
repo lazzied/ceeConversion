@@ -3,14 +3,14 @@
   "gold_questions": 23,
   "similarity_backend": "rapidfuzz.fuzz.ratio",
   "outputs": [
-    "ocr_baseline/baseline_manifest.json",
-    "error_taxonomy_results.json",
-    "alignment_results.json",
-    "structure_results.json",
-    "alignment_pairs.jsonl",
-    "token_alignment_results.json",
-    "metrics_results.json",
-    "audit_sample.jsonl"
+    "reports/alignment_results.json",
+    "reports/structure_results.json",
+    "reports/error_taxonomy_results.json",
+    "reports/token_alignment_results.json",
+    "reports/metrics_results.json",
+    "review/alignment_pairs.jsonl",
+    "review/audit_sample.jsonl",
+    "reports/run_summary.json"
   ],
   "alignment_methods": {
     "parent_block_sequence": 81,

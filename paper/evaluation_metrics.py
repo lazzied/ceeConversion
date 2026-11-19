@@ -8,16 +8,17 @@ from difflib import SequenceMatcher
 try:
     from .alignment_core import SIMILARITY_BACKEND
     from .content_tokenizer import character_records, tokenize_content
-    from .unit_matching import align_documents, edit_alignment
+    from .content_alignment import edit_alignment
     from .unit_extraction import content_units, document_units, flatten_questions
 except ImportError:
     from alignment_core import SIMILARITY_BACKEND
     from content_tokenizer import character_records, tokenize_content
-    from unit_matching import align_documents, edit_alignment
+    from content_alignment import edit_alignment
     from unit_extraction import content_units, document_units, flatten_questions
 
 
 def edit_counts(reference, hypothesis):
+    """Count character substitutions, insertions, and deletions."""
     edits, distance, reference_length = edit_alignment(reference, hypothesis)
     counts = Counter(edit["operation"] for edit in edits)
     return (
@@ -27,6 +28,7 @@ def edit_counts(reference, hypothesis):
 
 
 def _records(unit):
+    """Return visible character records for one unit, or none for a missing unit."""
     if unit is None:
         return []
     kind, text = unit["unit_type"], str(unit.get("text", ""))
@@ -38,6 +40,7 @@ def _records(unit):
 
 
 def _word_records(unit_type, text):
+    """Choose the right tokenizer for prose, math, figures, or tables."""
     text = str(text or "")
     if unit_type == "figure":
         return [{"token": f"<FIGURE:{text}>", "category": "figure"}] if text else []
@@ -49,6 +52,7 @@ def _word_records(unit_type, text):
 
 
 def _token_metrics(rows):
+    """Count mixed-content token edits and exact matches for paired units."""
     edits = Counter()
     references = 0
     exact_units = 0
@@ -102,6 +106,7 @@ def _token_metrics(rows):
 
 
 def _equation_similarity(rows):
+    """Estimate equation similarity from token edit distance for each pair."""
     scores = []
     for row in rows:
         if row.get("unit_type") != "display_equation" or row.get("operation") != "match":
@@ -119,6 +124,7 @@ def _equation_similarity(rows):
 
 
 def _table_structure(rows):
+    """Compare table row counts and cell counts, without comparing cell text."""
     gold_tables = [row for row in rows if row.get("unit_type") == "table" and row.get("gold_unit_id")]
     exact = sum(
         row.get("operation") == "match"
@@ -134,6 +140,7 @@ def _table_structure(rows):
 
 
 def _reading_order(ocr_document, gold_document, min_similarity=0.35):
+    """Estimate whether matched question blocks keep the reference block order."""
     try:
         from .alignment_core import align_questions
     except ImportError:
@@ -161,6 +168,7 @@ def _reading_order(ocr_document, gold_document, min_similarity=0.35):
 
 
 def _alignment_coverage(rows):
+    """Summarize paired, unmatched, and excluded OCR/reference unit coverage."""
     eligible = [row for row in rows if row.get("count_in_metrics", True)]
     ocr_sides = sum(bool(row.get("ocr_unit_id")) for row in eligible)
     gold_sides = sum(bool(row.get("gold_unit_id")) for row in eligible)
@@ -183,6 +191,7 @@ def _alignment_coverage(rows):
 
 
 def _manual_alignment_review(audit_rows):
+    """Calculate alignment precision and recall from completed human labels."""
     counts = Counter(row.get("alignment_review_label") for row in audit_rows if row.get("alignment_review_label"))
     true_positive = counts["correct_match"]
     false_positive = counts["incorrect_match"]
@@ -202,6 +211,7 @@ def _manual_alignment_review(audit_rows):
 
 
 def _math_subtype(token):
+    """Place a math token in a broad symbol group for error summaries."""
     value = str(token or "")
     greek_chars = set("αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ")
     greek_commands = {
@@ -229,6 +239,7 @@ def _math_subtype(token):
 
 
 def _error_distribution(rows):
+    """Count token edits by content class, unit kind, operation, and math type."""
     by_class, by_unit, by_operation = defaultdict(Counter), defaultdict(Counter), defaultdict(Counter)
     confusions, math_confusions, math_subtypes = defaultdict(Counter), defaultdict(Counter), defaultdict(Counter)
     for row in rows:
@@ -265,11 +276,8 @@ def _error_distribution(rows):
     }
 
 
-def _new_counts():
-    return {key: 0 for key in ERROR_KEYS}
-
-
 def _add_edits(totals, reference, hypothesis):
+    """Add one reference/hypothesis edit alignment into aggregate CER totals."""
     edits, distance, reference_length = edit_alignment(reference, hypothesis)
     totals["reference_characters"] += reference_length
     totals["overall"]["reference_characters"] += reference_length
@@ -285,6 +293,7 @@ def _add_edits(totals, reference, hypothesis):
 
 
 def _metric_result(counts):
+    """Add total errors and CER to a bucket of edit counts."""
     errors = counts["substitutions"] + counts["insertions"] + counts["deletions"]
     reference_length = counts["reference_characters"]
     rate = errors / reference_length if reference_length else None
@@ -297,14 +306,17 @@ def _metric_result(counts):
 
 
 def _metric_bucket():
+    """Create an empty CER bucket for substitutions, insertions, and deletions."""
     return {"substitutions": 0, "insertions": 0, "deletions": 0, "reference_characters": 0}
 
 
 def _empty_metric_totals():
+    """Create overall and per-content-class CER accumulators."""
     return {"overall": _metric_bucket(), "by_category": defaultdict(_metric_bucket), "reference_characters": 0}
 
 
 def _unit_lookup(document):
+    """Index all extracted units by ID for fast access during scoring."""
     _, tree = document_units(document)
     lookup = {}
     for group in tree.values():
@@ -314,6 +326,7 @@ def _unit_lookup(document):
 
 
 def _evaluate_pairs(rows, lookup_ocr, lookup_gold, *, count_only_metric_units=True):
+    """Score eligible matched rows and return overall and class-specific CER."""
     totals = _empty_metric_totals()
     alignable = 0
     for row in rows:
@@ -343,11 +356,13 @@ def _evaluate_pairs(rows, lookup_ocr, lookup_gold, *, count_only_metric_units=Tr
 
 
 def _unit_error(row, ocr_unit, gold_unit):
+    """Return edit distance, reference length, and edits for one unit pair."""
     edits, distance, reference_length = edit_alignment(_records(gold_unit), _records(ocr_unit))
     return distance, reference_length, edits
 
 
 def _outcome_report(normalized_rows, raw_ocr_units, raw_gold_units):
+    """Compare raw and normalized edit distances and label each unit's outcome."""
     outcomes = defaultdict(Counter)
     per_unit = []
     for row in normalized_rows:
@@ -394,6 +409,7 @@ def _outcome_report(normalized_rows, raw_ocr_units, raw_gold_units):
 
 
 def _confusion_table(rows, raw_ocr_units, raw_gold_units, limit=50):
+    """Return the most frequent raw gold-to-OCR character substitutions."""
     confusion = Counter()
     for row in rows:
         if not row.get("count_in_metrics", True) or row.get("operation") != "match":
@@ -413,6 +429,7 @@ def _confusion_table(rows, raw_ocr_units, raw_gold_units, limit=50):
 
 
 def _equal_index_map(left, right):
+    """Map characters that SequenceMatcher considers unchanged between strings."""
     mapping = {}
     for block in SequenceMatcher(a=left, b=right, autojunk=False).get_matching_blocks():
         for offset in range(block.size):
@@ -450,6 +467,11 @@ def evaluate_pipeline(raw_rows, normalized_rows, raw_ocr_document, raw_gold_docu
                       normalized_ocr_markdown, normalized_gold_markdown,
                       *, low_error_threshold=0.05, audit_rows=None,
                       document_name="document", min_similarity=0.35):
+    """Build baseline, normalization outcome, error, and audit quality metrics.
+
+    Raw pairs measure OCR as received. Normalized pairs measure the effect of
+    deterministic normalization on those same documents.
+    """
     raw_ocr_units, raw_gold_units = _unit_lookup(raw_ocr_document), _unit_lookup(raw_gold_document)
     norm_ocr_units, norm_gold_units = _unit_lookup(normalized_ocr_document), _unit_lookup(normalized_gold_document)
     raw_metrics = _evaluate_pairs(raw_rows, raw_ocr_units, raw_gold_units)
@@ -504,6 +526,7 @@ def evaluate_pipeline(raw_rows, normalized_rows, raw_ocr_document, raw_gold_docu
 
 
 def _excluded_summary(rows):
+    """Report the number and share of eligible unit sides excluded from scoring."""
     eligible = [row for row in rows if row.get("count_in_metrics", True)]
     total_sides = sum(bool(row.get("ocr_unit_id")) + bool(row.get("gold_unit_id")) for row in eligible)
     excluded_sides = sum(

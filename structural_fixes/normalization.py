@@ -32,6 +32,7 @@ UNICODE_PATTERN = re.compile('|'.join(re.escape(k) for k in UNICODE_TO_LATEX))
 
 
 def edit_parts(markdown, edit_text=None, edit_math=None):
+    """Apply separate edit functions to ordinary text and math spans."""
     parts = SPLIT_PATTERN.split(markdown)
     for i, part in enumerate(parts):
         if i % 2 == 0 and edit_text:
@@ -42,8 +43,12 @@ def edit_parts(markdown, edit_text=None, edit_math=None):
 
 
 def edit_text_ctx(markdown, fn):
-    """Like edit_parts(edit_text=...) but a '$' sentinel marks 'not at line start'
-    for gaps that follow a protected token."""
+    """Edit prose between math spans while preserving where each line begins.
+
+    The leading marker lets rules distinguish the start of a line from text
+    immediately after a math span, where the same characters can mean something
+    different.
+    """
     parts = SPLIT_PATTERN.split(markdown)
     for i in range(0, len(parts), 2):
         pre = '$' if i else ''
@@ -53,11 +58,14 @@ def edit_text_ctx(markdown, fn):
 
 # ------------------------------------------------------------------ basics
 def decode_html_entities(md):
+    """Decode HTML entities without changing the surrounding Markdown."""
     return html.unescape(md)
 
 
 def convert_figures(md):
+    """Standardize supported figure references while preserving their paths."""
     def img(m):
+        """Convert one HTML image tag when it contains a usable source path."""
         src = re.search(r'''src\s*=\s*["']([^"']+)["']''', m.group(0), re.I)
         return rf"\includegraphics{{{src.group(1).strip()}}}" if src else m.group(0)
     md = re.sub(r'<img\b[^>]*>', img, md, flags=re.I)
@@ -66,11 +74,14 @@ def convert_figures(md):
 
 
 def unwrap_divs(md):
+    """Remove presentation-only div wrappers around document content."""
     return re.sub(r'</?div\b[^>]*>', '', md, flags=re.I)
 
 
 def normalize_tables(md):
+    """Standardize table cell spacing and layout without changing cell values."""
     def clean(m):
+        """Simplify supported table tags while leaving other HTML tags alone."""
         t = re.match(r'<\s*(/?)\s*([a-zA-Z0-9]+)', m.group(0))
         if not t or t.group(2).lower() not in {'table', 'tr', 'td', 'th'}:
             return m.group(0)
@@ -79,6 +90,7 @@ def normalize_tables(md):
 
 
 def replace_unicode_symbols(md):
+    """Map known Unicode math symbols to the shared canonical spelling."""
     return edit_parts(
         md,
         edit_text=lambda t: UNICODE_PATTERN.sub(lambda m: '$' + UNICODE_TO_LATEX[m.group()] + '$', t),
@@ -86,6 +98,7 @@ def replace_unicode_symbols(md):
 
 
 def replace_degree_sign(md):
+    """Normalize degree symbols in text and mathematical expressions."""
     return edit_parts(md, edit_text=lambda t: re.sub(r'(\d+)\s*[°◦]', r'$\1^\\circ$', t))
 
 
@@ -95,7 +108,9 @@ FRAC = re.compile(r'\\dfrac(?![A-Za-z])')
 
 
 def _strip_spaces(s):
+    """Remove unnecessary math spacing but keep spaces inside text and commands."""
     def keep(m):
+        """Keep a space when removing it would join a command or escape."""
         before, after = s[:m.start()], s[m.end():]
         if before.endswith('\\') and not before.endswith('\\\\'):
             return ' '
@@ -110,6 +125,7 @@ def _strip_spaces(s):
         else:
             # re-run keep() with full-string context is unnecessary inside a piece
             def keep_p(m, p=p):
+                """Apply the same safe spacing rule within this math fragment."""
                 before, after = p[:m.start()], p[m.end():]
                 if before.endswith('\\') and not before.endswith('\\\\'):
                     return ' '
@@ -121,6 +137,7 @@ def _strip_spaces(s):
 
 
 def _read_arg(s, i):
+    """Read one LaTeX argument at ``i`` and return its text and ending index."""
     while i < len(s) and s[i] == ' ':
         i += 1
     if i >= len(s):
@@ -189,6 +206,7 @@ def _strip_flat_left_right(s):
 
 
 def canon_math(span):
+    """Canonicalize formatting variations inside one mathematical expression."""
     d = '$$' if span.startswith('$$') else '$'
     s = span[len(d):-len(d)]
     s = re.sub(r'\*\*(\\[A-Za-z]+)\*\*', r'\1', s)
@@ -212,19 +230,23 @@ def canon_math(span):
 
 
 def canon_math_spans(md):
+    """Apply math canonicalization to every recognized Markdown math span."""
     return edit_parts(md, edit_math=canon_math)
 
 
 # ------------------------------------------------------- prose-level rules
 def remove_page_numbers(md):
+    """Remove standalone page-number lines introduced by OCR or conversion."""
     return re.sub(r'(?m)^[ \t]*\d{3,4}[ \t]*(?:\n|\Z)', '', md)
 
 
 def fix_answer_brackets(md):
+    """Standardize answer blanks and brackets used in exam questions."""
     return edit_parts(md, edit_text=lambda t: re.sub(r'[ \t]*[（(]\s*[）)]', '（ ）', t))
 
 
 def fix_fill_in_blanks(md):
+    """Convert supported fill-in-blank marks to one stable representation."""
     return edit_parts(md, edit_text=lambda t: re.sub(r'[ \t]*(?:\\_|_){3,}', '___', t))
 
 
@@ -242,7 +264,9 @@ NUMBER = re.compile(
 
 
 def wrap_standalone_numbers(md):
+    """Mark standalone numbers that belong to math rather than prose."""
     def repl(m):
+        """Wrap a matched number in math while leaving question labels intact."""
         if m.group(1):
             return m.group(1)
         n = m.group(2)
@@ -280,6 +304,7 @@ JOIN_OP = re.compile(rf'^[ \t]*({OPS})[ \t]*$')
 
 
 def _glue(a, b):
+    """Join math pieces without merging a LaTeX command with the next letter."""
     if re.search(r'\\[A-Za-z]+$', a) and re.match(r'[A-Za-z]', b):
         return a + ' ' + b
     return a + b
@@ -318,6 +343,7 @@ UNITS = ('件',)
 def split_symbol_lists(md):
     r"""$A, B$ -> $A$，$B$  (gold keeps symbol lists as separate spans)."""
     def fix(span):
+        """Split a comma-separated list into separate inline math spans."""
         m = INLINE.match(span)
         if m and SYMLIST.match(m.group(1)):
             return '，'.join('$' + x.strip() + '$' for x in m.group(1).split(','))
@@ -357,6 +383,7 @@ def move_trailing_punct(md):
 def gold_punctuation(md):
     """Prose punctuation in gold style: ， ； ： ？ ！ fullwidth, '.' ASCII."""
     def fix(t):
+        """Apply the reference paper's punctuation and spacing conventions."""
         t = t.replace('。', '.').replace('、', '，')
         t = t.replace(',', '，').replace(';', '；').replace(':', '：')
         t = t.replace('?', '？').replace('!', '！')
@@ -409,19 +436,23 @@ def absorb_trailing_equals(md):
 
 
 def split_options(md):
+    """Normalize inline answer choices while keeping their labels and order."""
     opt = r"(?:\([A-D]\)|（[A-D]）)"
     return edit_parts(md, edit_text=lambda t: re.sub(rf"[ \t]+(?={opt})", "\n", t))
 
 
 def clean_whitespace(md):
+    """Clean repeated spaces and excess blank lines without altering content."""
     md = re.sub(r'(?<=\S)[ \t]{2,}', ' ', md)
     md = re.sub(r'(?m)[ \t]+$', '', md)
     return re.sub(r'\n{3,}', '\n\n', md).strip() + '\n'
 
 
 def wrap_loose_symbols(md):
+    """Optionally wrap loose mathematical symbols as inline math spans."""
     loose = re.compile(r'(?<![A-Za-z0-9$\\(])[A-Za-z]{1,4}(?:\s*[,、]\s*[A-Za-z]{1,4})*(?![A-Za-z0-9$])')
     def line(l):
+        """Only consider short loose symbols on lines containing Chinese text."""
         if not CHINESE.search(l):
             return l
         return edit_parts(l, edit_text=lambda t: loose.sub(lambda m: '$' + m.group() + '$', t))

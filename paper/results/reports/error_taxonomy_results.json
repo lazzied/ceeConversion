@@ -1,0 +1,1118 @@
+{
+  "schema_version": 1,
+  "documents": {
+    "exam.md": {
+      "character_error_categories": {
+        "character_deletion": 307,
+        "character_insertion": 146,
+        "character_substitution": 122,
+        "equation_segmentation_candidate": 10,
+        "latex_command_error": 48,
+        "reading_order_error": 0,
+        "structural_error": 8
+      },
+      "character_operations": {
+        "deletion": 307,
+        "insertion": 146,
+        "substitution": 122
+      },
+      "unaligned_unit_rows": 73,
+      "errors_by_language_or_content_class": {
+        "cjk_text": {
+          "deletion": 13,
+          "substitution": 1
+        },
+        "math": {
+          "deletion": 268,
+          "insertion": 146,
+          "substitution": 71
+        },
+        "other_text": {
+          "deletion": 26,
+          "substitution": 50
+        }
+      },
+      "errors_by_content_type": {
+        "choice": {
+          "deletion": 12
+        },
+        "question": {
+          "deletion": 175,
+          "insertion": 80,
+          "substitution": 91
+        },
+        "statement": {
+          "deletion": 4,
+          "substitution": 8
+        },
+        "sub_question": {
+          "deletion": 89,
+          "insertion": 62,
+          "substitution": 21
+        },
+        "text": {
+          "deletion": 27,
+          "insertion": 4,
+          "substitution": 2
+        }
+      },
+      "math_token_errors_by_symbol_type": {
+        "braces_delimiters": {
+          "deletion": 146,
+          "insertion": 79,
+          "substitution": 48
+        },
+        "digits": {
+          "deletion": 13,
+          "substitution": 3
+        },
+        "latex_commands": {
+          "deletion": 8,
+          "insertion": 13,
+          "substitution": 23
+        },
+        "latin_letters": {
+          "deletion": 40,
+          "insertion": 1,
+          "substitution": 24
+        },
+        "operators": {
+          "deletion": 1,
+          "substitution": 6
+        },
+        "superscripts_subscripts": {
+          "deletion": 2
+        }
+      },
+      "latex_command_errors": {
+        "operation_counts": {
+          "deletion": 9,
+          "insertion": 13,
+          "substitution": 26
+        }
+      },
+      "structural_error_counts": {
+        "extra_block_in_ocr": 2,
+        "question_number_mismatch": 1,
+        "table_not_rendered": 1,
+        "unexpected_figure": 4
+      },
+      "reading_order_events": [],
+      "equation_segmentation_candidates": [
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 1,
+          "reference_question": 1,
+          "ocr_equation_count": 2,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q1.eq1",
+            "s1.q1.eq2"
+          ],
+          "reference_equation_ids": [
+            "s1.q1.eq1",
+            "s1.q1.eq2",
+            "s1.q1.eq3",
+            "s1.q1.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q1.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q1.eq1",
+              "gold_unit_id": "s1.q1.eq2",
+              "operation": "match"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q1.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q1.eq2",
+              "gold_unit_id": "s1.q1.eq3",
+              "operation": "match"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 2,
+          "reference_question": 2,
+          "ocr_equation_count": 0,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [],
+          "reference_equation_ids": [
+            "s1.q2.eq1",
+            "s1.q2.eq2",
+            "s1.q2.eq3",
+            "s1.q2.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q2.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q2.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q2.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q2.eq3",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 3,
+          "reference_question": 3,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q3.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q3.eq1",
+            "s1.q3.eq2",
+            "s1.q3.eq3",
+            "s1.q3.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q3.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q3.eq3",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q3.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q3.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q3.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 4,
+          "reference_question": 4,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q4.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q4.eq1",
+            "s1.q4.eq2",
+            "s1.q4.eq3",
+            "s1.q4.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q4.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q4.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q4.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q4.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q4.eq3",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 5,
+          "reference_question": 5,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q5.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q5.eq1",
+            "s1.q5.eq2",
+            "s1.q5.eq3",
+            "s1.q5.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q5.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q5.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q5.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q5.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q5.eq3",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 6,
+          "reference_question": 6,
+          "ocr_equation_count": 0,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [],
+          "reference_equation_ids": [
+            "s1.q6.eq1",
+            "s1.q6.eq2",
+            "s1.q6.eq3",
+            "s1.q6.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q6.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q6.eq3",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q6.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q6.eq4",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 7,
+          "reference_question": 7,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q7.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q7.eq1",
+            "s1.q7.eq2",
+            "s1.q7.eq3",
+            "s1.q7.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q7.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q7.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q7.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q7.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q7.eq3",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 9,
+          "reference_question": 9,
+          "ocr_equation_count": 0,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [],
+          "reference_equation_ids": [
+            "s1.q9.eq1",
+            "s1.q9.eq2",
+            "s1.q9.eq3",
+            "s1.q9.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q9.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q9.eq3",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q9.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q9.eq2",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 10,
+          "reference_question": 10,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q10.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q10.eq1",
+            "s1.q10.eq2",
+            "s1.q10.eq3",
+            "s1.q10.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q10.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q10.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q10.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q10.eq3",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q10.eq4",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        },
+        {
+          "category": "equation_segmentation_candidate",
+          "candidate_type": "possible_merge_or_missing_equation",
+          "ocr_question": 12,
+          "reference_question": 12,
+          "ocr_equation_count": 1,
+          "reference_equation_count": 4,
+          "ocr_equation_ids": [
+            "s1.q12.eq1"
+          ],
+          "reference_equation_ids": [
+            "s1.q12.eq1",
+            "s1.q12.eq2",
+            "s1.q12.eq3",
+            "s1.q12.eq4"
+          ],
+          "alignment_rows": [
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q12.eq4",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q12.eq1",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": "s1.q12.eq1",
+              "gold_unit_id": null,
+              "operation": "ocr_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q12.eq2",
+              "operation": "gold_only"
+            },
+            {
+              "ocr_unit_id": null,
+              "gold_unit_id": "s1.q12.eq3",
+              "operation": "gold_only"
+            }
+          ],
+          "requires_review": true
+        }
+      ],
+      "equation_segmentation_counts": {
+        "possible_merge_or_missing_equation": 10
+      },
+      "confidence_analysis": {
+        "available": false,
+        "reason": "OCR confidence is absent from the structured output or is not attached to text spans."
+      }
+    }
+  },
+  "aggregate": {
+    "document_count": 1,
+    "character_error_categories": {
+      "character_deletion": 307,
+      "character_insertion": 146,
+      "character_substitution": 122,
+      "equation_segmentation_candidate": 10,
+      "latex_command_error": 48,
+      "reading_order_error": 0,
+      "structural_error": 8
+    },
+    "character_operations": {
+      "deletion": 307,
+      "insertion": 146,
+      "substitution": 122
+    },
+    "unaligned_unit_rows": 73,
+    "errors_by_language_or_content_class": {
+      "cjk_text": {
+        "deletion": 13,
+        "substitution": 1
+      },
+      "math": {
+        "deletion": 268,
+        "insertion": 146,
+        "substitution": 71
+      },
+      "other_text": {
+        "deletion": 26,
+        "substitution": 50
+      }
+    },
+    "errors_by_content_type": {
+      "choice": {
+        "deletion": 12
+      },
+      "question": {
+        "deletion": 175,
+        "insertion": 80,
+        "substitution": 91
+      },
+      "statement": {
+        "deletion": 4,
+        "substitution": 8
+      },
+      "sub_question": {
+        "deletion": 89,
+        "insertion": 62,
+        "substitution": 21
+      },
+      "text": {
+        "deletion": 27,
+        "insertion": 4,
+        "substitution": 2
+      }
+    },
+    "math_token_errors_by_symbol_type": {
+      "braces_delimiters": {
+        "deletion": 146,
+        "insertion": 79,
+        "substitution": 48
+      },
+      "digits": {
+        "deletion": 13,
+        "substitution": 3
+      },
+      "latex_commands": {
+        "deletion": 8,
+        "insertion": 13,
+        "substitution": 23
+      },
+      "latin_letters": {
+        "deletion": 40,
+        "insertion": 1,
+        "substitution": 24
+      },
+      "operators": {
+        "deletion": 1,
+        "substitution": 6
+      },
+      "superscripts_subscripts": {
+        "deletion": 2
+      }
+    },
+    "latex_command_errors": {
+      "operation_counts": {
+        "deletion": 9,
+        "insertion": 13,
+        "substitution": 26
+      }
+    },
+    "structural_error_counts": {
+      "extra_block_in_ocr": 2,
+      "question_number_mismatch": 1,
+      "table_not_rendered": 1,
+      "unexpected_figure": 4
+    },
+    "reading_order_events": [],
+    "equation_segmentation_candidates": [
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 1,
+        "reference_question": 1,
+        "ocr_equation_count": 2,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q1.eq1",
+          "s1.q1.eq2"
+        ],
+        "reference_equation_ids": [
+          "s1.q1.eq1",
+          "s1.q1.eq2",
+          "s1.q1.eq3",
+          "s1.q1.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q1.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q1.eq1",
+            "gold_unit_id": "s1.q1.eq2",
+            "operation": "match"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q1.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q1.eq2",
+            "gold_unit_id": "s1.q1.eq3",
+            "operation": "match"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 2,
+        "reference_question": 2,
+        "ocr_equation_count": 0,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [],
+        "reference_equation_ids": [
+          "s1.q2.eq1",
+          "s1.q2.eq2",
+          "s1.q2.eq3",
+          "s1.q2.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q2.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q2.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q2.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q2.eq3",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 3,
+        "reference_question": 3,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q3.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q3.eq1",
+          "s1.q3.eq2",
+          "s1.q3.eq3",
+          "s1.q3.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q3.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q3.eq3",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q3.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q3.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q3.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 4,
+        "reference_question": 4,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q4.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q4.eq1",
+          "s1.q4.eq2",
+          "s1.q4.eq3",
+          "s1.q4.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q4.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q4.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q4.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q4.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q4.eq3",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 5,
+        "reference_question": 5,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q5.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q5.eq1",
+          "s1.q5.eq2",
+          "s1.q5.eq3",
+          "s1.q5.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q5.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q5.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q5.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q5.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q5.eq3",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 6,
+        "reference_question": 6,
+        "ocr_equation_count": 0,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [],
+        "reference_equation_ids": [
+          "s1.q6.eq1",
+          "s1.q6.eq2",
+          "s1.q6.eq3",
+          "s1.q6.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q6.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q6.eq3",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q6.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q6.eq4",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 7,
+        "reference_question": 7,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q7.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q7.eq1",
+          "s1.q7.eq2",
+          "s1.q7.eq3",
+          "s1.q7.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q7.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q7.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q7.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q7.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q7.eq3",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 9,
+        "reference_question": 9,
+        "ocr_equation_count": 0,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [],
+        "reference_equation_ids": [
+          "s1.q9.eq1",
+          "s1.q9.eq2",
+          "s1.q9.eq3",
+          "s1.q9.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q9.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q9.eq3",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q9.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q9.eq2",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 10,
+        "reference_question": 10,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q10.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q10.eq1",
+          "s1.q10.eq2",
+          "s1.q10.eq3",
+          "s1.q10.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q10.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q10.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q10.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q10.eq3",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q10.eq4",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      },
+      {
+        "document": "exam.md",
+        "category": "equation_segmentation_candidate",
+        "candidate_type": "possible_merge_or_missing_equation",
+        "ocr_question": 12,
+        "reference_question": 12,
+        "ocr_equation_count": 1,
+        "reference_equation_count": 4,
+        "ocr_equation_ids": [
+          "s1.q12.eq1"
+        ],
+        "reference_equation_ids": [
+          "s1.q12.eq1",
+          "s1.q12.eq2",
+          "s1.q12.eq3",
+          "s1.q12.eq4"
+        ],
+        "alignment_rows": [
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q12.eq4",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q12.eq1",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": "s1.q12.eq1",
+            "gold_unit_id": null,
+            "operation": "ocr_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q12.eq2",
+            "operation": "gold_only"
+          },
+          {
+            "ocr_unit_id": null,
+            "gold_unit_id": "s1.q12.eq3",
+            "operation": "gold_only"
+          }
+        ],
+        "requires_review": true
+      }
+    ],
+    "equation_segmentation_counts": {
+      "possible_merge_or_missing_equation": 10
+    },
+    "top_correction_experiment_candidates": [
+      {
+        "category": "character_deletion",
+        "count": 307,
+        "impact_weight": 1.0,
+        "priority_score": 307.0
+      },
+      {
+        "category": "character_insertion",
+        "count": 146,
+        "impact_weight": 1.0,
+        "priority_score": 146.0
+      },
+      {
+        "category": "character_substitution",
+        "count": 122,
+        "impact_weight": 1.0,
+        "priority_score": 122.0
+      },
+      {
+        "category": "latex_command_error",
+        "count": 48,
+        "impact_weight": 1.5,
+        "priority_score": 72.0
+      },
+      {
+        "category": "equation_segmentation_candidate",
+        "count": 10,
+        "impact_weight": 2.0,
+        "priority_score": 20.0
+      }
+    ],
+    "priority_note": "Counts are measured from the paired data. Impact weights are explicit heuristics, not learned probabilities. Specialized findings such as LaTeX command errors can overlap with character-level counts.",
+    "classification_note": "Character edits are grouped by insertion, deletion, or substitution. Pairwise character, glyph, and math-token confusion tables are deferred to a later analysis.",
+    "confidence_analysis": {
+      "available": false,
+      "confidence_spans": 0,
+      "mapped_character_errors": 0,
+      "unmapped_character_errors": 0,
+      "by_confidence_band": {},
+      "note": "Confidence matching uses the closest OCR text span and should be audited for calibration."
+    }
+  }
+}

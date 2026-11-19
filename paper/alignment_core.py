@@ -16,7 +16,7 @@ SIMILARITY_BACKEND = "rapidfuzz.fuzz.ratio" if fuzz is not None else "difflib.Se
 
 
 def matching_stage(left, right):
-    """Describe whether a pair was identical, normalized-identical, or fuzzy."""
+    """Say whether two strings match exactly, after simple cleanup, or fuzzily."""
     left, right = str(left or ""), str(right or "")
     if left == right:
         return "exact_text"
@@ -27,7 +27,7 @@ def matching_stage(left, right):
 
 
 def similarity(left, right):
-    """Return normalized fuzzy similarity in [0, 1]."""
+    """Give two strings a similarity score from zero (different) to one (same)."""
     left, right = str(left or ""), str(right or "")
     if not left and not right:
         return 1.0
@@ -39,7 +39,13 @@ def similarity(left, right):
 
 
 def monotonic_alignment(left, right, score_fn, *, gap_penalty=-0.35, min_similarity=0.0):
-    """Needleman-Wunsch alignment; low-score candidate matches become gaps."""
+    """Line up two ordered lists while allowing items to be missing or extra.
+
+    ``score_fn`` compares a possible pair. Pairs below ``min_similarity`` are
+    treated as poor matches, while ``gap_penalty`` controls how willing the
+    aligner is to leave an item unmatched. The returned indexes follow the
+    original order of both lists.
+    """
     n, m = len(left), len(right)
     dp = [[0.0] * (m + 1) for _ in range(n + 1)]
     trace = [[None] * (m + 1) for _ in range(n + 1)]
@@ -76,8 +82,13 @@ def monotonic_alignment(left, right, score_fn, *, gap_penalty=-0.35, min_similar
 
 
 def align_questions(ocr_questions, gold_questions, *, min_similarity=0.35):
-    """Align questions by order/content, then use exact question numbers as fallback."""
+    """Pair OCR and gold questions in reading order.
+
+    Pairing uses question text and number. A skipped pair may be recovered by
+    printed number, and the recovery method is kept on the result row.
+    """
     def score(ocr, gold):
+        """Score two question stems, giving a small bonus for equal numbers."""
         stage = matching_stage(ocr.get("stem", ""), gold.get("stem", ""))
         text_score = 1.0 if stage in {"exact_text", "normalized_text"} else similarity(ocr.get("stem", ""), gold.get("stem", ""))
         if ocr.get("number") == gold.get("number"):

@@ -1,99 +1,24 @@
-"""Hierarchical unit pairing and token/character edit labels."""
+"""Pair OCR content units with reference units inside aligned questions.
 
+This module chooses correspondences and records how each pair was found.
+Token and character comparisons are handled by :mod:`content_alignment`.
+"""
 from __future__ import annotations
 
 try:
     from .alignment_core import SIMILARITY_BACKEND, align_questions, matching_stage, monotonic_alignment, similarity
-    from .content_tokenizer import character_records, tokenize_content
-    from .unit_extraction import content_units, document_units
+    from .unit_extraction import document_units
 except ImportError:
     from alignment_core import SIMILARITY_BACKEND, align_questions, matching_stage, monotonic_alignment, similarity
-    from content_tokenizer import character_records, tokenize_content
-    from unit_extraction import content_units, document_units
-
-
-def _tokens(unit):
-    if unit is None:
-        return []
-    kind, text = unit["unit_type"], str(unit.get("text", ""))
-    if kind == "figure":
-        return [{"token": f"<FIGURE:{text}>", "category": "figure"}] if text else []
-    if kind == "table":
-        return [{"token": "<table>", "category": "table"}]
-    if kind == "display_equation":
-        return tokenize_content(f"${text}$")
-    return tokenize_content(text)
-
-
-def _chars(unit):
-    if unit is None:
-        return []
-    kind, text = unit["unit_type"], str(unit.get("text", ""))
-    if kind == "figure":
-        return [{"token": f"<FIGURE:{text}>", "category": "figure"}] if text else []
-    if kind == "table":
-        return [{"token": "<table>", "category": "table"}]
-    if kind == "display_equation":
-        return character_records(f"${text}$")
-    return character_records(text)
-
-
-def edit_alignment(reference, hypothesis, *, include_matches=False):
-    """Return gold-to-OCR Levenshtein operations; whitespace is not tokenized."""
-    n, m = len(reference), len(hypothesis)
-    dp = [[0] * (m + 1) for _ in range(n + 1)]
-    trace = [[None] * (m + 1) for _ in range(n + 1)]
-    for i in range(1, n + 1):
-        dp[i][0], trace[i][0] = i, "deletion"
-    for j in range(1, m + 1):
-        dp[0][j], trace[0][j] = j, "insertion"
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            same = reference[i - 1]["token"] == hypothesis[j - 1]["token"]
-            choices = [
-                (dp[i - 1][j - 1] + (0 if same else 1), "match" if same else "substitution", 0),
-                (dp[i - 1][j] + 1, "deletion", 1),
-                (dp[i][j - 1] + 1, "insertion", 2),
-            ]
-            cost, operation, _ = min(choices, key=lambda item: (item[0], item[2]))
-            dp[i][j], trace[i][j] = cost, operation
-
-    edits = []
-    i, j = n, m
-    while i or j:
-        operation = trace[i][j]
-        if operation in {"match", "substitution"}:
-            gold_item, ocr_item = reference[i - 1], hypothesis[j - 1]
-            if operation != "match" or include_matches:
-                edits.append({
-                    "operation": operation,
-                    "category": gold_item.get("category") or ocr_item.get("category"),
-                    "gold": gold_item["token"], "ocr": ocr_item["token"],
-                    "gold_index": i - 1, "ocr_index": j - 1,
-                })
-            i -= 1
-            j -= 1
-        elif operation == "deletion":
-            gold_item = reference[i - 1]
-            edits.append({"operation": "deletion", "category": gold_item.get("category"), "gold": gold_item["token"], "ocr": None, "gold_index": i - 1, "ocr_index": None})
-            i -= 1
-        else:
-            ocr_item = hypothesis[j - 1]
-            edits.append({"operation": "insertion", "category": ocr_item.get("category"), "gold": None, "ocr": ocr_item["token"], "gold_index": None, "ocr_index": j - 1})
-            j -= 1
-    return list(reversed(edits)), dp[n][m], len(reference)
+    from unit_extraction import document_units
 
 
 def _unit_pair(ocr, gold, method, *, parent_fallback=False, matched=True, min_similarity=0.30):
+    """Record one unit correspondence and keep its matching provenance."""
     score = similarity(ocr.get("text", "") if ocr else "", gold.get("text", "") if gold else "")
     operation = "match" if matched else ("ocr_only" if ocr else "gold_only")
     if matched and score < min_similarity and method not in {"parent_label", "question_number_fallback"}:
         operation = "excluded_low_similarity"
-    token_alignment, token_distance, token_reference_len = edit_alignment(
-        _tokens(gold), _tokens(ocr), include_matches=True
-    )
-    token_edits = [item for item in token_alignment if item["operation"] != "match"]
-    char_edits, char_distance, char_reference_len = edit_alignment(_chars(gold), _chars(ocr))
     return {
         "unit_type": (ocr or gold)["unit_type"],
         "ocr_unit_id": ocr.get("unit_id") if ocr else None,
@@ -116,22 +41,13 @@ def _unit_pair(ocr, gold, method, *, parent_fallback=False, matched=True, min_si
         "match_method": method if operation in {"match", "excluded_low_similarity"} else "unmatched",
         "used_parent_fallback": bool(parent_fallback and operation == "match"),
         "similarity_backend": SIMILARITY_BACKEND,
-        "token_alignment": token_alignment,
-        "token_errors": token_edits,
-        "unaligned_tokens": [
-            item for item in token_edits if item["operation"] in {"insertion", "deletion"}
-        ],
-        "token_edit_distance": token_distance,
-        "gold_token_count": token_reference_len,
-        "character_errors": char_edits,
-        "character_edit_distance": char_distance,
-        "gold_character_count": char_reference_len,
         "count_in_metrics": (ocr or gold)["unit_type"] != "display_equation",
         "excluded": operation != "match",
     }
 
 
 def _align_lists(ocr_units, gold_units, *, method, score_fn=None, min_similarity=0.30, parent_fallback=False):
+    """Align two ordered unit lists and create a report row for every outcome."""
     if score_fn is None:
         score_fn = lambda left, right: similarity(left.get("text", ""), right.get("text", ""))
     ops = monotonic_alignment(ocr_units, gold_units, score_fn, min_similarity=min_similarity)
@@ -147,7 +63,9 @@ def _align_lists(ocr_units, gold_units, *, method, score_fn=None, min_similarity
 
 
 def _subquestion_pairs(ocr_subs, gold_subs, parent_fallback=False):
+    """Pair sub-questions by wording and label within their parent question."""
     def score(ocr, gold):
+        """Score sub-questions, strongly favoring matching printed labels."""
         text_score = similarity(ocr.get("text", ""), gold.get("text", ""))
         return max(text_score, 0.95 if ocr.get("label") == gold.get("label") else 0.0)
 
@@ -164,8 +82,93 @@ def _subquestion_pairs(ocr_subs, gold_subs, parent_fallback=False):
     return pairs
 
 
+def _metric_blocks(group):
+    """Return content units after question and sub-question records."""
+    return [
+        unit for unit in group["content_units"]
+        if unit["unit_type"] not in {"question", "sub_question"}
+    ]
+
+
+def _block_score(ocr, gold):
+    """Score content blocks while keeping figures and table cells in place."""
+    same_labeled_kind = (
+        ocr["unit_type"] == gold["unit_type"]
+        and ocr.get("label") == gold.get("label")
+        and ocr.get("label")
+    )
+    if same_labeled_kind:
+        return 1.0
+    if ocr["unit_type"] == "figure" or gold["unit_type"] == "figure":
+        same_figure = (
+            ocr["unit_type"] == gold["unit_type"]
+            and ocr.get("text") == gold.get("text")
+        )
+        return 1.0 if same_figure else 0.0
+    if ocr["unit_type"] == "table_cell" or gold["unit_type"] == "table_cell":
+        if ocr.get("cell_index") != gold.get("cell_index"):
+            return 0.0
+    return similarity(ocr.get("text", ""), gold.get("text", ""))
+
+
+def _align_question_equations(ocr_group, gold_group, sub_map, min_similarity):
+    """Align equations inside matched sub-questions, then in question scope."""
+    ocr_equations = ocr_group["display_equations"]
+    gold_equations = gold_group["display_equations"]
+    paired_rows = []
+    used_ocr, used_gold = set(), set()
+
+    for ocr_sub_id, gold_sub_id in sub_map.items():
+        ocr_subset = [
+            eq for eq in ocr_equations
+            if eq.get("parent_subquestion_id") == ocr_sub_id
+        ]
+        gold_subset = [
+            eq for eq in gold_equations
+            if eq.get("parent_subquestion_id") == gold_sub_id
+        ]
+        pairs = _align_lists(
+            ocr_subset,
+            gold_subset,
+            method="subquestion_scoped",
+            min_similarity=min_similarity,
+        )
+        paired_rows.extend(pairs)
+        used_ocr.update(pair["ocr_unit_id"] for pair in pairs if pair["ocr_unit_id"])
+        used_gold.update(pair["gold_unit_id"] for pair in pairs if pair["gold_unit_id"])
+
+    remaining_ocr = [eq for eq in ocr_equations if eq["unit_id"] not in used_ocr]
+    remaining_gold = [eq for eq in gold_equations if eq["unit_id"] not in used_gold]
+    if remaining_ocr or remaining_gold:
+        fallback = any(eq.get("parent_subquestion_id") for eq in remaining_ocr + remaining_gold)
+        paired_rows.extend(_align_lists(
+            remaining_ocr,
+            remaining_gold,
+            method="parent_fallback" if fallback else "question_scope",
+            min_similarity=min_similarity,
+            parent_fallback=fallback,
+        ))
+    return paired_rows
+
+
+def _unmatched_question_units(group):
+    """Return all descendants of a question whose parent did not match."""
+    if group is None:
+        return []
+    descendants = [
+        unit for unit in group["content_units"]
+        if unit["unit_type"] not in {"question", "sub_question"}
+    ]
+    return [group["question"], *group["sub_questions"], *group["display_equations"], *descendants]
+
+
 def align_documents(ocr_document, gold_document, *, min_similarity=0.35):
-    """Create matched question/subquestion/equation/content-unit rows."""
+    """Pair document units from questions down to text, figures, and tables.
+
+    Questions are paired first. Their sub-questions, equations, and remaining
+    content blocks are then aligned within that question's scope. Unmatched
+    question descendants stay in the result with an explicit excluded status.
+    """
     ocr_questions, ocr_tree = document_units(ocr_document)
     gold_questions, gold_tree = document_units(gold_document)
     question_pairs = align_questions(ocr_questions, gold_questions, min_similarity=min_similarity)
@@ -191,50 +194,22 @@ def align_documents(ocr_document, gold_document, *, min_similarity=0.35):
             sub_matches = [p for p in sub_pairs if p["operation"] == "match"]
             sub_map = {p["ocr_unit_id"]: p["gold_unit_id"] for p in sub_matches}
 
-            # Match equations within an aligned subquestion first.
-            ocr_eqs, gold_eqs = ocr_group["display_equations"], gold_group["display_equations"]
-            used_ocr, used_gold = set(), set()
-            for ocr_sub_id, gold_sub_id in sub_map.items():
-                left = [eq for eq in ocr_eqs if eq.get("parent_subquestion_id") == ocr_sub_id]
-                right = [eq for eq in gold_eqs if eq.get("parent_subquestion_id") == gold_sub_id]
-                eq_pairs = _align_lists(left, right, method="subquestion_scoped", min_similarity=min_similarity)
-                rows.extend(eq_pairs)
-                used_ocr.update(p["ocr_unit_id"] for p in eq_pairs if p["ocr_unit_id"])
-                used_gold.update(p["gold_unit_id"] for p in eq_pairs if p["gold_unit_id"])
-
-            left_rest = [eq for eq in ocr_eqs if eq["unit_id"] not in used_ocr]
-            right_rest = [eq for eq in gold_eqs if eq["unit_id"] not in used_gold]
-            if left_rest or right_rest:
-                parent_fallback = any(eq.get("parent_subquestion_id") for eq in left_rest + right_rest)
-                method = "parent_fallback" if parent_fallback else "question_scope"
-                rows.extend(_align_lists(
-                    left_rest, right_rest, method=method,
-                    min_similarity=min_similarity, parent_fallback=parent_fallback,
-                ))
+            rows.extend(_align_question_equations(
+                ocr_group, gold_group, sub_map, min_similarity
+            ))
 
             # Align remaining content blocks in the question's own scope.
-            def metric_blocks(group):
-                return [u for u in group["content_units"] if u["unit_type"] not in {"question", "sub_question"}]
-            left = metric_blocks(ocr_group)
-            right = metric_blocks(gold_group)
-            def block_score(a, b):
-                if a["unit_type"] == b["unit_type"] and a.get("label") == b.get("label") and a.get("label"):
-                    return 1.0
-                if a["unit_type"] == "figure" or b["unit_type"] == "figure":
-                    return 1.0 if a["unit_type"] == b["unit_type"] and a.get("text") == b.get("text") else 0.0
-                if a["unit_type"] == "table_cell" or b["unit_type"] == "table_cell":
-                    if a.get("cell_index") != b.get("cell_index"):
-                        return 0.0
-                return similarity(a.get("text", ""), b.get("text", ""))
+            left = _metric_blocks(ocr_group)
+            right = _metric_blocks(gold_group)
             rows.extend(_align_lists(
-                left, right, method="parent_block_sequence", score_fn=block_score,
+                left, right, method="parent_block_sequence", score_fn=_block_score,
                 min_similarity=min_similarity,
             ))
         else:
             # Preserve unmatched descendants as excluded pairs, rather than
             # silently dropping content from coverage calculations.
-            left_units = [ocr_group["question"], *ocr_group["sub_questions"], *ocr_group["display_equations"], *[u for u in ocr_group["content_units"] if u["unit_type"] not in {"question", "sub_question"}]] if ocr_group else []
-            right_units = [gold_group["question"], *gold_group["sub_questions"], *gold_group["display_equations"], *[u for u in gold_group["content_units"] if u["unit_type"] not in {"question", "sub_question"}]] if gold_group else []
+            left_units = _unmatched_question_units(ocr_group)
+            right_units = _unmatched_question_units(gold_group)
             rows.extend(_unit_pair(unit, None, "unmatched_parent", matched=False) for unit in left_units)
             rows.extend(_unit_pair(None, unit, "unmatched_parent", matched=False) for unit in right_units)
 

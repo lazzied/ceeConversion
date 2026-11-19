@@ -19,6 +19,7 @@ except ImportError:
 
 
 def load_segmentation(path):
+    """Load a saved segmentation JSON document."""
     with open(path, "r", encoding="utf-8") as stream:
         return json.load(stream)
 
@@ -56,12 +57,14 @@ def align_questions(ocr_questions, gold_questions):
 
 
 def _block_signature(block):
+    """Return the block kind used to compare document structure."""
     # Labels are compared as their own structural property so a changed
     # subquestion/choice number is reported as a numbering error.
     return block.get("kind", "unknown")
 
 
 def _error(error_type, location, detail):
+    """Create one consistently shaped structural finding."""
     return {"type": error_type, "location": location, "detail": detail}
 
 
@@ -160,6 +163,7 @@ def detect_structure_errors(ocr_question, gold_question):
 def _question_similarity(ocr_question, gold_question):
     """One fuzzy score over the full question text, with media placeholders."""
     def view(question):
+        """Build comparable question text while keeping block kinds and labels."""
         parts = [str(question.get("stem", ""))]
         for block in question.get("blocks", []):
             kind = block.get("kind")
@@ -242,7 +246,11 @@ def run_alignment(ocr_path, gold_path, *, min_similarity=0.35):
     return _run_reports(ocr_path, gold_path, min_similarity=min_similarity)[0]
 
 
-def write_reports(ocr_path, gold_path, alignment_path="alignment_results.json", structure_path="structure_results.json", *, min_similarity=0.35):
+def write_reports(ocr_path, gold_path,
+                 alignment_path=PROJECT_ROOT / "paper/results/reports/alignment_results.json",
+                 structure_path=PROJECT_ROOT / "paper/results/reports/structure_results.json", *,
+                 min_similarity=0.35):
+    """Write question similarity and structural findings for two documents."""
     similarities, structures = _run_reports(ocr_path, gold_path, min_similarity=min_similarity)
     alignment_path, structure_path = Path(alignment_path), Path(structure_path)
     alignment_path.parent.mkdir(parents=True, exist_ok=True)
@@ -254,10 +262,10 @@ def write_reports(ocr_path, gold_path, alignment_path="alignment_results.json", 
     return similarities, report
 
 
-def main(ocr_segmentation_path=PROJECT_ROOT / "paper/results/ocr_segmented.json",
-         gold_segmentation_path=PROJECT_ROOT / "paper/results/gold_segmented.json",
-         alignment_output_path=PROJECT_ROOT / "paper/results/alignment_results.json",
-         structure_output_path=PROJECT_ROOT / "paper/results/structure_results.json", *, min_similarity=0.35):
+def main(ocr_segmentation_path=PROJECT_ROOT / "paper/results/segmentations/ocr/normalized.json",
+         gold_segmentation_path=PROJECT_ROOT / "paper/results/segmentations/reference/normalized.json",
+         alignment_output_path=PROJECT_ROOT / "paper/results/reports/alignment_results.json",
+         structure_output_path=PROJECT_ROOT / "paper/results/reports/structure_results.json", *, min_similarity=0.35):
     """Write structure reports from editable function arguments."""
     similarities, report = write_reports(
         ocr_segmentation_path, gold_segmentation_path,

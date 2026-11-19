@@ -1,3 +1,5 @@
+"""Turn exam Markdown into an ordered section/question/block representation."""
+
 import json
 import re
 import html
@@ -10,10 +12,10 @@ CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SUBQUESTION_LABEL = re.compile(r"^[（(]([0-9０-９]+|[一二三四五六七八九十]+)[)）]\s*(.*)$", re.S)
 
-
 # ---------- data model ----------
 @dataclass
 class Figure:
+    """Reference to an image in a parsed Markdown block."""
     path: str
 
 
@@ -40,40 +42,49 @@ class Block:
 
 @dataclass
 class Question:
+    """A numbered question with its stem and ordered content blocks."""
     number: int
     stem: str
     blocks: list[Block] = field(default_factory=list)  # everything after the stem, in order
 
     # convenient filtered views (not stored in the JSON)
     def _of(self, kind):
+        """Select blocks of one kind without changing their document order."""
         return [b for b in self.blocks if b.kind == kind]
 
     @property
     def choices(self):
+        """Return answer choices in their original order."""
         return self._of("choice")
 
     @property
     def sub_questions(self):
+        """Return sub-questions in their original order."""
         return self._of("sub_question")
 
     @property
     def statements(self):
+        """Return statement blocks in their original order."""
         return self._of("statement")
 
     @property
     def tables(self):
+        """Return table blocks in their original order."""
         return self._of("table")
 
     @property
     def figures(self):
+        """Return figure blocks in their original order."""
         return self._of("figure")
 
     @property
     def other_text(self):
+        """Return ordinary text blocks in their original order."""
         return self._of("text")
 
     @property
     def kind(self):
+        """Return the broad question kind inferred from its choices and stem."""
         if self.choices:
             return "choice"
         if "___" in self.stem:
@@ -83,21 +94,25 @@ class Question:
 
 @dataclass
 class Section:
+    """A titled section containing questions in document order."""
     title: str
     questions: list[Question] = field(default_factory=list)
 
 
 @dataclass
 class Exam:
+    """A parsed exam document containing ordered sections."""
     title: str = ""
     sections: list[Section] = field(default_factory=list)
 
     def all_questions(self):
+        """Return questions from every section in reading order."""
         return [q for s in self.sections for q in s.questions]
 
 
 # ---------- parsing helpers ----------
 def parse_figure(text):
+    """Read a TeX image reference from one Markdown content block."""
     m = re.search(r"\\includegraphics\{([^}]*)\}", text)
     return Figure(path=m.group(1)) if m else None
 
@@ -115,6 +130,7 @@ def parse_choices(block):
 
 
 def split_blocks(md):
+    """Separate Markdown into paragraphs, tables, and equation blocks."""
     return [b.strip() for b in re.split(r"\n\s*\n", md) if b.strip()]
 
 
@@ -137,6 +153,7 @@ def _markdown_table_html(block):
 
 
 def _question_number(text):
+    """Read a supported printed number and return the remaining question stem."""
     patterns = (
         r"^\s*(?:第\s*)?([0-9０-９]+)\s*[.．、]\s*",
         r"^\s*第\s*([0-9０-９]+)\s*题\s*[：:]?\s*",
@@ -151,6 +168,7 @@ def _question_number(text):
 
 # ---------- main parser ----------
 def parse_exam(md):
+    """Parse exam Markdown into section, question, and content records."""
     exam = Exam()
     section = None
     question = None
@@ -210,8 +228,8 @@ def describe(q):
 
 def main(gold_markdown_path=PROJECT_ROOT / "paper/example_01_exam_markdown.md",
          ocr_markdown_path=PROJECT_ROOT / "data/input/exam.md",
-         gold_output_path=PROJECT_ROOT / "paper/results/manual_gold_segmentation.json",
-         ocr_output_path=PROJECT_ROOT / "paper/results/manual_ocr_segmentation.json"):
+         gold_output_path=PROJECT_ROOT / "paper/results/segmentations/manual/reference.json",
+         ocr_output_path=PROJECT_ROOT / "paper/results/segmentations/manual/ocr.json"):
     """Segment the two Markdown inputs supplied as function arguments."""
     for input_file, output_json in (
         (Path(gold_markdown_path), Path(gold_output_path)),

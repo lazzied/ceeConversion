@@ -21,10 +21,8 @@ try:
     from .evaluation_metrics import evaluate_pipeline
     from .gold_normalization import convert_tex
     from .exam_segmentation import parse_exam
-    from .content_alignment import label_unit_errors, run_token_alignment, write_jsonl
-    from .unit_matching import align_documents
+    from .content_alignment import run_token_alignment, write_jsonl
     from .unit_extraction import document_units
-    from .ocr_baseline import ingest_ocr_baseline
     from .error_taxonomy import build_taxonomy_report
 except ImportError:
     from alignment_core import SIMILARITY_BACKEND
@@ -32,10 +30,8 @@ except ImportError:
     from evaluation_metrics import evaluate_pipeline
     from gold_normalization import convert_tex
     from exam_segmentation import parse_exam
-    from content_alignment import label_unit_errors, run_token_alignment, write_jsonl
-    from unit_matching import align_documents
+    from content_alignment import run_token_alignment, write_jsonl
     from unit_extraction import document_units
-    from ocr_baseline import ingest_ocr_baseline
     from error_taxonomy import build_taxonomy_report
 
 from structural_fixes.normalization import normalize_markdown
@@ -47,16 +43,19 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "paper/results"
 
 
 def write_text(path: Path, text: str):
+    """Write UTF-8 text, creating the destination directory when needed."""
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
 
 
 def write_json(path: Path, value):
+    """Write formatted UTF-8 JSON, creating the destination directory."""
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def segment(markdown: str, path: Path):
+    """Parse Markdown, save its exam structure, and return that structure."""
     exam = parse_exam(markdown)
     data = asdict(exam)
     write_json(path, data)
@@ -122,6 +121,7 @@ def compile_markdown(markdown: str, label: str, output_dir: Path):
 
 
 def _all_unit_lookup(document):
+    """Index question, sub-question, equation, and content units by their IDs."""
     _, groups = document_units(document)
     lookup = {}
     for group in groups.values():
@@ -131,6 +131,7 @@ def _all_unit_lookup(document):
 
 
 def _audit_sample(rows, raw_ocr, raw_gold, size=30, seed=31, previous_path=None):
+    """Choose a balanced review sample and carry forward labels from the last run."""
     previous = {}
     if previous_path and previous_path.is_file():
         for line in previous_path.read_text(encoding="utf-8").splitlines():
@@ -190,8 +191,13 @@ def _audit_sample(rows, raw_ocr, raw_gold, size=30, seed=31, previous_path=None)
 
 def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
                  min_similarity=0.35, low_error_threshold=0.05,
-                 audit_size=30, skip_compile=False, ocr_structured_json=None,
-                 ocr_metadata_json=None, ocr_log_path=None):
+                 audit_size=30, skip_compile=False, ocr_structured_json=None):
+    """Run the full evaluation from external OCR Markdown to final reports.
+
+    The stages are gold conversion, shared normalization, segmentation,
+    structure checks, raw and normalized alignment, then metrics and review
+    files. The OCR path is read directly; this pipeline does not run OCR.
+    """
     if not 0.0 <= min_similarity <= 1.0:
         raise ValueError("min_similarity must be between 0 and 1")
     if not 0.0 <= low_error_threshold <= 1.0:
@@ -199,15 +205,12 @@ def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
     if audit_size < 0:
         raise ValueError("audit_size must be nonnegative")
     output_dir.mkdir(parents=True, exist_ok=True)
+    documents_dir = output_dir / "documents"
+    segmentations_dir = output_dir / "segmentations"
+    reports_dir = output_dir / "reports"
+    review_dir = output_dir / "review"
     external_ocr_path = Path(ocr_path)
-    baseline_manifest = ingest_ocr_baseline(
-        external_ocr_path, output_dir / "ocr_baseline",
-        structured_json=ocr_structured_json,
-        metadata_json=ocr_metadata_json,
-        log_path=ocr_log_path,
-    )
-    ocr_path = output_dir / "ocr_baseline" / baseline_manifest["markdown_file"]
-    ocr_raw = ocr_path.read_text(encoding="utf-8")
+    ocr_raw = external_ocr_path.read_text(encoding="utf-8")
     if gold_path.suffix.lower() == ".tex":
         gold_raw = convert_tex(gold_path.read_text(encoding="utf-8"), normalize=False)
         gold_format = "tex"
@@ -220,54 +223,59 @@ def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
     # Deterministic shared style normalization only; no LLM correction is run.
     ocr_normalized = normalize_markdown(ocr_raw)
     gold_normalized = normalize_markdown(gold_raw)
-    write_text(output_dir / "ocr_raw.md", ocr_raw)
-    write_text(output_dir / "gold_raw.md", gold_raw)
-    write_text(output_dir / "ocr_normalized.md", ocr_normalized)
-    write_text(output_dir / "gold_normalized.md", gold_normalized)
+    write_text(documents_dir / "ocr" / "raw.md", ocr_raw)
+    write_text(documents_dir / "reference" / "raw.md", gold_raw)
+    write_text(documents_dir / "ocr" / "normalized.md", ocr_normalized)
+    write_text(documents_dir / "reference" / "normalized.md", gold_normalized)
 
-    raw_ocr_doc = segment(ocr_raw, output_dir / "ocr_raw_segmented.json")
-    raw_gold_doc = segment(gold_raw, output_dir / "gold_raw_segmented.json")
-    norm_ocr_doc = segment(ocr_normalized, output_dir / "ocr_segmented.json")
-    norm_gold_doc = segment(gold_normalized, output_dir / "gold_segmented.json")
+    raw_ocr_segmentation = segment(ocr_raw, segmentations_dir / "ocr" / "raw.json")
+    raw_gold_segmentation = segment(gold_raw, segmentations_dir / "reference" / "raw.json")
+    norm_ocr_segmentation_path = segmentations_dir / "ocr" / "normalized.json"
+    norm_gold_segmentation_path = segmentations_dir / "reference" / "normalized.json"
+    norm_ocr_doc = segment(ocr_normalized, norm_ocr_segmentation_path)
+    norm_gold_doc = segment(gold_normalized, norm_gold_segmentation_path)
 
     # Structure and question similarity report uses the normalized pair.
     _, structure_report = write_reports(
-        output_dir / "ocr_segmented.json", output_dir / "gold_segmented.json",
-        output_dir / "alignment_results.json", output_dir / "structure_results.json",
+        norm_ocr_segmentation_path, norm_gold_segmentation_path,
+        reports_dir / "alignment_results.json", reports_dir / "structure_results.json",
         min_similarity=min_similarity,
     )
-    raw_rows = align_documents(raw_ocr_doc, raw_gold_doc, min_similarity=min_similarity)
-    confidence_data = None
-    if baseline_manifest.get("structured_json_file"):
-        confidence_data = json.loads(
-            (output_dir / "ocr_baseline" / baseline_manifest["structured_json_file"]).read_text(encoding="utf-8")
-        )
+    raw_token_report = run_token_alignment(
+        raw_ocr_segmentation, raw_gold_segmentation, min_similarity=min_similarity
+    )
+    raw_rows = raw_token_report["unit_alignments"]
+    confidence_data = (
+        json.loads(Path(ocr_structured_json).read_text(encoding="utf-8"))
+        if ocr_structured_json is not None else None
+    )
     taxonomy_report = build_taxonomy_report(
-        raw_rows, structure_report, raw_ocr_doc, raw_gold_doc,
+        raw_rows, structure_report, raw_ocr_segmentation, raw_gold_segmentation,
         external_ocr_path.name, confidence_data=confidence_data,
     )
-    write_json(output_dir / "error_taxonomy_results.json", taxonomy_report)
+    write_json(reports_dir / "error_taxonomy_results.json", taxonomy_report)
     token_report = run_token_alignment(norm_ocr_doc, norm_gold_doc, min_similarity=min_similarity)
     normalized_rows = token_report["unit_alignments"]
     # Per-unit normalized rows get raw counterparts for the baseline/outcome calculations.
-    raw_lookup_ocr, raw_lookup_gold = _all_unit_lookup(raw_ocr_doc), _all_unit_lookup(raw_gold_doc)
+    raw_lookup_ocr = _all_unit_lookup(raw_ocr_segmentation)
+    raw_lookup_gold = _all_unit_lookup(raw_gold_segmentation)
     for row in normalized_rows:
         row["raw_ocr_text"] = (raw_lookup_ocr.get(row.get("ocr_unit_id")) or {}).get("text")
         row["raw_gold_text"] = (raw_lookup_gold.get(row.get("gold_unit_id")) or {}).get("text")
-    write_json(output_dir / "token_alignment_results.json", {
+    write_json(reports_dir / "token_alignment_results.json", {
         key: value for key, value in token_report.items() if key != "unit_alignments"
     })
-    write_jsonl(output_dir / "alignment_pairs.jsonl", normalized_rows)
-    audit_path = output_dir / "audit_sample.jsonl"
+    write_jsonl(review_dir / "alignment_pairs.jsonl", normalized_rows)
+    audit_path = review_dir / "audit_sample.jsonl"
     audit_rows = _audit_sample(
-        normalized_rows, raw_ocr_doc, raw_gold_doc, size=audit_size,
+        normalized_rows, raw_ocr_segmentation, raw_gold_segmentation, size=audit_size,
         previous_path=audit_path,
     )
     write_jsonl(audit_path, audit_rows)
 
     metrics = evaluate_pipeline(
         raw_rows, normalized_rows,
-        raw_ocr_doc, raw_gold_doc, norm_ocr_doc, norm_gold_doc,
+        raw_ocr_segmentation, raw_gold_segmentation, norm_ocr_doc, norm_gold_doc,
         ocr_raw, gold_raw, ocr_normalized, gold_normalized,
         low_error_threshold=low_error_threshold,
         audit_rows=audit_rows, document_name=external_ocr_path.name,
@@ -277,16 +285,8 @@ def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
     metrics["structure_error_counts_by_document"] = {
         external_ocr_path.name: structure_report["error_counts"]
     }
-    metrics["ocr_baseline_manifest"] = "ocr_baseline/baseline_manifest.json"
-    metrics["error_taxonomy_report"] = "error_taxonomy_results.json"
+    metrics["error_taxonomy_report"] = "reports/error_taxonomy_results.json"
     metrics["top_correction_experiment_candidates"] = taxonomy_report["aggregate"]["top_correction_experiment_candidates"]
-    metrics["ocr_baseline_metadata"] = {
-        "engine": baseline_manifest.get("ocr_engine"),
-        "version": baseline_manifest.get("ocr_version"),
-        "configuration": baseline_manifest.get("configuration"),
-        "processing_seconds": baseline_manifest.get("processing_seconds"),
-        "structured_json_available": bool(baseline_manifest.get("structured_json_file")),
-    }
     confidence_report = taxonomy_report["documents"][external_ocr_path.name]["confidence_analysis"]
     metrics["error_distribution_raw"]["by_document"][external_ocr_path.name]["confidence"] = confidence_report
     if not skip_compile:
@@ -306,22 +306,29 @@ def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
         metrics["markdown_to_latex_compile"] = {"skipped": True, "reason": "--skip-compile"}
     metrics["inputs"] = {
         "ocr": str(external_ocr_path.resolve()),
-        "ocr_snapshot": str(ocr_path.resolve()),
         "gold": str(gold_path.resolve()),
         "gold_format": gold_format, "output_dir": str(output_dir.resolve()),
     }
-    metrics["audit_sample"] = {"requested": audit_size, "written": len(audit_rows), "file": "audit_sample.jsonl"}
-    write_json(output_dir / "metrics_results.json", metrics)
+    metrics["audit_sample"] = {
+        "requested": audit_size,
+        "written": len(audit_rows),
+        "file": "review/audit_sample.jsonl",
+    }
+    write_json(reports_dir / "metrics_results.json", metrics)
 
     summary = {
         "ocr_questions": sum(len(section.get("questions", [])) for section in norm_ocr_doc.get("sections", [])),
         "gold_questions": sum(len(section.get("questions", [])) for section in norm_gold_doc.get("sections", [])),
         "similarity_backend": SIMILARITY_BACKEND,
         "outputs": [
-            "ocr_baseline/baseline_manifest.json",
-            "error_taxonomy_results.json",
-            "alignment_results.json", "structure_results.json", "alignment_pairs.jsonl",
-            "token_alignment_results.json", "metrics_results.json", "audit_sample.jsonl",
+            "reports/alignment_results.json",
+            "reports/structure_results.json",
+            "reports/error_taxonomy_results.json",
+            "reports/token_alignment_results.json",
+            "reports/metrics_results.json",
+            "review/alignment_pairs.jsonl",
+            "review/audit_sample.jsonl",
+            "reports/run_summary.json",
         ],
         "alignment_methods": token_report["match_method_counts"],
         "comparison_methods": token_report["comparison_method_counts"],
@@ -329,13 +336,13 @@ def run_pipeline(ocr_path: Path, gold_path: Path, output_dir: Path, *,
         "excluded_units": token_report["excluded"],
         "syntax_semantic_errors": token_report["error_counts"],
     }
-    write_json(output_dir / "run_summary.json", summary)
+    write_json(reports_dir / "run_summary.json", summary)
     return summary
 
 
 def main(ocr_path=DEFAULT_OCR, gold_path=DEFAULT_GOLD, output_dir=DEFAULT_OUTPUT, *,
-         ocr_structured_json=None, ocr_metadata_json=None, ocr_log_path=None,
-         min_similarity=0.35, low_error_threshold=0.05, audit_size=30,
+         ocr_structured_json=None, min_similarity=0.35,
+         low_error_threshold=0.05, audit_size=30,
          skip_compile=False):
     """Run with editable input-path arguments; no terminal arguments are read."""
     summary = run_pipeline(
@@ -345,8 +352,6 @@ def main(ocr_path=DEFAULT_OCR, gold_path=DEFAULT_GOLD, output_dir=DEFAULT_OUTPUT
         audit_size=audit_size,
         skip_compile=skip_compile,
         ocr_structured_json=ocr_structured_json,
-        ocr_metadata_json=ocr_metadata_json,
-        ocr_log_path=ocr_log_path,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return summary

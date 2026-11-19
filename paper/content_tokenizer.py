@@ -14,6 +14,7 @@ MATH_ATOM = re.compile(r"\\[A-Za-z]+|\\.|[A-Za-z]|\d|[^\s]")
 
 
 def _text_tokens(text):
+    """Split prose into words, individual CJK characters, and punctuation."""
     result = []
     i = 0
     while i < len(text):
@@ -36,6 +37,7 @@ def _text_tokens(text):
 
 
 def _math_tokens(text, open_delimiter=None, close_delimiter=None):
+    """Split one math expression into commands, symbols, and delimiters."""
     result = []
     if open_delimiter:
         result.append({"token": open_delimiter, "category": "math_syntax"})
@@ -83,6 +85,7 @@ def character_records(text):
 
 
 def _chars(text, mode):
+    """Turn text into non-whitespace characters with their content labels."""
     result = []
     for char in text:
         if char.isspace():

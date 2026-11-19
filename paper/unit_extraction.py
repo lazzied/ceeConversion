@@ -11,8 +11,13 @@ STANDALONE_MATH = re.compile(r"^\$(?!\$)(.+)\$$", re.S)
 TABLE_CELL = re.compile(r"<t[dh]\b[^>]*>(.*?)</t[dh]>", re.I | re.S)
 TABLE_ROW = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.I | re.S)
 
+"""
 
+The purpose of this function is to extract all questions from all sections and put them into a single ordered list.
+For each question, it adds four metadata fields
+"""
 def flatten_questions(document):
+    """Return questions in reading order with stable document-local IDs."""
     result = []
     for section_index, section in enumerate(document.get("sections", [])):
         for question_index, question in enumerate(section.get("questions", [])):
@@ -27,6 +32,7 @@ def flatten_questions(document):
 
 
 def _subquestion_records(question):
+    """Extract labeled sub-questions and assign each a stable child ID."""
     occurrences = {}
     records = []
     for block_index, block in enumerate(question.get("blocks", [])):
@@ -48,6 +54,7 @@ def _subquestion_records(question):
 
 
 def _equation_records(question, subquestions):
+    """Find display equations and record which question part contains each one."""
     labels = {record["label"]: record["unit_id"] for record in subquestions}
     records = []
     sources = [("stem", question.get("stem", ""), None)]
@@ -81,6 +88,7 @@ def _equation_records(question, subquestions):
 
 
 def question_record(question):
+    """Create the canonical alignment record for one question stem."""
     return {
         "unit_type": "question",
         "unit_id": question["_unit_id"],
@@ -93,6 +101,7 @@ def question_record(question):
 
 
 def child_units(question):
+    """Extract sub-question and display-equation records from one question."""
     subquestions = _subquestion_records(question)
     equations = _equation_records(question, subquestions)
     return subquestions, equations
